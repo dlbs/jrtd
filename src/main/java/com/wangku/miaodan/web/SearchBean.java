@@ -1,8 +1,10 @@
 package com.wangku.miaodan.web;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 public class SearchBean {
@@ -61,16 +63,26 @@ public class SearchBean {
 
 	// 最大额度
 	private Double sumEnd;
-
+	
 	// 当前日期
 	private String now = LocalDateTime.now().plusDays(-1)
 			.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+	
+	private String nowDate = LocalDate.now().toString() + " 00:00:00";
 
 	// 当前页码
 	private Integer page;
 
 	// 页面数据尺寸
 	private Integer size;
+	
+	public String getNowDate() {
+		return nowDate;
+	}
+
+	public void setNowDate(String nowDate) {
+		this.nowDate = nowDate;
+	}
 
 	public Integer getType() {
 		return type;

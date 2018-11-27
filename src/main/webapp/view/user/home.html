@@ -41,7 +41,7 @@ html, body {
 	line-height: 40px;
 	font-size: 16px;
 	font-weight: 400;
-	background: #05c7c3;
+	background: #1676e3;
 	color: #fff;
 	position: fixed;
 	width: 100vw;
@@ -209,7 +209,7 @@ html, body {
 	width: 5em;
 	height: 5em;
 	text-align: center;
-	background: #05c7c3
+	background: #1676e3;
 }
 
 #my-order .weui-cell__hd p[data-v-0209e74b] {
@@ -241,7 +241,7 @@ html, body {
 }
 
 #my-order .hasContact[data-v-0209e74b] {
-	color: #05c7c3;
+	color:#1676e3;
 	font-size: 16px;
 	font-weight: 500
 }
@@ -286,14 +286,14 @@ html, body {
 	height: 15px;
 	line-height: 10px;
 	border-radius: 0;
-	border: 1px solid #05c7c3
+	border: 1px solid #1676e3;
 }
 
 .seller-tag span[data-v-0209e74b] {
 	padding: 0 5px;
 	font-size: 12px;
 	font-weight: 400;
-	color: #05c7c3;
+	color:#1676e3;
 	vertical-align: middle
 }
 </style>
@@ -324,7 +324,7 @@ html, body {
 .router-link-active .weui-tabbar__icon>i[data-v-5247103c],
 	.router-link-active .weui-tabbar__label[data-v-5247103c], i.weui-tabbar__icon[data-v-5247103c]
 	{
-	color: #05c7c3
+	color: #1676e3;
 }
 
 .fire[data-v-5247103c] {
@@ -378,7 +378,7 @@ html, body {
 }
 
 #order-detail .userImg .hasChecked i[data-v-5af10e42] {
-	color: #05c7c3
+	color: #1676e3;
 }
 
 #order-detail .weui-cells[data-v-5af10e42] {
@@ -446,7 +446,6 @@ html, body {
 
 #order-detail .orderingMoney[data-v-5af10e42] {
 	font-size: 16px;
-	color: #00a0dc
 }
 
 #order-detail .sellerDate[data-v-5af10e42] {
@@ -596,7 +595,7 @@ html, body {
 }
 
 .main_list .fa-fw[data-v-5af10e42] {
-	color: #05c7c3
+	color: #1676e3;
 }
 #sug-detail[data-v-80f281aa] {
 	background: #f5f3f3;
@@ -615,7 +614,7 @@ html, body {
 }
 
 #sug-detail .weui-btn[data-v-80f281aa] {
-	background: #05c7c3;
+	background: #1676e3;
 	font-weight: 400;
 	color: #fff
 }
@@ -643,7 +642,13 @@ html, body {
 								<span data-v-5af10e42="">今日推单</span>
 							</p>
 							<p data-v-5af10e42="">
-								<span data-v-5af10e42="" class="seller-name">${user.name?default('***')}</span> <span data-v-5af10e42="" class="seller-job">信贷经理</span>
+								<span data-v-5af10e42="" class="seller-name">
+									<#if !user.name?? || user.name == ''>
+										***
+									<#else>
+										${user.name}
+									</#if>
+								</span> <span data-v-5af10e42="" class="seller-job">信贷经理</span>
 							</p>
 							<p data-v-5af10e42="">
 								手机： <span data-v-5af10e42="" class="orderingMoney">${user.mobile?default('***')}</span> <br data-v-5af10e42=""> 城市： <span data-v-5af10e42="" class="sellerDate">${user.city?default('***')}</span>
@@ -750,32 +755,21 @@ html, body {
 	<script>
 		$(function() {
 			$(".weui-tabbar__item").click(function() {
-						var _this = $(this);
-						_this.children("li").addClass("router-link-exact-active router-link-active");
-						_this.siblings().children("li").removeClass("router-link-exact-active router-link-active");
-						var page_name = _this.find("p").html();
-						if (page_name == "抢单") {
-							window.location.href = "/home";
-						} else if (page_name == "精品订单") {
-							window.location.href = "/jpdd";
-						} else if (page_name == "淘单") {
-							window.location.href = "/td";
-						} else if (page_name == "我的单子") {
-							window.location.href = "/mine";
-						}
+				var _this = $(this);
+				_this.children("li").addClass("router-link-exact-active router-link-active");
+				_this.siblings().children("li").removeClass("router-link-exact-active router-link-active");
+				var page_name = _this.find("p").html();
+				if (page_name == "抢单") {
+					window.location.href = "/home";
+				} else if (page_name == "精品订单") {
+					window.location.href = "/jpdd";
+				} else if (page_name == "淘单") {
+					window.location.href = "/td";
+				} else if (page_name == "我的单子") {
+					window.location.href = "/mine";
+				}
 			});
 		})
-		function is_weixin() {
-			var ua = navigator.userAgent.toLowerCase();
-			if (ua.match(/MicroMessenger/i) == "micromessenger") {
-				return true;
-			} else {
-				return false;
-			}
-		}
-		if (!is_weixin()) {
-			// window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxdf3f22ebfe96b912&redirect_uri=xxx&response_type=code&scope=snsapi_base&state=hyxt#wechat_redirect';
-		}
 	</script>
 </body>
 </html>

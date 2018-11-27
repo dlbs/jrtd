@@ -18,4 +18,20 @@ public class RechargeServiceImpl implements IRechargeService {
 		return rechargeMapper.getDetailByIdAndMobile(id, mobile);
 	}
 
+	@Override
+	public void notifySuccessByNumber(String number) {
+		rechargeMapper.updateStatusByNumber(number, 2);
+	}
+
+	@Override
+	public void notifyFailByNumber(String number) {
+		rechargeMapper.updateStatusByNumber(number, 3);
+	}
+
+	@Override
+	public Recharge getdetailByNumber(String number) {
+		return rechargeMapper.getdetailByNumber(number);
+	}
+
+
 }

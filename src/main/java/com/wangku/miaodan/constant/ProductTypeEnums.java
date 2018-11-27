@@ -26,6 +26,7 @@ public enum ProductTypeEnums {
 		this.desc = desc;
 		this.type = type;
 		this.jpTimes = jpTimes;
+		this.tdTimes = tdTimes;
 		this.price = price;
 	}
 	
@@ -65,5 +66,5 @@ public enum ProductTypeEnums {
 	public BigDecimal getPrice() {
 		return price;
 	}
-
+	
 }

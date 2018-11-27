@@ -7,9 +7,9 @@ import com.wangku.miaodan.core.model.User;
 
 public interface IUserService {
 
-	public boolean checkCanStore(String mobile);
+	public boolean checkCanStore(String mobile, boolean isTD);
 
-	public long storeOrder(Long orderId, String mobile);
+	public long storeOrder(Long orderId, String mobile, boolean isTD);
 
 	public void addUser(String mobile);	
 	
@@ -21,6 +21,8 @@ public interface IUserService {
 
 	public Long addRecharge(Recharge recharge);
 
-	public void notifyResultOfPay(Map<String, Object> map);
+	public void recharge(Map<String, String> restmap);
+
+	public void addOpenId(String mobile, String openId);
 
 }

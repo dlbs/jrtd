@@ -10,6 +10,8 @@ public class User {
 	private String identity;
 
 	private String pic;
+	
+	private String openId;
 
 	private String mobile;
 
@@ -36,6 +38,14 @@ public class User {
 	private Date addTime;
 
 	private Date updateTime;
+	
+	public String getOpenId() {
+		return openId;
+	}
+
+	public void setOpenId(String openId) {
+		this.openId = openId;
+	}
 
 	public int getTdTimes() {
 		return tdTimes;

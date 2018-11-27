@@ -160,16 +160,18 @@
 		select times from recharge_info where mobile = #{mobile}
 	</select>
 	
-	<update id="updateStatusByNumber" parameterType="map"> 
-		upate recharge_info set status = #{status}
-		<if test="reason != null">
-			, reason = #{reason}
-		</if> 
-		where number = #{number} 
-	</update>
-	
 	<select id="getDetailByIdAndMobile" resultMap="BaseResultMap">
 		select * from recharge_info 
 		where id = #{id} and mobile = #{mobile}
+	</select>
+	
+	<update id="updateStatusByNumber">
+		update recharge_info
+		set status = #{status}
+		where number = #{number}
+	</update>
+	
+	<select id="getdetailByNumber" resultMap="BaseResultMap">
+		select * from recharge_info where number = #{number};
 	</select>
 </mapper>

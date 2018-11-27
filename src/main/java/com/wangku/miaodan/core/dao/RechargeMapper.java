@@ -25,8 +25,10 @@ public interface RechargeMapper {
     
   	void reduceLimitByMobile(@Param("mobile")String mobile);
 
-	void updateStatusByNumber(Map<String, Object> map);
-
 	Recharge getDetailByIdAndMobile(@Param("id")Long id, @Param("mobile")String mobile);
+
+	void updateStatusByNumber(@Param("number")String number, @Param("status")int status);
+
+	Recharge getdetailByNumber(@Param("number")String number);
   	
 }

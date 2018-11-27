@@ -14,5 +14,9 @@ public interface IOrderService {
 	public List<Order> getStoredByUser(String mobile);
 
 	public boolean checkIsMine(String mobile, Long id);
+
+	public void saveBatch(List<Order> list);
+
+	public Order getOrderById(Long id);
 	
 }

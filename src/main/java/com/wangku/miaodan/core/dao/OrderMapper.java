@@ -31,6 +31,8 @@ public interface OrderMapper {
 
 	List<Order> getStoredByUser(@Param("mobile")String mobile);
 
-	int selectByMobileAndId(@Param("mobile")String mobile, @Param("id")Long id);    
+	int selectByMobileAndId(@Param("mobile")String mobile, @Param("id")Long id);
+
+	void saveBatch(List<Order> list);    
     
 }

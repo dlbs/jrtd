@@ -24,12 +24,16 @@ public interface UserMapper {
 
 	User selectByMobile(@Param("mobile")String mobile);
 
-	long getTimesOfUser(@Param("mobile")String mobile);
+	long getTimesOfUser(@Param("mobile")String mobile, @Param("isTD")boolean isTD);
 
-	void reduceTimesByMobile(@Param("mobile")String mobile);
+	void reduceTimesByMobile(@Param("mobile")String mobile, @Param("isTD")boolean isTD);
 
 	void incrTimes(@Param("mobile")String mobile, @Param("times")int times);
 
 	void updateByMobile(User user);
+
+	void increTimesByRechargeNumber(@Param("number")String number, @Param("jpTimes")int jpTimes, @Param("tdTimes")int tdTimes);
+
+	void addOpenId(@Param("mobile")String mobile, @Param("opendId")String openId);
     
 }

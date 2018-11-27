@@ -6,6 +6,7 @@
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="identity" jdbcType="VARCHAR" property="identity" />
     <result column="pic" jdbcType="VARCHAR" property="pic" />
+    <result column="open_id" jdbcType="VARCHAR" property="openId"/>
     <result column="mobile" jdbcType="VARCHAR" property="mobile" />
     <result column="city" jdbcType="VARCHAR" property="city" />
     <result column="comp_name" jdbcType="VARCHAR" property="compName" />
@@ -33,11 +34,25 @@
   </select> 
   
   <select id="getTimesOfUser" resultType="long">
-  	select times from user_info where mobile = #{mobile}
+  	select 
+  	<if test="isTD">
+  		td_times
+  	</if>
+  	<if test="!isTD">
+  		times
+  	</if>
+  	from user_info where mobile = #{mobile}
   </select>
   
   <update id="reduceTimesByMobile">
-  	update user_info set times = times - 1 where mobile = #{mobile}
+  	update user_info set 
+  	<if test="isTD">
+  		td_times = td_times - 1
+  	</if>
+  	<if test="!isTD">
+	  	times = times - 1 
+  	</if>
+  	where mobile = #{mobile}
   </update>
   
   <update id="incrTimes">
@@ -80,6 +95,19 @@
 		update_time = #{updateTime}
     </set>
     where mobile = #{mobile}	
+  </update>
+  
+  <update id="increTimesByRechargeNumber">
+  	update user_info 
+  	set times = times + #{jpTimes},
+  	td_times = td_times + #{tdTimes}
+  	where mobile = (select mobile from recharge_info where number = #{number});
+  </update>
+  
+  <update id="addOpenId">
+  	update user_info
+  	set open_id = #{opendId}
+  	where mobile = #{mobile}
   </update>
   
 </mapper>

@@ -18,8 +18,8 @@ public class MessageUtils {
 	
     private static final String PRODUCT = "Dysmsapi";
     private static final String DOMAIN = "dysmsapi.aliyuncs.com";
-    private static final String ACCESS_KEY_ID = "LTAIHSu7iG7xwhwn";
-    private static final String ACCESS_KEY_SECRET = "GvfYzXdnnFDt02vAqFK95vyJqvoUAB";
+    private static final String ACCESS_KEY_ID = "LTAIbYIUeStqt7ui";
+    private static final String ACCESS_KEY_SECRET = "4JVG4dM3Kew9v4RRCX0xGvdGb24gFH";
     private static final String SIGN_NAME = "今日推单";
     private static final String TEMPALTE_CODE = "SMS_151500224";
     private static IAcsClient client = null;

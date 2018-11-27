@@ -39,4 +39,16 @@ public class OrderServiceImpl implements IOrderService {
 		return orderMapper.selectByMobileAndId(mobile, id) > 0;
 	}
 
+	@Override
+	public void saveBatch(List<Order> list) {
+		if (list.size() > 0) {
+			orderMapper.saveBatch(list);
+		}
+	}
+
+	@Override
+	public Order getOrderById(Long id) {
+		return orderMapper.selectByPrimaryKey(id);
+	}
+
 }

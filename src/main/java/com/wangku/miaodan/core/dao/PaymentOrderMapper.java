@@ -1,7 +1,10 @@
 package com.wangku.miaodan.core.dao;
 
+import org.springframework.stereotype.Repository;
+
 import com.wangku.miaodan.core.model.PaymentOrder;
 
+@Repository
 public interface PaymentOrderMapper {
     int deleteByPrimaryKey(Long id);
 
@@ -14,4 +17,6 @@ public interface PaymentOrderMapper {
     int updateByPrimaryKeySelective(PaymentOrder record);
 
     int updateByPrimaryKey(PaymentOrder record);
+
+	void notifyResult(PaymentOrder paymentOrder);
 }

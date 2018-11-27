@@ -6,4 +6,10 @@ public interface IRechargeService {
 	
 	public Recharge getDetailByIdAndMobile(Long id, String mobile);
 
+	public void notifySuccessByNumber(String number);
+
+	public void notifyFailByNumber(String number);
+
+	public Recharge getdetailByNumber(String number);
+
 }

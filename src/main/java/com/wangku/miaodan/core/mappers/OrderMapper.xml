@@ -342,8 +342,11 @@
 		add_time       
       from   order_info 
       where 1 = 1 
+      <if test="type == 1">
+      	and apply_time >= #{nowDate}
+      </if>
       <if test="type == 2">
-      
+      	and apply_time &lt; #{nowDate}
       </if>
       <if test="vocation != null">
       	and vocation =#{vocation}
@@ -361,7 +364,7 @@
         and sum lte; #{sumEnd}
       </if>
       <if test="city != null and city != '' and city != '全国'">
-      	and city = #{city}
+      	and city like concat(#{city}, "%") 
       </if>
       <if test="car != null and car != ''">
       	and car in 
@@ -450,5 +453,25 @@
   <select id="selectByMobileAndId" resultType="Integer">
 	select count(*) from order_stored where mobile = #{mobile} and order_id = #{id}
   </select>
+  
+  <insert id="saveBatch">
+    insert into order_info (name, mobile, 
+      city, age, sum, vocation, 
+      work_time, sex, month_income, 
+      wages_type, credit_card, car, 
+      building, accumulation_fund, social_insurance, 
+      life_insurance, identy_number, sesame_credit, 
+      wei_li_dai, apply_time)
+    values 
+    <foreach collection="list" item="order" separator=",">
+		  (#{order.name,jdbcType=VARCHAR}, #{order.mobile,jdbcType=VARCHAR}, 
+	      #{order.city,jdbcType=VARCHAR}, #{order.age,jdbcType=INTEGER}, #{order.sum,jdbcType=DECIMAL}, #{order.vocation,jdbcType=TINYINT}, 
+	      #{order.workTime,jdbcType=TINYINT}, #{order.sex,jdbcType=TINYINT}, #{order.monthIncome,jdbcType=TINYINT}, 
+	      #{order.wagesType,jdbcType=TINYINT}, #{order.creditCard,jdbcType=TINYINT}, #{order.car,jdbcType=TINYINT}, 
+	      #{order.building,jdbcType=TINYINT}, #{order.accumulationFund,jdbcType=TINYINT}, #{order.socialInsurance,jdbcType=TINYINT}, 
+	      #{order.lifeInsurance,jdbcType=TINYINT}, #{order.identyNumber,jdbcType=VARCHAR}, #{order.sesameCredit,jdbcType=INTEGER}, 
+	      #{order.weiLiDai,jdbcType=TINYINT}, #{order.applyTime,jdbcType=TIMESTAMP})    
+    </foreach>  	
+  </insert>  
     
 </mapper>

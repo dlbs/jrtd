@@ -11,7 +11,7 @@ public class MapController {
 	@RequestMapping("")
 	public String map(long type, ModelMap model) {
 		model.put("type", type);
-		return "/map/map";
+		return "/map/map3";
 	}
 	
 	@RequestMapping("/search")

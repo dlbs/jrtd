@@ -25,7 +25,7 @@ html, body {
 	line-height: 40px;
 	font-size: 16px;
 	font-weight: 400;
-	background: #05c7c3;
+	background: #1676e3;
 	color: #fff;
 	position: fixed;
 	width: 100vw;
@@ -597,7 +597,7 @@ html, body {
 }
 
 #sug-detail .weui-btn[data-v-80f281aa] {
-	background: #05c7c3;
+	background: #1676e3;
 	font-weight: 400;
 	color: #fff
 }

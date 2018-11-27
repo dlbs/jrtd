@@ -64,8 +64,8 @@ public class LoginInterceptor implements HandlerInterceptor {
 			String verifyCode = VerifyCodeUtil.getVerifyCode();
 			Map<String, Object> map = new HashMap<String, Object>(1);
 			map.put("code", verifyCode);
-			System.out.println(verifyCode);// 模拟验证码发送接口
-			//MessageUtils.sendSms(mobile, verifyCode);
+			System.out.println(mobile + "------" + verifyCode);
+			MessageUtils.sendSms(mobile, verifyCode);
 			codes.put(mobile, new VerifyCode(verifyCode));
 			return true;
 		} catch (Exception e) {
