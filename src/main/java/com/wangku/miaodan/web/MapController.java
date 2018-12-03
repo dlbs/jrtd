@@ -9,15 +9,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class MapController {
 	
 	@RequestMapping("")
-	public String map(long type, ModelMap model) {
+	public String map(long type,  String city, Integer status, ModelMap model) {
 		model.put("type", type);
+		model.put("city", city);
+		model.put("status", status);
 		return "/map/map3";
 	}
 	
 	@RequestMapping("/search")
-	public String search(long type, String city, ModelMap model) {
-		model.put("city", city);
+	public String search(long type, String city, Integer status, ModelMap model) {
 		model.put("type", type);
+		model.put("city", city);
+		model.put("status", status);
 		return "/map/search";	
 	}
 

@@ -49,9 +49,11 @@
 
 /*下拉刷新和上拉加载的滑动区域*/
 .mescroll {
+	position: absolute;
 	width: 100%;
 	height: 100%;
 	overflow-y: auto;
+	top:42px;
 	-webkit-overflow-scrolling: touch;
 }
 

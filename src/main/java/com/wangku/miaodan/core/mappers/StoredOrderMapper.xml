@@ -21,8 +21,8 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.wangku.miaodan.core.model.StoredOrder">
-    insert into order_stored (mobile, order_id)
-    values (#{mobile,jdbcType=VARCHAR}, #{orderId,jdbcType=BIGINT})
+    insert into order_stored (mobile, order_id, is_td)
+    values (#{mobile,jdbcType=VARCHAR}, #{orderId,jdbcType=BIGINT}, #{isTd})
   </insert>
   <insert id="insertSelective" parameterType="com.wangku.miaodan.core.model.StoredOrder">
     insert into order_stored
@@ -77,4 +77,11 @@
       add_time = #{addTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  
+  <select id="detail" resultMap="BaseResultMap">
+  	select order_stored.* from order_stored 
+	LEFT JOIN user_info 
+    on user_info.id = 1
+  	where order_stored.order_id = 3
+  </select>
 </mapper>

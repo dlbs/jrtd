@@ -36,10 +36,12 @@
 					var month_income = data[i].monthIncome == 1 ? "3000-5000" : data[i].monthIncome == 2 ? "5001-8000" : data[i].monthIncome == 3 ? "8000-一万" : data[i].monthIncome == 4 ? "一万以上" : "3000以下";
 					var building = data[i].building == 0 ? "无房" : "有房";
 					var car = data[i].car == 0 ? "无车" : "有车";
-					if (data[i].status == 0) {
-						temp = '<div ' + class_data + ' data-v-ecaca2b0="" class="weui-cell__ft cando">可抢单</div>';
-					} else {
-						temp = '<div ' + class_data + ' data-v-ecaca2b0="" class="weui-cell__ft cannotdo">已抢单</div>';
+					if (temp_type != 3) {
+						if (data[i].status == 0) {
+							temp = '<div ' + class_data + ' data-v-ecaca2b0="" class="weui-cell__ft cando">可抢单</div>';
+						} else {
+							temp = '<div ' + class_data + ' data-v-ecaca2b0="" class="weui-cell__ft cannotdo">已抢单</div>';
+						}
 					}
 					var img = data[i].sex == 0? "/static/img/meil.png":"/static/img/femail.png";
 					str += '<a ' + class_data + ' data-v-ecaca2b0="" class="menu" href="/order/detail/' + data[i].id + '?from=' + from + '">'

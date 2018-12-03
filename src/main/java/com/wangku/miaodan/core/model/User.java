@@ -3,6 +3,7 @@ package com.wangku.miaodan.core.model;
 import java.util.Date;
 
 public class User {
+	
 	private Long id;
 
 	private String name;
@@ -10,7 +11,7 @@ public class User {
 	private String identity;
 
 	private String pic;
-	
+
 	private String openId;
 
 	private String mobile;
@@ -25,11 +26,15 @@ public class User {
 
 	private String picIdentity;
 
+	private String picIdentityBack;
+
 	private String picCard;
 
 	private String picLogo;
 
 	private Integer status;
+
+	private String reason;
 
 	private int times;
 
@@ -38,22 +43,6 @@ public class User {
 	private Date addTime;
 
 	private Date updateTime;
-	
-	public String getOpenId() {
-		return openId;
-	}
-
-	public void setOpenId(String openId) {
-		this.openId = openId;
-	}
-
-	public int getTdTimes() {
-		return tdTimes;
-	}
-
-	public void setTdTimes(int tdTimes) {
-		this.tdTimes = tdTimes;
-	}
 
 	public Long getId() {
 		return id;
@@ -85,6 +74,14 @@ public class User {
 
 	public void setPic(String pic) {
 		this.pic = pic;
+	}
+
+	public String getOpenId() {
+		return openId;
+	}
+
+	public void setOpenId(String openId) {
+		this.openId = openId;
 	}
 
 	public String getMobile() {
@@ -135,6 +132,14 @@ public class User {
 		this.picIdentity = picIdentity;
 	}
 
+	public String getPicIdentityBack() {
+		return picIdentityBack;
+	}
+
+	public void setPicIdentityBack(String picIdentityBack) {
+		this.picIdentityBack = picIdentityBack;
+	}
+
 	public String getPicCard() {
 		return picCard;
 	}
@@ -159,12 +164,28 @@ public class User {
 		this.status = status;
 	}
 
+	public String getReason() {
+		return reason;
+	}
+
+	public void setReason(String reason) {
+		this.reason = reason;
+	}
+
 	public int getTimes() {
 		return times;
 	}
 
 	public void setTimes(int times) {
 		this.times = times;
+	}
+
+	public int getTdTimes() {
+		return tdTimes;
+	}
+
+	public void setTdTimes(int tdTimes) {
+		this.tdTimes = tdTimes;
 	}
 
 	public Date getAddTime() {

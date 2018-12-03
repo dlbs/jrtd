@@ -1,5 +1,8 @@
 package com.wangku.miaodan.core.service.impl;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,5 +36,9 @@ public class RechargeServiceImpl implements IRechargeService {
 		return rechargeMapper.getdetailByNumber(number);
 	}
 
+	@Override
+	public List<Recharge> list(int start, int size) {
+		return rechargeMapper.list(start, size);
+	}
 
 }

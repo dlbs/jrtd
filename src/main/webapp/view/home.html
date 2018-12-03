@@ -2180,20 +2180,6 @@ a.menu[data-v-1fde3c5f] {
 					</#if>
 				</div>
 			</header>
-			<nav data-v-7ad21634="">
-				<div data-v-7ad21634="" class="nav-tab active_tab">全部</div>
-				<div data-v-7ad21634="" class="nav-tab">社保贷</div>
-				<div data-v-7ad21634="" class="nav-tab">公积金贷</div>
-				<div data-v-7ad21634="" class="nav-tab">车抵贷</div>
-				<div data-v-7ad21634="" class="nav-tab2">
-					<i data-v-7ad21634="" class="fa fa-th-large fa-fw"></i>
-				</div>
-				<div data-v-7ad21634="" class="moreTab" style="display: none;">
-					<button data-v-7ad21634="" class="">房抵贷</button>
-					<button data-v-7ad21634="" class="">寿险贷</button>
-					<button data-v-7ad21634="" class="">微粒贷</button>
-				</div>
-			</nav>
 			<div data-v-7ad21634="" class="city-picker">
 				<i data-v-7ad21634="" class="fa fa-map-marker fa-fw"></i>
 				<span data-v-7ad21634="">${condition.city!'全国'}</span>
@@ -2252,7 +2238,7 @@ a.menu[data-v-1fde3c5f] {
 						<div data-v-5247103c="" class="weui-tabbar__icon">
 							<i data-v-5247103c="" class="fa fa-user fa-fw"></i>
 						</div>
-						<p data-v-5247103c="" class="weui-tabbar__label">我的</p>
+						<p data-v-5247103c="" class="weui-tabbar__label">个人中心</p>
 					</li>
 				</a>
 			</div>
@@ -2302,49 +2288,14 @@ a.menu[data-v-1fde3c5f] {
 				} else {
 					$("input[name='status']").val("");
 				}
-				changeNav();
-			});
-			$(".nav-tab2").click(function() {
-				$(".moreTab").attr("style",$(".moreTab").attr("style") == "" ? "display: none;": "");
-			});
-
-			$(".moreTab").children().click(function() {
-				$(this).siblings().removeClass("active_Moretab");
-				$(this).addClass("active_Moretab");
-				$(".nav-tab").removeClass("active_tab");
-				$(".moreTab").attr("style", "display: none;");
-				resetCondition()
-				if ($(this).text() == "房抵贷") {
-					$("input[name='building']").val("1,2");
-				} else if ($(this).text() == "寿险贷") {
-					$("input[name='lifeInsurance']").val("1,2");
-				} else if ($(this).text() == "微粒贷") {
-					$("input[name='weiLiDai']").val("1");
-				}
-				changeNav()
-			});
-			$(".nav-tab").click(function() {
-				$(this).addClass("active_tab");
-				$(this).siblings().removeClass("active_tab");
-				$(".moreTab").children().removeClass("active_Moretab");
-				$(".moreTab").attr("style", "display: none;");
-				resetCondition();
-				if ($(this).text() == "社保贷") {
-					$("input[name='socialInsurance']").val("1,2");
-				} else if ($(this).text() == "公积金贷") {
-					$("input[name='accumulationFund']").val("1,2");
-				} else if ($(this).text() == "车抵贷") {
-					$("input[name='car']").val("1,2");
-				}
-				changeNav();
 			});
 
 			$(".city-picker").on("click", function() {
-				window.location.href = "/map?type=1";
+				window.location.href = "/map?type=1&city=" + $("input[name='city']").val() + "&status=" + $("input[name='status']").val();
 			});
 
 			$(".screen").on("click", function() {
-				window.location.href = "/map/search?type=1&city="+ $("input[name='city']").val();
+				window.location.href = "/map/search?type=1&city="+ $("input[name='city']").val() + "&status=" + $("input[name='status']").val();
 			});
 		})
 		function resetCondition() {
@@ -2355,20 +2306,6 @@ a.menu[data-v-1fde3c5f] {
 			$("input[name='accumulationFund']").val("");
 			$("input[name='car']").val("");
 		}
-		function changeNav() {
-			mescroll.prePageNum = 0;
-		    setTimeout(function() { 
-		        if(mescroll.optDown.auto) { 
-		          if(mescroll.optDown.autoShowLoading) {
-		        	  mescroll.triggerDownScroll(); 
-		          } else {
-		        	  mescroll.optDown.callback && mescroll.optDown.callback(mescroll); 
-		          }
-		        }
-
-		        mescroll.optUp.auto && mescroll.triggerUpScroll(); //默认false
-		      }, 30)
-		} 
 		function loadParams() {
 			temp_type = 1;
 			temp_status = $("input[name='status']").val();

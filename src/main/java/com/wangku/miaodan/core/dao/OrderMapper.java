@@ -33,6 +33,8 @@ public interface OrderMapper {
 
 	int selectByMobileAndId(@Param("mobile")String mobile, @Param("id")Long id);
 
-	void saveBatch(List<Order> list);    
+	void saveBatch(List<Order> list);
+
+	List<Order> list(@Param("start")int start, @Param("size")int size);    
     
 }

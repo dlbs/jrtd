@@ -8,10 +8,20 @@ public class StoreOrder {
     private String mobile;
 
     private Long orderId;
+    
+    private Integer isTd;
 
     private Date addTime;
+    
+    public Integer getIsTd() {
+		return isTd;
+	}
 
-    public Long getId() {
+	public void setIsTd(Integer isTd) {
+		this.isTd = isTd;
+	}
+
+	public Long getId() {
         return id;
     }
 

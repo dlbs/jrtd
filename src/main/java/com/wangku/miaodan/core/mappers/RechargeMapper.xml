@@ -4,6 +4,7 @@
 
 	<resultMap id="BaseResultMap" type="com.wangku.miaodan.core.model.Recharge">
 		<id column="id" jdbcType="BIGINT" property="id" />
+		<result column="name" property="name"/>
 		<result column="number" jdbcType="VARCHAR" property="number" />
 		<result column="wei_xin_number" jdbcType="VARCHAR" property="weiXinNumber" />
 		<result column="mobile" jdbcType="VARCHAR" property="mobile" />
@@ -174,4 +175,17 @@
 	<select id="getdetailByNumber" resultMap="BaseResultMap">
 		select * from recharge_info where number = #{number};
 	</select>
+	
+	<select id="list" resultMap="BaseResultMap">
+		select rei.id, rei.mobile, rei.product, rei.sum, 
+		       rei.num_product, rei.status, rei.add_time, 
+		       rei.failer_resone, ui.name 
+		from recharge_info  rei
+		LEFT JOIN user_info ui
+		ON ui.mobile = rei.mobile
+		where rei.status = 2 or rei.status = 3
+		order by rei.add_time desc 
+		limit #{start}, #{size}
+	</select>
+	
 </mapper>

@@ -1,5 +1,6 @@
 package com.wangku.miaodan.core.service;
 
+import java.util.List;
 import java.util.Map;
 
 import com.wangku.miaodan.core.model.Recharge;
@@ -24,5 +25,11 @@ public interface IUserService {
 	public void recharge(Map<String, String> restmap);
 
 	public void addOpenId(String mobile, String openId);
+
+	public boolean isAuth(String mobile);
+
+	public List<User> list(int start, int size);
+
+	public void checkAuth(Long userId, int status);
 
 }

@@ -1,6 +1,7 @@
 package com.wangku.miaodan.core.service.impl;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
@@ -44,7 +45,7 @@ public class UserServiceImpl implements IUserService {
 	public long storeOrder(Long orderId, String mobile, boolean isTD) {
 		int counsumeOrder = orderMapper.counsumeOrder(orderId);
 		if (counsumeOrder > 0) {
-			storedOrderMapper.insert(orderId, mobile);
+			storedOrderMapper.insert(orderId, mobile, isTD? 0:1);
 			userMapper.reduceTimesByMobile(mobile, isTD);
 			return 1;
 		} else {
@@ -89,6 +90,25 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public void addOpenId(String mobile, String openId) {
 		userMapper.addOpenId(mobile, openId);
+	}
+
+	@Override
+	public boolean isAuth(String mobile) {
+		User user = userMapper.selectByMobile(mobile);
+		return user.getStatus() == 2;
+	}
+
+	@Override
+	public List<User> list(int start, int size) {
+		return userMapper.list(start, size);
+	}
+
+	@Override
+	public void checkAuth(Long userId, int status) {
+		User record = new User();
+		record.setId(userId);
+		record.setStatus(status);
+		userMapper.updateByPrimaryKey(record);
 	}
 
 }

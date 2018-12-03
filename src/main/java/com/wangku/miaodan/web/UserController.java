@@ -55,11 +55,25 @@ public class UserController {
 	public Map<String, Object> update(User user, HttpServletRequest request) {
 		String mobile = LoginInterceptor.getMobile(request);
 		user.setMobile(mobile);
+		user.setStatus(1);
 		userService.update(user);
 		Map<String, Object> result = new HashMap<String, Object>();
 		result.put("code", 200);
 		result.put("msg", "修改成功");
 		return result;
+	}
+	
+	@RequestMapping(value = "/auth", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> auth(Integer status, HttpServletRequest request) {
+		User user = new User();
+		user.setMobile(LoginInterceptor.getMobile(request));
+		user.setStatus(status);
+		userService.update(user);
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put("code", 200);
+		result.put("msg", "用户认证状态修改成功");
+		return result;		
 	}
 	
 	@RequestMapping(value = "/recharge", method = RequestMethod.GET)

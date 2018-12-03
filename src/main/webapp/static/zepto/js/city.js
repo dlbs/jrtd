@@ -31,8 +31,8 @@ var hotCity = ["全国", "北京","上海","广州","深圳","西安","成都","
 		init();
 		$('body').on('click', '.city-list p', function () {
 			if ($("#type").val() == 1) {
-				window.location.href = "/home?city=" + $(this).text();
-			} else if ($("#type").val() == 2) {
+				window.location.href = "/home?city=" + $(this).text() + "&status=" + $("#status").val();
+			} else {
 				window.location.href = "/td?city=" + $(this).text();
 			}          
 		});

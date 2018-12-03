@@ -13,9 +13,11 @@
     <result column="comp_tel" jdbcType="VARCHAR" property="compTel" />
     <result column="micr_mess" jdbcType="VARCHAR" property="micrMess" />
     <result column="pic_identity" jdbcType="VARCHAR" property="picIdentity" />
+    <result column="pic_identity_back" jdbcType="VARCHAR" property="picIdentityBack" />
     <result column="pic_card" jdbcType="VARCHAR" property="picCard" />
     <result column="pic_logo" jdbcType="VARCHAR" property="picLogo" />
     <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="reason" jdbcType="VARCHAR" property="reason" />
     <result column="times" property="times"/>
     <result column="td_times" property="tdTimes"/>
     <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
@@ -86,11 +88,20 @@
 		<if test="picIdentity != null and picIdentity != ''">
 			pic_identity = #{picIdentity},
 		</if>
+		<if test="picIdentityBack != null and picIdentityBack != ''">
+			pic_identity_back = #{picIdentityBack},
+		</if>
 		<if test="picCard != null and picCard != ''">
 			pic_card = #{picCard},
 		</if>
 		<if test="picLogo != null and picLogo != ''">
 			pic_logo = #{picLogo},
+		</if>
+		<if test="status != null">
+			status = #{status},
+		</if>
+		<if test="reason != null">
+			reason = #{reason},
 		</if>
 		update_time = #{updateTime}
     </set>
@@ -107,6 +118,28 @@
   <update id="addOpenId">
   	update user_info
   	set open_id = #{opendId}
+  	where mobile = #{mobile}
+  </update>
+  
+  <select id="list" resultMap="BaseResultMap">
+  	select * from user_info 
+  	order by add_time desc
+  	limit #{start}, #{size}
+  </select>
+  
+  <update id="updateByPrimaryKey" parameterType="com.wangku.miaodan.core.model.User">
+	update user_info set status = #{status}
+	where id = #{id}
+  </update>
+  
+  <update id="increTimesByMobile">
+  	update user_info set 
+  	<if test="isTD == 0">
+  		td_times = td_times + 1
+  	</if>
+  	<if test="isTD == 1">
+	  	times = times + 1 
+  	</if>
   	where mobile = #{mobile}
   </update>
   

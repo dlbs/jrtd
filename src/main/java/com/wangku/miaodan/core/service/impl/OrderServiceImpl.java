@@ -51,4 +51,17 @@ public class OrderServiceImpl implements IOrderService {
 		return orderMapper.selectByPrimaryKey(id);
 	}
 
+	@Override
+	public List<Order> list(int start, int size) {
+		return orderMapper.list(start, size);
+	}
+
+	@Override
+	public void updateStatus(Long productId, int status) {
+		Order order = new Order();
+		order.setId(productId);
+		order.setStatus(status);
+		orderMapper.updateByPrimaryKeySelective(order);
+	}
+
 }

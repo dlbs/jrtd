@@ -18,5 +18,9 @@ public interface IOrderService {
 	public void saveBatch(List<Order> list);
 
 	public Order getOrderById(Long id);
+
+	public List<Order> list(int i, int size);
+
+	public void updateStatus(Long productId, int status);
 	
 }

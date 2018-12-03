@@ -473,5 +473,11 @@
 	      #{order.weiLiDai,jdbcType=TINYINT}, #{order.applyTime,jdbcType=TIMESTAMP})    
     </foreach>  	
   </insert>  
+  
+  <select id="list" resultMap="BaseResultMap">
+  	select * from order_info 
+  	order by apply_time desc 
+  	limit #{start}, #{size}
+  </select>
     
 </mapper>

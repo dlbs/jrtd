@@ -12,14 +12,16 @@
 	
 	<mvc:default-servlet-handler />
 	
-	<context:component-scan base-package="com.wangku.miaodan.web" />
+	<context:component-scan base-package="com.wangku.miaodan.web"/>
 	
 	<mvc:interceptors>
 	    <mvc:interceptor>
 			<mvc:mapping path="/home"/>
 	        <mvc:mapping path="/user/**"/>
 	        <mvc:mapping path="/order/**"/>
-	        <bean class="com.wangku.miaodan.core.interceptor.LoginInterceptor"></bean>
+	        <bean class="com.wangku.miaodan.core.interceptor.LoginInterceptor">
+	        	<property name="tokenService" ref="tokenService"/>
+	        </bean>
 	    </mvc:interceptor>
 	</mvc:interceptors>	
 	<!-- 定义文件上传解析器 -->

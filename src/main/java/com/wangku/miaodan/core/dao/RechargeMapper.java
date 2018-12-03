@@ -1,5 +1,6 @@
 package com.wangku.miaodan.core.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
@@ -30,5 +31,7 @@ public interface RechargeMapper {
 	void updateStatusByNumber(@Param("number")String number, @Param("status")int status);
 
 	Recharge getdetailByNumber(@Param("number")String number);
+
+	List<Recharge> list(@Param("start")int page, @Param("size")int size);
   	
 }
