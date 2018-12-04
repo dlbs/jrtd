@@ -64,4 +64,9 @@ public class RequitServiceImpl implements IRequitService {
 		return requitMapper.selectByOrderId(orderId, mobile);
 	}
 
+	@Override
+	public long count() {
+		return requitMapper.count();
+	}
+
 }

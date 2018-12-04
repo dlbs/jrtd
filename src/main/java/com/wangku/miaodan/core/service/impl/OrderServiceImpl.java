@@ -64,4 +64,9 @@ public class OrderServiceImpl implements IOrderService {
 		orderMapper.updateByPrimaryKeySelective(order);
 	}
 
+	@Override
+	public long count() {
+		return orderMapper.count();
+	}
+
 }

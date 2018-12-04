@@ -17,4 +17,6 @@ public interface IRechargeService {
 	
 	public List<Recharge> list(int page, int size);
 
+	public long count();
+
 }

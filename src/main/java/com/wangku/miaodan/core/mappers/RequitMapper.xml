@@ -34,6 +34,10 @@
 		limit #{start}, #{size}
 	</select>
 	
+	<select id="count" resultType="long">
+		select count(*) from jrtd_requit_info
+	</select>
+	
 	<update id="updateByPrimaryKey" parameterType="com.wangku.miaodan.core.model.Requit">
 		update jrtd_requit_info 
 		SET status = #{status}

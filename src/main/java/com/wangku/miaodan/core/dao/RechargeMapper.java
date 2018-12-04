@@ -33,5 +33,7 @@ public interface RechargeMapper {
 	Recharge getdetailByNumber(@Param("number")String number);
 
 	List<Recharge> list(@Param("start")int page, @Param("size")int size);
+
+	long count();
   	
 }

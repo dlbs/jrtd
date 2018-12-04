@@ -127,6 +127,10 @@
   	limit #{start}, #{size}
   </select>
   
+  <select id="count" resultType="long">
+  	select count(*) from user_info 
+  </select>
+  
   <update id="updateByPrimaryKey" parameterType="com.wangku.miaodan.core.model.User">
 	update user_info set status = #{status}
 	where id = #{id}

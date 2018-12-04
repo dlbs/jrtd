@@ -188,4 +188,8 @@
 		limit #{start}, #{size}
 	</select>
 	
+	<select id="count" resultType="long">
+		select count(*) from recharge_info where status = 2 or status = 3
+	</select>
+	
 </mapper>

@@ -111,4 +111,9 @@ public class UserServiceImpl implements IUserService {
 		userMapper.updateByPrimaryKey(record);
 	}
 
+	@Override
+	public long count() {
+		return userMapper.count();
+	}
+
 }

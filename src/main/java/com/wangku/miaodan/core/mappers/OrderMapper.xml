@@ -479,5 +479,9 @@
   	order by apply_time desc 
   	limit #{start}, #{size}
   </select>
+  
+  <select id="count" resultType="long">
+  	select count(*) from order_info
+  </select>
     
 </mapper>

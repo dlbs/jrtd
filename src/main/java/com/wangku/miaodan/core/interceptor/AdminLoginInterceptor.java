@@ -27,7 +27,7 @@ public class AdminLoginInterceptor implements HandlerInterceptor {
 		if (!Strings.isNullOrEmpty(ticket)) {
 			AuthUser user = userService.getDetailByTicket(getTicket(request));
 			if (user != null) {
-				users.put("ticket", user.getUsername());
+				users.put(ticket, user.getUsername());
 				flag = true;
 			}
 		}

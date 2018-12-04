@@ -32,4 +32,6 @@ public interface IUserService {
 
 	public void checkAuth(Long userId, int status);
 
+	public long count();
+
 }

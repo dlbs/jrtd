@@ -25,4 +25,6 @@ public interface RequitMapper {
 	List<Requit> list(@Param("start")int start, @Param("size")int size);
 
 	Requit selectByOrderId(@Param("orderId")long orderId, @Param("mobile")String mobile);
+
+	long count();
 }

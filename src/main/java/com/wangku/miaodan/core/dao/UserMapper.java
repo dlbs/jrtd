@@ -41,5 +41,7 @@ public interface UserMapper {
 	List<User> list(@Param("start")int start, @Param("size")int size);
 
 	void increTimesByMobile(@Param("mobile")String mobile, @Param("isTd")Integer isTd);
+
+	long count();
     
 }

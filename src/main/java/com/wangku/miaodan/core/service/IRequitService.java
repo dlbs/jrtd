@@ -14,4 +14,6 @@ public interface IRequitService {
 
 	Requit detail(long orderId, String mobile);
 
+	long count();
+
 }

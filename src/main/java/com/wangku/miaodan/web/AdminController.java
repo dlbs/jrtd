@@ -86,33 +86,52 @@ public class AdminController {
 	
 	@RequestMapping("/user/list")
 	@ResponseBody
-	public List<User> userList(int page, int size) {
-		return userService.list((page - 1) * size, size);
+	public Map<String, Object> userList(int page, int size) {
+		 Map<String, Object> result = new HashMap<String, Object>();
+		 List<User> list = userService.list((page - 1) * size, size);
+		 result.put("list", list);
+		 long count = userService.count();
+		 result.put("pages", count % size == 0? count/ size: count/size + 1);
+		 return result;
 	}
 	
 	@RequestMapping("/product/list")
 	@ResponseBody
-	public List<Order> productList(int page, int size) {
-		return orderService.list((page - 1) * size, size);
+	public Map<String, Object> productList(int page, int size) {
+		 Map<String, Object> result = new HashMap<String, Object>();
+		 List<Order> list = orderService.list((page - 1) * size, size);
+		 result.put("list", list);
+		 long count = orderService.count();
+		 result.put("pages", count % size == 0? count/ size: count/size + 1);
+		return result;
 	}
 	
 	@RequestMapping("/recharge/list")
 	@ResponseBody
-	public List<Recharge> rechargeList(int page, int size) {
+	public Map<String, Object> rechargeList(int page, int size) {
+		Map<String, Object> result = new HashMap<String, Object>();
 		List<Recharge> list = rechargeService.list((page - 1) * size, size);
 		for (Recharge recharge : list) {
-			ProductTypeEnums type = ProductTypeEnums.getByType(recharge.getProduct());
+			ProductTypeEnums type = ProductTypeEnums.getByType(recharge
+					.getProduct());
 			recharge.setTimes(type.getJpTimes());
 			recharge.setTdTimes(type.getTdTimes());
 		}
-		
-		return list;
+		result.put("list", list);
+		long count = rechargeService.count();
+		result.put("pages", count % size == 0 ? count / size : count / size + 1);
+		return result;
 	}
 	
 	@RequestMapping("/requit/list")
 	@ResponseBody
-	public List<Requit> requitList(int page, int size) {
-		return requitService.list((page - 1) * size, size);
+	public Map<String, Object> requitList(int page, int size) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		List<Requit> list = requitService.list((page - 1) * size, size);
+		 result.put("list", list);
+		 long count = requitService.count();
+		 result.put("pages", count % size == 0? count/ size: count/size + 1);
+		return result;
 	}
 	
 	@RequestMapping("/checkAuth")

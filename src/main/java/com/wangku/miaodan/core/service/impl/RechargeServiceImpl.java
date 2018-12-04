@@ -41,4 +41,9 @@ public class RechargeServiceImpl implements IRechargeService {
 		return rechargeMapper.list(start, size);
 	}
 
+	@Override
+	public long count() {
+		return rechargeMapper.count();
+	}
+
 }

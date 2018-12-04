@@ -22,5 +22,7 @@ public interface IOrderService {
 	public List<Order> list(int i, int size);
 
 	public void updateStatus(Long productId, int status);
+
+	public long count();
 	
 }

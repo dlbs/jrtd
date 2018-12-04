@@ -1,6 +1,5 @@
 (function($) {
-	$.fn.paginate12 = function(options) {
-		console.log(123);
+	$.fn.paginate = function(options) {
 		var opts = $.extend({}, $.fn.paginate.defaults, options);
 		return this.each(function() {
 			$this = $(this);
@@ -88,7 +87,7 @@
 		//}
 		//下页   跳转
 		var _last = $(document.createElement('li')).addClass("up").html('<a href="javascript::"><img src="http://static.99114.com/static/js/common/plugins/custom/paginate/images/dj.gif" height="10" /></a>');
-		var _pa = $(document.createElement('li')).html('共' + o.totalCount + '条/' + '共'+o.count+'页&nbsp;&nbsp;&nbsp;&nbsp;到第<input value='+o.start+' type="text"  name="textfield" id="textfield" class="input_li" />页');
+		var _pa = $(document.createElement('li')).html('共'+o.count+'页&nbsp;&nbsp;&nbsp;&nbsp;到第<input value='+o.start+' type="text"  name="textfield" id="textfield" class="input_li" />页');
 		var _textfie = $(document.createElement('li')).html('<input  id="textfie" type="button" class="sub123" value="" />');
 		
 		var _divwrapright	= $(document.createElement('ul')).addClass("ul_listz");
@@ -103,17 +102,17 @@
 		//calculate width of the ones displayed:
 		if(o.rotate){}
 		//跳转
-		$(".sub123").click(function(){
-			var i = document.getElementById("textfield").value;
+		$this.find(".sub123").eq(0).click(function(){
+			var i = $(this).parent().parent().find("#textfield").eq(0).val();			
 			reg = /^[0-9]*[1-9][0-9]*$/;
 			if(!i.match(reg)){
-				alert("页码只能输入数字！！！");
-				document.getElementById("textfield").value=o.start;
+				alert("页码应为大于等于1的整数");
+				$(this).parent().parent().find("#textfield").eq(0).attr("value",o.start);
 			}else if(i>=1 && i<=o.count ){
-				o.onChange(i);
+				o.onChange(i);		
 			}else{
-				alert("输入的页码不存在！！！");
-				document.getElementById("textfield").value=o.start;
+				alert("输入的页码不存在");
+				$(this).parent().parent().find("#textfield").eq(0).attr("value",o.start);
 			}
 		});
 		//first and last:

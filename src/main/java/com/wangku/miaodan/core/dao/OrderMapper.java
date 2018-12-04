@@ -35,6 +35,8 @@ public interface OrderMapper {
 
 	void saveBatch(List<Order> list);
 
-	List<Order> list(@Param("start")int start, @Param("size")int size);    
+	List<Order> list(@Param("start")int start, @Param("size")int size);
+
+	long count();    
     
 }

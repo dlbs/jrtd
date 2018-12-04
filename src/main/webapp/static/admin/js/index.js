@@ -1,5 +1,4 @@
 var type = "user";
-var page = 1;
 var size = 20;
 var num = 0;
 
@@ -24,33 +23,51 @@ return format;
 }
 
 $(function() {
-	loadUser();
+	loadElement(1);
 	$(".nav_li").on("click", function() {
 		if (!$(this).attr("class").indexOf("flag") >= 0) {
 			$(this).addClass("flag");
 			$(this).siblings().removeClass("flag");
 			type = $(this).attr("data-type");
-			page = 1;
-			loadElement();
+			loadElement(1);
 			num = 0
 		}
 	});
 });
 
-function loadElement() {
+
+function initPaginate(pages, page) {
+	$("#pageTradeListDiv").paginate({
+		count 		: pages,
+		start 		: page,
+		display     : 10,
+		border					: false,
+		text_color  			: '#888',
+		background_color    	: '#fff',	
+		text_hover_color  		: '#FFF',
+		background_hover_color	: '#f40',
+		onChange    : function(page_index) {
+			loadElement(page_index);
+		}
+	});
+}
+
+function loadElement(page) {
 	if (type == "user") {
-		loadUser();
+		loadUser(page);
 	} else if (type == "product"){
-		loadProduct();
+		loadProduct(page);
 	} else if (type == "recharge-log") {
-		loadRecharge();
+		loadRecharge(page);
 	} else if (type == "requit") {
-		loadRequit();
+		loadRequit(page);
 	}
 }
 
-function loadUser() {
+function loadUser(page) {
 	$.post("/admin/user/list", {"page":page, "size":size}, function(data) {
+		initPaginate(data.pages, page);
+		var list = data.list;
 		if(page == 1) {
 			$("#tbody").empty();
 			$("#thead").empty();
@@ -72,57 +89,59 @@ function loadUser() {
 		}
 		
 		var str = "";
-		if (data.length > 0) {
-			for(var i= 0; i < data.length; ++i) {
+		if (list.length > 0) {
+			for(var i= 0; i < list.length; ++i) {
 				var imgIdentity =  "";
 				var imgIdentityBack = "";
 				var imgPicCard = "";
 				var imgPicLogo = "";
-				var statusStr = data[i].status == 0?"未认证":data[i].status == 1?"审核中":data[i].status == 2?"通过":"未通过";
+				var statusStr = list[i].status == 0?"未认证":list[i].status == 1?"审核中":list[i].status == 2?"通过":"未通过";
 				var optStr = '';
-				if (data[i].picIdentity && data[i].picIdentity != "") {
-					imgIdentity = '<img  src= "' + data[i].picIdentity + '">';
+				if (list[i].picIdentity && list[i].picIdentity != "") {
+					imgIdentity = '<img  src= "' + list[i].picIdentity + '">';
 				}
 				
-				if (data[i].picIdentityBack && data[i].picIdentityBack != "") {
-					imgIdentityBack = '<img  src= "' + data[i].picIdentityBack + '">';
+				if (list[i].picIdentityBack && list[i].picIdentityBack != "") {
+					imgIdentityBack = '<img  src= "' + list[i].picIdentityBack + '">';
 				}
 				
-				if (data[i].picCard && data[i].picCard != "") {
-					imgPicCard = '<img  src= "' + data[i].picCard + '">';
+				if (list[i].picCard && list[i].picCard != "") {
+					imgPicCard = '<img  src= "' + list[i].picCard + '">';
 				}
 				
-				if (data[i].picLogo && data[i].picLogo != "") {
-					imgPicLogo = '<img  src= "' + data[i].picLogo + '">';
+				if (list[i].picLogo && list[i].picLogo != "") {
+					imgPicLogo = '<img  src= "' + list[i].picLogo + '">';
 				}
 				
-				if (data[i].status == 1) {
-					optStr = '<button onclick="checkUserAuth(' + data[i].id + ',' + 2+ ')">通过</button>&nbsp;&nbsp;<button onclick="checkUserAuth(' + data[i].id + ',' + 3 + ')">驳回</button>';
+				if (list[i].status == 1) {
+					optStr = '<button onclick="checkUserAuth(' + list[i].id + ',' + 2+ ')">通过</button>&nbsp;&nbsp;<button onclick="checkUserAuth(' + list[i].id + ',' + 3 + ')">驳回</button>';
 				}
 				
 				str += '<tr><td align="center">' + (++num) + '</td>'
-				+ '<td align="center">' + data[i].name + '</td>'
-				+ '<td align="center">' + data[i].identity + '</td>'
-				+ '<td align="center">' + data[i].mobile + '</td>'
-				+ '<td align="center">' + data[i].city + '</td>'
-				+ '<td align="center">' + data[i].compName + '</td>'
+				+ '<td align="center">' + list[i].name + '</td>'
+				+ '<td align="center">' + list[i].identity + '</td>'
+				+ '<td align="center">' + list[i].mobile + '</td>'
+				+ '<td align="center">' + list[i].city + '</td>'
+				+ '<td align="center">' + list[i].compName + '</td>'
 				+ '<td align="center">' + imgIdentity + '</td>'
 				+ '<td align="center">' + imgIdentityBack + '</td>'
 				+ '<td align="center">' + imgPicCard + '</td>'
 				+ '<td align="center">' + imgPicLogo + '</td>'
 				+ '<td align="center">' + statusStr + '</td>'
-				+ '<td align="center">' + new Date(data[i].addTime).format('yyyy-MM-dd hh:mm:ss') + '</td>'
+				+ '<td align="center">' + new Date(list[i].addTime).format('yyyy-MM-dd hh:mm:ss') + '</td>'
 				+ '<td align="center">' + optStr + '</td>'
 				+ '</tr>';
 			}
-			$("#tbody").append($(str));
+			$("#tbody").empty().append($(str));
 		}
 		
 	});
 }
 
-function loadProduct() {
+function loadProduct(page) {
 	$.post("/admin/product/list", {"page":page, "size":size}, function(data) {
+		var list = data.list;
+		initPaginate(data.pages, page);
 		if(page == 1) {
 			$("#thead").empty();
 			$("#tbody").empty();
@@ -152,31 +171,31 @@ function loadProduct() {
                     + '</tr>'));
 		}
 		var str = "";
-		if (data.length > 0) {
-			for (var i = 0; i < data.length; ++i) {				
-				var sex = data[i].sex == 0? "男":"女";
-				var vocation = data[i].vocation == 0?"上班族":data[i].vocation == 1?"个体户":"企业主";
-				var workTime = data[i].workTime == 0?"半年以下":data[i].workTime == 1?"半年到一年":"一年以上";
-				var monthIncome = data[i].monthIncome == 0?"":data[i].monthIncome == 1?"3千以下":data[i].monthIncome == 2?"3千到5千":data[i].monthIncome == 3?"5千到8千":"1万以上";
-				var wagesType = data[i].wagesType == 0?"银行转账":"现金发放";
-				var car = data[i].car == 0?"无车":"有车";
-				var building = data[i].building == 0?"无房":"有房";
-				var creditCard = data[i].creditCard == 0?"无":"有";
-				var gjj = data[i].accumulationFund == 0?"无":"有";
-				var sb = data[i].socialInsurance == 0?"无":"有";
-				var sx = data[i].lifeInsurance == 0?"无":"有";
-				var wld = data[i].weiLiDai == 0?"无":"有";
-				var sum = data[i].sum/10000 + "万";
-				var applyTime = new Date(data[i].applyTime).format('yyyy-MM-dd hh:mm:ss')
-				var status = data[i].status == 0?"未抢":"已抢";
-				var opt = (data[i].status == 0 || data[i].status == 1)? '<td align="center"><button onclick="updateProduct(' + data[i].id + ',' + 2 + ')">加精</button>&nbsp;&nbsp;&nbsp;<button onclick="updateProduct(' + data[i].id + ',' + 3 + ')">废弃</button></td>':"<td></td>";
+		if (list.length > 0) {
+			for (var i = 0; i < list.length; ++i) {				
+				var sex = list[i].sex == 0? "男":"女";
+				var vocation = list[i].vocation == 0?"上班族":list[i].vocation == 1?"个体户":"企业主";
+				var workTime = list[i].workTime == 0?"半年以下":list[i].workTime == 1?"半年到一年":"一年以上";
+				var monthIncome = list[i].monthIncome == 0?"":list[i].monthIncome == 1?"3千以下":list[i].monthIncome == 2?"3千到5千":list[i].monthIncome == 3?"5千到8千":"1万以上";
+				var wagesType = list[i].wagesType == 0?"银行转账":"现金发放";
+				var car = list[i].car == 0?"无车":"有车";
+				var building = list[i].building == 0?"无房":"有房";
+				var creditCard = list[i].creditCard == 0?"无":"有";
+				var gjj = list[i].accumulationFund == 0?"无":"有";
+				var sb = list[i].socialInsurance == 0?"无":"有";
+				var sx = list[i].lifeInsurance == 0?"无":"有";
+				var wld = list[i].weiLiDai == 0?"无":"有";
+				var sum = list[i].sum/10000 + "万";
+				var applyTime = new Date(list[i].applyTime).format('yyyy-MM-dd hh:mm:ss')
+				var status = list[i].status == 0?"未抢":"已抢";
+				var opt = (list[i].status == 0 || list[i].status == 1)? '<td align="center"><button onclick="updateProduct(' + list[i].id + ',' + 2 + ')">加精</button>&nbsp;&nbsp;&nbsp;<button onclick="updateProduct(' + list[i].id + ',' + 3 + ')">废弃</button></td>':"<td></td>";
 				str += '<tr><td align="center">' + (++num) + '</td>'
-					+ '<td align="center">' + data[i].name + '</td>'
-					+ '<td align="center">' + data[i].age + '</td>'
-					+ '<td align="center">' + data[i].mobile + '</td>'
-					+ '<td align="center">' + data[i].identyNumber + '</td>'
+					+ '<td align="center">' + list[i].name + '</td>'
+					+ '<td align="center">' + list[i].age + '</td>'
+					+ '<td align="center">' + list[i].mobile + '</td>'
+					+ '<td align="center">' + list[i].identyNumber + '</td>'
 					+ '<td align="center">' + sex  + '</td>'
-					+ '<td align="center">' + data[i].city + '</td>'
+					+ '<td align="center">' + list[i].city + '</td>'
 					+ '<td align="center">' + vocation + '</td>'
 					+ '<td align="center">' + workTime + '</td>'
 					+ '<td align="center">' + monthIncome + '</td>'
@@ -194,13 +213,15 @@ function loadProduct() {
 					+ opt
 					+ '</tr>';
 			}
-			$("#tbody").append($(str));				
+			$("#tbody").empty().append($(str));				
 		}
 	});	
 }
 
-function loadRecharge() {
+function loadRecharge(page) {
 	$.post("/admin/recharge/list", {"page":page, "size":size}, function(data) {
+		var list = data.list;
+		initPaginate(data.pages, page);
 		if (page == 1) {
 			$("#tbody").empty();
 			$("#thead").empty();
@@ -216,27 +237,29 @@ function loadRecharge() {
                     + '</tr>'));			
 		}
 		
-		if (data.length > 0) { 
+		if (list.length > 0) { 
 			var str = "";
-			for (var i = 0; i < data.length; ++i) {
-				var status = data[i].status == 2?"成功":"失败";
+			for (var i = 0; i < list.length; ++i) {
+				var status = list[i].status == 2?"成功":"失败";
 				str += '<tr><td align="center">' + (++num) + '</td>'
-				+ '<td align="center">' + data[i].name + '</td>'
-				+ '<td align="center">' + data[i].mobile + '</td>'
-				+ '<td align="center">' + data[i].times + '</td>'
-				+ '<td align="center">' + data[i].tdTimes + '</td>'
-				+ '<td align="center">' + data[i].sum + '元</td>'
+				+ '<td align="center">' + list[i].name + '</td>'
+				+ '<td align="center">' + list[i].mobile + '</td>'
+				+ '<td align="center">' + list[i].times + '</td>'
+				+ '<td align="center">' + list[i].tdTimes + '</td>'
+				+ '<td align="center">' + list[i].sum + '元</td>'
 				+ '<td align="center">' + status + '</td>'
-				+ '<td align="center">' + new Date(data[i].addTime).format('yyyy-MM-dd hh:mm:ss') + '</td>'
+				+ '<td align="center">' + new Date(list[i].addTime).format('yyyy-MM-dd hh:mm:ss') + '</td>'
 				+ '</tr>';
 			}
-			$("#tbody").append($(str));
+			$("#tbody").empty().append($(str));
 		}
 	});	
 }
 
-function loadRequit() {
+function loadRequit(page) {
 	$.post("/admin/requit/list", {"page":page, "size":size}, function(data) {
+		var list = data.list;
+		initPaginate(data.pages, page);
 		if (page == 1) {
 			$("#tbody").empty();
 			$("#thead").empty();
@@ -256,26 +279,26 @@ function loadRequit() {
                     + '</tr>'));			
 		}
 		
-		if (data.length > 0) {
+		if (list.length > 0) {
 			var str = "";
-			for (var i = 0; i < data.length; ++i) {
-				var opt = data[i].status == 0?'<td align="center"><button  onclick="updateRequit(' + data[i].id + ',' + 1 + ')">通过</button>&nbsp;&nbsp;&nbsp;<button onclick="updateRequit(' + data[i].id + ',' + 2 + ')">驳回</button></td>':'<td align="center"></td>';
-				var status = data[i].status == 0? '<td align="center">未处理</td>':data[i].status == 1?'<td align="center">退单成功</td>':'<td align="center">已驳回</td>';
+			for (var i = 0; i < list.length; ++i) {
+				var opt = list[i].status == 0?'<td align="center"><button  onclick="updateRequit(' + list[i].id + ',' + 1 + ')">通过</button>&nbsp;&nbsp;&nbsp;<button onclick="updateRequit(' + list[i].id + ',' + 2 + ')">驳回</button></td>':'<td align="center"></td>';
+				var status = list[i].status == 0? '<td align="center">未处理</td>':list[i].status == 1?'<td align="center">退单成功</td>':'<td align="center">已驳回</td>';
 				str += '<tr><td align="center">' + (++num) + '</td>'
-				+ '<td align="center">' + data[i].name + '</td>'
-				+ '<td align="center">' + data[i].mobile + '</td>'
-				+ '<td align="center">' + data[i].productName + '</td>'
-				+ '<td align="center">' + data[i].productMobile + '</td>'
-				+ '<td align="center">' + data[i].sum + '元</td>'
-				+ '<td align="center">' + data[i].requitReason + '</td>'
+				+ '<td align="center">' + list[i].name + '</td>'
+				+ '<td align="center">' + list[i].mobile + '</td>'
+				+ '<td align="center">' + list[i].productName + '</td>'
+				+ '<td align="center">' + list[i].productMobile + '</td>'
+				+ '<td align="center">' + list[i].sum/10000 + '万元</td>'
+				+ '<td align="center">' + list[i].requitReason + '</td>'
 				+ status
-				+ '<td align="center">' + data[i].reason + '</td>'
-				+ '<td align="center">' + new Date(data[i].addTime).format('yyyy-MM-dd hh:mm:ss') + '</td>'
-				+ '<td align="center">' + new Date(data[i].updateTime).format('yyyy-MM-dd hh:mm:ss') + '</td>'
+				+ '<td align="center">' + list[i].reason + '</td>'
+				+ '<td align="center">' + new Date(list[i].addTime).format('yyyy-MM-dd hh:mm:ss') + '</td>'
+				+ '<td align="center">' + new Date(list[i].updateTime).format('yyyy-MM-dd hh:mm:ss') + '</td>'
 				+ opt
 				+ '</tr>';				
 			}
-			$("#tbody").append($(str));
+			$("#tbody").empty().append($(str));
 		} else {
 			if (page == 1) {
 				$("#tbody").append($('<tr><td colspan="11" rowspan="5" align="center">暂无数据</td></tr>'));
