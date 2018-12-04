@@ -1383,7 +1383,7 @@ h6[data-v-078a6550] {
 	line-height: 5vh;
 	font-size: 14px;
 	padding-left: 4vw;
-	background: #b2fbff;
+	background: #ccc;
 	color: #8d8d8d;
 	font-weight: 400
 }
@@ -1435,6 +1435,15 @@ h6[data-v-078a6550] {
 	color: #e60e3b;
 	font-weight: 400
 }
+
+.center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.text_center {
+	text-align: center;
+}
 </style>
 </head>
 <body data-7m="7m_warp">
@@ -1446,14 +1455,22 @@ h6[data-v-078a6550] {
 					class="fa fa-chevron-left fa-fw"></i></span> 实名认证
 			</div>
 			<div data-v-3b1241a1="" class="auditStatus">
-				<!-- <p data-v-3b1241a1="" class="auditStatus-msg">审核状态：未认证</p> -->
+				<#if user.status == 0>
+					<p data-v-3b1241a1="" class="auditStatus-msg">审核状态：未认证</p>
+				<#elseif user.status == 1>
+					<p data-v-3b1241a1="" class="auditStatus-msg">审核状态：审核中</p>
+				<#elseif user.status == 2>
+					<p data-v-3b1241a1="" class="auditStatus-msg">审核状态：审核通过</p>
+				<#elseif user.status == 3>
+					<p data-v-3b1241a1="" class="auditStatus-msg">审核状态：未通过，${user.reason!'未通过原因'}</p>
+				</#if>
 			</div>
 			<div data-v-3b1241a1=""
 				class="weui-cells weui-cells_form first_cells">
 				<div data-v-3b1241a1="" class="weui-cells__title">基本信息</div>
 				<div data-v-3b1241a1="" class="weui-cell">
 					<div data-v-3b1241a1="" class="weui-cell__hd">
-						<label data-v-3b1241a1="" class="weui-label">姓名</label>
+						<label data-v-3b1241a1="" class="weui-label">*姓名</label>
 					</div>
 					<div data-v-3b1241a1="" class="weui-cell__bd">
 						<input data-v-3b1241a1="" type="text" name="name" value = "${user.name?default('')}" placeholder="必须与身份证姓名一致" class="weui-input">
@@ -1461,7 +1478,7 @@ h6[data-v-078a6550] {
 				</div>
 				<div data-v-3b1241a1="" class="weui-cell">
 					<div data-v-3b1241a1="" class="weui-cell__hd">
-						<label data-v-3b1241a1="" class="weui-label">身份证号</label>
+						<label data-v-3b1241a1="" class="weui-label">*身份证号</label>
 					</div>
 					<div data-v-3b1241a1="" class="weui-cell__bd">
 						<input data-v-3b1241a1="" type="text" name= "identity" value = "${user.identity?default('')}" placeholder="必须与身份证号码一致" class="weui-input">
@@ -1483,34 +1500,14 @@ h6[data-v-078a6550] {
 						<input data-v-3b1241a1="" type="text" name = "com_name" value = "${user.compName?default('')}" placeholder="公司全称" class="weui-input">
 					</div>
 				</div>
-				<div data-v-3b1241a1="" class="weui-cell">
-					<div data-v-3b1241a1="" class="weui-cell__hd">
-						<label data-v-3b1241a1="" class="weui-label">公司电话</label>
-					</div>
-					<div data-v-3b1241a1="" class="weui-cell__bd">
-						<input data-v-3b1241a1="" type="text" name= "com_tel" value = "${user.compTel?default('')}" placeholder="公司电话（可选）" class="weui-input">
-					</div>
-				</div>
-				<div data-v-3b1241a1="" class="weui-cell">
-					<div data-v-3b1241a1="" class="weui-cell__hd">
-						<label data-v-3b1241a1="" class="weui-label">微信</label>
-					</div>
-					<div data-v-3b1241a1="" class="weui-cell__bd">
-						<input data-v-3b1241a1="" type="text" name = "mic_mess" value = "${user.micrMess?default('')}" placeholder="微信号" class="weui-input">
-					</div>
-				</div>
 			</div>
-			<p data-v-3b1241a1="" class="msg">*拍摄时请对焦到证件上，保持证件信息及号码清晰，请勿遮挡证件信息，谢谢您的配合！</p>
+			<p data-v-3b1241a1="" class="msg">*您的图片将仅用于审核，我们将为您严格保密</p>
 			<div data-v-3b1241a1="" class="weui-cells weui-cells_form">
-				<div data-v-3b1241a1="" class="weui-cells__title">手持身份证照片</div>
+				<div data-v-3b1241a1="" class="weui-cells__title">证明材料</div>
 				<div data-v-3b1241a1="" class="weui-cell">
 					<div data-v-3b1241a1="" class="weui-cell__bd">
 						<div data-v-3b1241a1="" class="weui-uploader">
-							<div data-v-3b1241a1="" class="weui-uploader__hd">
-								<p data-v-3b1241a1="" class="weui-uploader__title">图片上传</p>
-								<div data-v-3b1241a1="" class="weui-uploader__info">0/1</div>
-							</div>
-							<div data-v-3b1241a1="" class="weui-uploader__bd">
+							<div data-v-3b1241a1="" class="weui-uploader__bd center">
 								<#if user.picIdentity?? && user.picIdentity != ''>
 									<div data-v-3b1241a1="" class="weui__image-box">
 									<img data-v-3b1241a1="" src="${user.picIdentity}" height="100%">
@@ -1520,61 +1517,67 @@ h6[data-v-078a6550] {
 									<input data-v-3b1241a1="" id="uploaderInput1" type="file" accept="image/*" multiple="multiple" capture="camera" class="weui-uploader__input">
 								</div>
 							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div data-v-3b1241a1="" class="weui-cells weui-cells_form">
-				<div data-v-3b1241a1="" class="weui-cells__title">名片或工牌</div>
-				<div data-v-3b1241a1="" class="weui-cell">
-					<div data-v-3b1241a1="" class="weui-cell__bd">
-						<div data-v-3b1241a1="" class="weui-uploader">
 							<div data-v-3b1241a1="" class="weui-uploader__hd">
-								<p data-v-3b1241a1="" class="weui-uploader__title">图片上传</p>
-								<div data-v-3b1241a1="" class="weui-uploader__info">0/1</div>
-								<!---->
+								<p data-v-3b1241a1="" class="weui-uploader__title text_center">手持身份证正面</p>
 							</div>
-							<div data-v-3b1241a1="" class="weui-uploader__bd">
+						</div>
+						<div data-v-3b1241a1="" class="weui-uploader">
+							<div data-v-3b1241a1="" class="weui-uploader__bd center">
 								<#if user.picCard?? && user.picCard != ''>
 									<div data-v-3b1241a1="" class="weui__image-box">
 									<img data-v-3b1241a1="" src="${user.picCard}" height="100%">
 								<#else>
 									<div data-v-3b1241a1="" class="weui-uploader__input-box">
 								</#if>
-									<input data-v-3b1241a1="" id="uploaderInput2" type="file" accept="image/*" multiple="multiple" capture="camera" class="weui-uploader__input">
-								</div>
+										<input data-v-3b1241a1="" id="uploaderInput3" type="file" accept="image/*" multiple="multiple" capture="camera" class="weui-uploader__input">
+									</div>
 							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div data-v-3b1241a1="" class="weui-cells weui-cells_form">
-				<div data-v-3b1241a1="" class="weui-cells__title">本人与公司标志合影</div>
-				<div data-v-3b1241a1="" class="weui-cell">
-					<div data-v-3b1241a1="" class="weui-cell__bd">
-						<div data-v-3b1241a1="" class="weui-uploader">
 							<div data-v-3b1241a1="" class="weui-uploader__hd">
-								<p data-v-3b1241a1="" classpicCarduploader__title">图片上传</p>
-								<div data-v-3b1241a1="" class="weui-uploader__info">0/1</div>
+								<p data-v-3b1241a1="" class="weui-uploader__title text_center">个人名片或工牌</p>
 							</div>
-							<div data-v-3b1241a1="" class="weui-uploader__bd">
-								<#if user.picLogo?? && user.picLogo != ''>
+						</div>								
+						</div>
+						<div data-v-3b1241a1="" class="weui-cell__bd">
+						<div data-v-3b1241a1="" class="weui-uploader">
+								<div data-v-3b1241a1="" class="weui-uploader__bd center">
+								<#if user.picCard?? && user.picIdentityBack != ''>
 									<div data-v-3b1241a1="" class="weui__image-box">
-									<img data-v-3b1241a1="" src="${user.picLogo}" height="100%">
+									<img data-v-3b1241a1="" src="${user.picIdentityBack}" height="100%">
+									<#else>
+									<div data-v-3b1241a1="" class="weui-uploader__input-box">
+									</#if>
+										<input data-v-3b1241a1="" id="uploaderInput2" type="file" accept="image/*" multiple="multiple" capture="camera" class="weui-uploader__input">
+									</div>
+								</div>
+								<div data-v-3b1241a1="" class="weui-uploader__hd">
+									<p data-v-3b1241a1="" class="weui-uploader__title text_center">手持身份证背面</p>
+								</div>
+						</div>						
+						<div data-v-3b1241a1="" class="weui-uploader">
+							<div data-v-3b1241a1="" class="weui-uploader__bd center">
+								<#if user.picCard?? && user.picLogo != ''>
+									<div data-v-3b1241a1="" class="weui__image-box">
+									<img data-v-3b1241a1="" src="${user.picCard}" height="100%">
 								<#else>
 									<div data-v-3b1241a1="" class="weui-uploader__input-box">
 								</#if>
-									<input data-v-3b1241a1="" id="uploaderInput3" type="file" accept="image/*" multiple="multiple" capture="camera" class="weui-uploader__input">
-								</div>
+										<input data-v-3b1241a1="" id="uploaderInput4" type="file" accept="image/*" multiple="multiple" capture="camera" class="weui-uploader__input">
+									</div>
 							</div>
-						</div>
-					</div>
+							<div data-v-3b1241a1="" class="weui-uploader__hd">
+								<p data-v-3b1241a1="" class="weui-uploader__title text_center">本人与公司logo合影</p>
+							</div>
+						</div>							
 				</div>
-			</div>
-			<div data-v-3b1241a1="" class="weui-cell">
-				<a data-v-3b1241a1="" href="javascript:;" class="weui-btn weui-btn_primary">提交</a>
-			</div>
+			</div>	
 		</div>
+		<div data-v-3b1241a1="" class="weui-cell">
+			<#if user.status == 1>
+				<a data-v-3b1241a1="" href="javascript:;" class="weui-btn weui-btn_disabled weui-btn_primary">提交</a>
+			<#elseif user.status == 0 || user.status == 3>
+				<a data-v-3b1241a1="" href="javascript:;" class="weui-btn weui-btn_primary">提交</a>
+			</#if>
+		</div>				
 	</div>
 	<script src="/static/common/js/jquery.min.js"></script>
 	<script src="/static/common/js/polyfill.min.js"></script>
@@ -1615,6 +1618,9 @@ h6[data-v-078a6550] {
 			});
 			
 			$(".weui-btn_primary").on("click", function() {
+				if ($(this).attr("class").indexOf("disabled") >= 0) {
+					return;
+				}
 				var param = {};
 				param.name = $("input[name='name']").val();
 				param.identity=$("input[name='identity']").val();
@@ -1622,11 +1628,57 @@ h6[data-v-078a6550] {
 				param.compName=$("input[name='com_name']").val();
 				param.compTel = $("input[name='com_tel']").val();
 				param.micrMess = $("input[name='mic_mess']").val();
+				
+				var vars = $(".weui-uploader__input");
 				param.picIdentity = $($(".weui-uploader__input")[0]).siblings().length > 0? $($(".weui-uploader__input")[0]).siblings().attr("src"): "";
-				param.picCard = $($(".weui-uploader__input")[0]).siblings().length > 0? $($(".weui-uploader__input")[1]).siblings().attr("src"): "";
-				param.picLogo = $($(".weui-uploader__input")[0]).siblings().length > 0? $($(".weui-uploader__input")[2]).siblings().attr("src"): "";
+				param.picIdentityBack = $($(".weui-uploader__input")[2]).siblings().length > 0? $($(".weui-uploader__input")[2]).siblings().attr("src"): "";
+				param.picCard = $($(".weui-uploader__input")[1]).siblings().length > 0? $($(".weui-uploader__input")[1]).siblings().attr("src"): "";
+				param.picLogo = $($(".weui-uploader__input")[3]).siblings().length > 0? $($(".weui-uploader__input")[3]).siblings().attr("src"): "";
+				if(param.name == "") {
+					alert("姓名不能为空:");
+					return;
+				}
+				
+				if (param.identity == "") {
+					alert("身份证号不能为空");
+					return;
+				}
+				
+				if(param.city == "") {
+					alert("请填写所在城市");
+					return;
+				}
+				
+				if(param.compName == "") {
+					alert("请填写公司全称");
+					return;
+				}
+				
+				if(param.picIdentity == "") {
+					alert("请上传身份证正面照片");
+					return;
+				}
+				
+				if (param.picIdentityBack == "") {
+					alert("请上传身份证背面照片");
+					return;
+				}
+				if(param.picCard == "") {
+					alert("请上传个人名片或工牌照片");
+					return;
+				}
+				
+				if (param.picLogo == "") {
+					alert("请上传本人与公司logo合影");
+					return;
+				}
+				
+				
+				
 				$.post("/user/detail", param, function(data) {
 					if (data.code == 200) {
+						$(".auditStatus-msg").text("审核状态：审核中");
+						$(".weui-btn_primary").addClass(" weui-btn_disabled");
 						alert(data.msg);
 					} else {
 						alert("网络错误！");
