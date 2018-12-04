@@ -7,7 +7,7 @@ import com.wangku.miaodan.core.dao.AuthUserMapper;
 import com.wangku.miaodan.core.model.AuthUser;
 import com.wangku.miaodan.core.service.IAuthUserService;
 
-@Service
+@Service("authUserService")
 public class AuthUserServiceImpl implements IAuthUserService {
 	
 	@Autowired
@@ -16,6 +16,21 @@ public class AuthUserServiceImpl implements IAuthUserService {
 	@Override
 	public AuthUser getDetailByUserAndPass(String username, String password) {
 		return authUserMapper.getDetailByNameAndPass(username, password);
+	}
+
+	@Override
+	public AuthUser getDetailByTicket(String ticket) {
+		return authUserMapper.getDetailByTicket(ticket);
+	}
+
+	@Override
+	public void addTicket(Long id, String ticket) {
+		authUserMapper.addTicket(id, ticket);
+	}
+
+	@Override
+	public void removeTicket(String userName) {
+		authUserMapper.removeTicket(userName);
 	}
 
 }

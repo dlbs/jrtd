@@ -928,7 +928,7 @@ a.menu[data-v-7ad21634] {
 	<div id="app">
 		<div id="topup-detail" class="content">
 			<div class="detail-header">
-				<span class="back"><i class="fa fa-chevron-left fa-fw"></i></span> 余额 <span class="sub">交易记录</span>
+				<span class="back"><i class="fa fa-chevron-left fa-fw"></i></span> 余额 <span class="sub"></span>
 			</div>
 			<div class="weui-msg">
 				<div class="weui-msg__text-area">
@@ -1044,6 +1044,18 @@ a.menu[data-v-7ad21634] {
 					</label>
 				</div>
 			</div>
+			<div class="weui-cells">
+				<div class="weui-cells weui-cells_radio">
+					<label  class="weui-cell weui-check__label check-pay display_flex">
+						<div class="weui-cell__hd">
+							<input onclick="jump();" checked="checked" type="radio" value="充值协议">
+						</div>						
+						<div class="weui-cell__bd">
+							<p>已阅读并接受充值协议</p>
+						</div>
+					</label>
+				</div>
+			</div>			
 			<div class = "weui-grids weui-cells_radio">
 					<a id = "pay_result" href=""></a>
 			</div>
@@ -1110,7 +1122,10 @@ a.menu[data-v-7ad21634] {
 			       document.attachEvent('WeixinJSBridgeReady', onBridgeReady()); 
 			       document.attachEvent('onWeixinJSBridgeReady', onBridgeReady());
 			   }
-		}		
+		}
+		function jump() {
+			window.location.href = "/view/user/recharge-pro.html";
+		}
 	</script>
 </body>
 </html>

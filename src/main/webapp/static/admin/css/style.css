@@ -56,3 +56,12 @@ td img {
 	width:200px; 
 	height:100px;
 }
+
+.admin-logout {
+    position: absolute;
+    right: 40px;
+}
+
+.box_top {
+    font-size: x-large;	
+}

@@ -4,8 +4,8 @@ import java.util.Objects;
 
 public class Strings {
 	
-	public static boolean isNullOrEmpty(String str) {
-		return Objects.isNull(str) || str.isEmpty();
+	public static boolean isNullOrEmpty(Object str) {
+		return Objects.isNull(str) || String.valueOf(str).isEmpty();
 	}
 
 }

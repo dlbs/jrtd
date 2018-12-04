@@ -1,8 +1,11 @@
 package com.wangku.miaodan.web;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -21,6 +24,7 @@ import com.wangku.miaodan.core.model.User;
 import com.wangku.miaodan.core.service.IOrderService;
 import com.wangku.miaodan.core.service.IRequitService;
 import com.wangku.miaodan.core.service.IUserService;
+import com.wangku.miaodan.utils.Strings;
 
 @Controller
 public class OrderController {
@@ -32,7 +36,7 @@ public class OrderController {
 	private IUserService userService;
 	
 	@Autowired
-	private IRequitService requitService;
+	private IRequitService resquitService;
 	
 	@RequestMapping("/order/search")
 	@ResponseBody
@@ -54,7 +58,7 @@ public class OrderController {
 		mp.put("from", from);
 		mp.put("order", order);
 		mp.put("isTD", (new Date().getTime() - order.getApplyTime().getTime())/(24 * 60 * 60 * 1000) >= 1? true:false);
-		mp.put("requit", requitService.detail(Long.parseLong(id), mobile));
+		mp.put("requit", resquitService.detail(Long.parseLong(id), mobile));
 		return "/order/order-detail";
 	}
 	
@@ -69,7 +73,7 @@ public class OrderController {
 			result.put("code", 601);
 		} else {
 			boolean isTD = new Date().getTime() - order.getApplyTime().getTime() >= 24 * 60 * 60 * 1000;
-			//验证用户是否通过认证
+			 //验证用户是否通过认证
 			 Integer status = userService.getDetailByMobile(mobile).getStatus();
 			 
 			if (status == 0) {
@@ -98,8 +102,9 @@ public class OrderController {
 	}
 	
 	@RequestMapping(value = "/order/requit/{id}", method = RequestMethod.GET)
-	public String requit(@PathVariable("id")Long id, ModelMap model) {
+	public String requit(@PathVariable("id")Long id, ModelMap model, String from) {
 		model.put("orderId", id);
+		model.put("from", from);
 		return "order/requit";
 	}
 	
@@ -119,7 +124,7 @@ public class OrderController {
 		} else if ("2".equals(requitReason)) {
 			requit.setRequitReason("异地");
 		}
-		requitService.save(requit);
+		resquitService.save(requit);
 		HashMap<String, Object> result = new HashMap<String, Object>();
 		result.put("code", 200);
 		result.put("msg", "退单操作完成");
@@ -127,9 +132,40 @@ public class OrderController {
 	}
 	
 	@RequestMapping(value = "/loan", method = RequestMethod.POST)
-	public Map<String, Object> save(Order order) {
+	public int save(Order order) {
 		
-		return null;
+		if (order == null) {
+			return 0;
+		}
+		
+		if (Strings.isNullOrEmpty(order.getName())) {
+			return 1;
+		}
+		
+		if (Strings.isNullOrEmpty(order.getMobile())) {
+			return 2;
+		}
+		
+		if (Strings.isNullOrEmpty(order.getCity())) {
+			return 3;
+		}
+		
+		if (order.getSum() == null || order.getSum().intValue() <= 0) {
+			return 4;
+		}
+		
+		if (Strings.isNullOrEmpty(order.getIdentyNumber())) {
+			return 5;
+		}
+		
+		if (Objects.isNull(order.getApplyTime())) {
+			return 6;
+		}
+		
+		List<Order> list = new ArrayList<Order>();
+		list.add(order);
+		orderService.saveBatch(list);
+		return 200;
 	}
 
 }

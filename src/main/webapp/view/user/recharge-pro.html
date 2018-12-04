@@ -6,7 +6,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta name="format-detection" content="telephone=no">
-<link rel="shortcut icon" href="https://klm7.com/static/common/img/favicon.ico">
+<link rel="shortcut icon" href="/static/common/img/favicon.ico">
 <link href="/static/common/css/font-awesome.min.css" rel="stylesheet">
 <link href="/static/common/css/jquery-weui.min.css" rel="stylesheet">
 <link href="/static/common/css/weui.min.css" rel="stylesheet">
@@ -58,7 +58,6 @@ html, body {
 	position: absolute;
 	top: 0;
 	left: 0;
-	overflow: hidden;
 	-webkit-user-select: none;
 	-moz-user-select: none;
 	-ms-user-select: none;
@@ -440,7 +439,6 @@ nav[data-v-7ad21634] {
 	background-color: #fff;
 	color: #1676e3;
 	border-radius: 0 15px 15px 0;
-	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
 	font-size: 16px
@@ -466,7 +464,6 @@ input[data-v-7ad21634]::-webkit-input-placeholder {
 	width: 0;
 	-webkit-box-flex: 2;
 	border-radius: 20px;
-	overflow: hidden;
 	margin: 4px
 }
 
@@ -506,7 +503,6 @@ a.menu[data-v-7ad21634] {
 #restaurant i[data-v-7ad21634] {
 	color: #cecece
 }
-
 #footer[data-v-5247103c] {
 	position: fixed
 }
@@ -543,7 +539,6 @@ a.menu[data-v-7ad21634] {
 	top: 0;
 	right: 18px
 }
-
 #order-detail[data-v-5af10e42] {
 	background: #f5f3f3;
 	height: 100%
@@ -747,7 +742,6 @@ a.menu[data-v-7ad21634] {
 }
 
 #remack ul[data-v-5af10e42] {
-	overflow: hidden;
 	margin: 0 -20px 0 0;
 	padding: 4px 0
 }
@@ -808,377 +802,229 @@ a.menu[data-v-7ad21634] {
 .main_list .fa-fw[data-v-5af10e42] {
 	color: #1676e3;
 }
-
-#sug-detail[data-v-80f281aa] {
-	background: #f5f3f3;
-	height: 100vh;
-	padding-top: 40px
+#topup-detail, .content {
+	background: #f5f3f3
 }
 
-#sug-detail .detail-header .back[data-v-80f281aa] {
+#topup-detail {
+	height: 100vh
+}
+
+#topup-detail .detail-header .back {
 	position: absolute;
-	left: 20px
+	top:10px;
+	left: 5px
 }
 
-#sug-detail .detail-header .sub[data-v-80f281aa] {
+#topup-detail .detail-header .sub {
 	position: absolute;
 	right: 20px
 }
 
-#sug-detail .weui-btn[data-v-80f281aa] {
+#topup-detail .weui-msg {
+	margin-top: 34px;
+	padding: 20px 0;
 	background: #1676e3;
+}
+
+#topup-detail .weui-msg__desc {
+	color: #fff;
+	font-weight: 400
+}
+
+#topup-detail .weui-msg__title {
+	margin-bottom: 15px;
 	font-weight: 400;
+	font-size: 25px;
 	color: #fff
 }
 
-#login-detail[data-v-a3a6e31c] {
-	background: #f5f3f3
-}
-
-#login-detail .detail-header span[data-v-a3a6e31c] {
-	position: absolute;
-	top:10px;
-	left: 20px
-}
-
-.header-btn[data-v-a3a6e31c] {
-	margin: 7px auto;
-	width: 9rem;
-	height: 1.5rem;
-	border-radius: 5px;
-	position: relative
-}
-
-.inner-btn[data-v-a3a6e31c] {
-	width: 4rem;
-	display: inline-block;
-	font-size: .8rem;
-	height: 1.4rem;
-	line-height: 1.4rem;
-	position: absolute;
-	text-align: center;
+#topup-detail .weui-cells, #topup-detail .weui-grids {
+	margin-top: 40px;
+	font-size: 12px;
 	font-weight: 400;
-	color: #7d7d7d
+	background: #f5f5f5
 }
 
-.active_btn[data-v-a3a6e31c] {
-	border-bottom: 1px solid #1676e3;
-	color: #1676e3;
+#topup-detail .weui-cell {
+	background: #fff
 }
 
-.left_btn[data-v-a3a6e31c] {
-	left: 0
-}
+/* #topup-detail .weui-grid .weui-check__label {
+	padding: 20px 15px
+} */
 
-.right_btn[data-v-a3a6e31c] {
-	right: 0
-}
-
-.login-code[data-v-a3a6e31c] {
-	position: relative
-}
-
-.msg-btn2[data-v-a3a6e31c], .msg-btn[data-v-a3a6e31c] {
-	position: absolute;
-	background: #1676e3;
-	width: 5rem;
-	height: 1.9rem;
-	border-radius: 5em;
-	top: 4px;
-	right: 4px
-}
-
-.dis[data-v-a3a6e31c] {
-	background: #ccc
-}
-
-.login_txt i[data-v-a3a6e31c] {
-	color: #dedede;
-	position: absolute;
-	top: 1.5em;
-	left: .5em;
-	font-size: 12px
-}
-
-input.weui-btn[data-v-a3a6e31c] {
-	width: 50%
-}
-
-button[data-v-a3a6e31c], input[data-v-a3a6e31c] {
-	border: 0;
-	-webkit-appearance: none;
-	-moz-appearance: none;
-	border-radius: 0;
-	outline: none;
-	font-size: .8rem;
-	color: #fff;
-	font-family: \\5FAE\8F6F\96C5\9ED1
-}
-
-.weui-btn_primary[data-v-a3a6e31c] {
-	background-color: #f5b479
-}
-
-.mpart[data-v-a3a6e31c] {
-	min-height: 500px;
-	background: #f5f5f5;
-	background-size: 100% 100%;
-	position: fixed;
-	width: 100%;
-	height: 100%;
-	z-index: 0;
-	max-width: 640px;
-	margin: 0 auto
-}
-
-.mpart .vision[data-v-a3a6e31c] {
-	position: relative
-}
-
-.mpart .vision .s_mide[data-v-a3a6e31c] {
-	background-size: 100%;
-	height: 4rem;
-	position: relative;
-	margin-top: -.4rem
-}
-
-.vision .s_botm[data-v-a3a6e31c]:nth-child(2n), .vision_bottom .s_botm[data-v-a3a6e31c]:nth-child(1n)
-	{
-	background: none;
-	height: 2rem;
-	margin-top: -1rem;
-	position: absolute;
-	left: 0
-}
-
-.vision_bottom .s_botm[data-v-a3a6e31c]:nth-child(1n) {
-	width: 40rem;
-	background-size: 10rem auto;
-	animation: wave 150s linear 0s infinite alternate;
-	-webkit-animation: wave 150s linear 0s infinite alternate
-}
-
-.vision_bottom .s_botm[data-v-a3a6e31c]:nth-child(2n) {
-	width: 50rem;
-	background-size: 12rem 2rem;
-	left: -30rem;
-	animation: wave2 90s linear 0s infinite alternate;
-	-webkit-animation: wave2 90s linear 0s infinite alternate
-}
-
-.mpart .vision_bottom[data-v-a3a6e31c] {
-	position: absolute;
-	bottom: 0;
-	max-width: 640px;
-	margin: 0 auto;
-	z-index: 9999;
-	height: 3rem;
-	width: 100%;
-	background-color: #fff
-}
-
-.login_logo[data-v-a3a6e31c] {
-	background-size: 100%;
-	width: auto;
-	height: 1.34rem;
-	position: relative;
-	top: 0;
-	margin: 0 auto;
-	z-index: 100
-}
-
-.login_form[data-v-a3a6e31c] {
-	position: relative;
-	width: 100vw;
-	z-index: 99;
-	height: 13.4rem;
-	margin: 2rem auto 0
-}
-
-.login_form .login_txt[data-v-a3a6e31c] {
-	height: 2.3rem;
-	line-height: 2.3rem;
-	background-color: #fff;
-	border-radius: none;
-	margin-top: .8rem;
-	background-repeat: no-repeat;
-	background-position: .47rem;
-	position: relative
-}
-
-.login_form .login_txt input[data-v-a3a6e31c] {
-	background: none;
-	color: #7d7d7d;
-	margin-left: 1.5rem;
-	height: 1.8rem;
-	line-height: 1.8rem
-}
-
-.login_form .login_txt em[data-v-a3a6e31c] {
-	float: right;
-	display: block;
-	width: .4rem;
-	height: .4rem;
-	margin: .32rem .47rem 0 0
-}
-
-.login_form .login_txt .login_clear[data-v-a3a6e31c] {
-	background-size: 100%
-}
-
-.login_form .pswinfo[data-v-a3a6e31c] {
-	margin-top: .8rem;
-	-webkit-box-sizing: border-box;
-	box-sizing: border-box;
-	color: #fcf2ff;
-	height: .42rem;
-	line-height: .42rem;
-	padding: 0 .1rem
-}
-
-.login_form .pswinfo input[data-v-a3a6e31c] {
-	display: block;
-	width: .42rem;
-	height: .42rem;
-	background: #fcf2ff;
-	border-radius: 3px;
-	float: left;
+#topup-detail .weui-cell__hd {
+	width: 5vw;
 	margin-right: 5px
 }
 
-.login_form .pswinfo .forget[data-v-a3a6e31c] {
-	color: #7d7d7d;
-	float: right;
-	font-size: 14px
+#topup-detail .weui-grid {
+	position: relative;
+	background: #fff;
+    height: 16vh;
+	padding: 1px
 }
 
-.login_form .pswinfo .forget[data-v-a3a6e31c]:active {
-	color: #1676e3;
-}
-
-.log_msg[data-v-a3a6e31c], .login_form .login_btn[data-v-a3a6e31c] {
-	width: 100%;
-	margin: 0 auto;
-	display: block;
-	height: 2.3rem;
-	line-height: 2.3rem;
-	border-radius: 4px;
-	text-align: center;
-	color: #fcf2ff;
-	background-color: #1676e3;
-}
-
-.log_msg[data-v-a3a6e31c] {
-	background: #609ae2;
-	display: none
-}
-
-.login_form .btn[data-v-a3a6e31c] {
-	margin-top: 1.2rem
-}
-
-.login_form .reg_btn[data-v-a3a6e31c] {
-	font-size: .68rem;
-	margin: 1rem auto 0;
-	text-align: center
-}
-
-.login_form .reg_btn a[data-v-a3a6e31c] {
-	line-height: 1rem;
-	display: inline-block;
-	color: #7d7d7d
-}
-
-.otherway[data-v-a3a6e31c] {
-	text-align: center;
-	width: 100%;
+#topup-detail .weui-grid i {
 	position: absolute;
-	z-index: 999;
-	top: -.3rem
+	top: 0
 }
 
-.otherway a[data-v-a3a6e31c] {
-	display: inline-block;
-	width: 1.3rem;
-	height: 1.3rem;
-	border-radius: 1.3rem;
-	margin: .3rem
+.weui-icon-success-no-circle {
+	font-size: 23px;
+	color: #fff
 }
 
-.otherway a.qq[data-v-a3a6e31c] {
-	background-position: 0 0;
-	background-color: #92b9f4
+#topup-detail .checked {
+	position: relative;
+	background: #1676e3;
+	color: #fff;
+	height: -webkit-fill-available;
 }
 
-.otherway a.weixin[data-v-a3a6e31c] {
-	background-position: -1.3rem 0;
-	background-color: #58b782
+#topup-detail .weui-grid .checked .weui-grid__label {
+	color: #fff
 }
 
-.otherway a.xina[data-v-a3a6e31c] {
-	background-position: -2.6rem 0;
-	background-color: #ea8b9d
+#topup-detail .weui-btn {
+	background: #1676e3;
+	width: 90vw;
+	height: 6vh;
+	line-height: 6vh
 }
 
-.otherway a.phone[data-v-a3a6e31c] {
-	background-position: -3.9rem 0;
-	background-color: #e7ce83
+#topup-detail .weui-cell-foot {
+	background: #ececec;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	font-weight: 400
 }
 
-.otherway a.email[data-v-a3a6e31c] {
-	background-position: -5.2rem 0;
-	background-color: #8ed3c1
+.checkMb {
+	font-size: 15px
 }
 
-.login_form .login_txt input[data-v-a3a6e31c] {
-	width: 85%
+.weui-cell {
+    padding: 10px 15px;
+    position: relative;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: block;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
 }
+
+.display_flex{
+	display: flex;
+}
+
 </style>
 </head>
 <body>
 	<div id="app">
-		<!---->
-		<div data-v-a3a6e31c="" id="login-detail" class="content">
-			<div data-v-a3a6e31c="" class="detail-header">
-				 登录
+		<div id="topup-detail" class="content">
+			<div class="detail-header">
+				<span class="back"><i class="fa fa-chevron-left fa-fw"></i></span> 充值协议 <span class="sub"></span>
 			</div>
-			<div data-v-a3a6e31c="" class="wrapper">
-				<div data-v-a3a6e31c="" class="mpart">
-					<div data-v-a3a6e31c="" class="vision">
-						<div data-v-a3a6e31c="" data-depth=".35" class="s_mide layer"></div>
-					</div>
-					<div data-v-a3a6e31c="" class="login_logo">
-					</div>
-					<div data-v-a3a6e31c="" class="login_form">
-						<form data-v-a3a6e31c="" id="formlogin">
-							<div data-v-a3a6e31c="" class="login_txt login_name">
-								<i data-v-a3a6e31c="" class="fa fa-user fa-fw"></i>
-								<input data-v-a3a6e31c="" type="text" name="username" id="text" placeholder="请输入手机号" required="required">
-							</div>
-							<!---->
-							<div data-v-a3a6e31c="" class="login_txt login-code">
-								<i data-v-a3a6e31c="" class="fa fa-qrcode fa-fw"></i>
-								<input data-v-a3a6e31c="" type="num" name="username" id="msgcode" placeholder="请输入短信验证码" required="required">
-								<button data-v-a3a6e31c="" type="button" class="msg-btn" onclick="send_code();">获取验证码</button>
-							</div>
-							<div  class="login-pro" style="font-size:10px; margin-top:15px; margin-left:10px;">
-								<input  type="radio" checked="checked" required="required">
-								<span onclick="jump();">已阅读并接受注册须知</span>
-							</div>
-							<div data-v-a3a6e31c="" class="btn">
-								<p data-v-a3a6e31c="" class="log_msg"></p>
-								<input data-v-a3a6e31c="" type="button" onclick="confirm();" value="登 录" class="login_btn">
-								<!---->
-							</div>
-							<!---->
-						</form>
-						<div data-v-a3a6e31c="" class="reg_btn">
-							<a data-v-a3a6e31c="">新用户登录时自动创建账号</a>
-						</div>
-						<!---->
-					</div>
-				</div>
+			<div class = "weui-grids weui-cells_radio">
+<p style="text-align: center;">
+    <span style=";font-family:微软雅黑;font-size:15px"><span style="font-family:微软雅黑">充值协议</span></span>
+</p>
+<p>
+    <span style=";font-family:Tahoma;font-size:15px">&nbsp;</span>
+</p>
+<p>
+    <span style=";font-family:微软雅黑;font-size:15px"><span style="font-family:微软雅黑">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;石家庄传驰科技有限公司（以下简称</span>“传驰科技”）开发运营产品：“今日推单”（以下简称“我们”），使用我们平台服务前请您仔细阅读本协议条款。</span>
+</p>
+<p>
+    <span style=";font-family:微软雅黑;font-size:15px"><span style="font-family:微软雅黑">一、充值介绍</span></span>
+</p>
+<p>
+    <span style=";font-family:微软雅黑;font-size:15px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1<span style="font-family:微软雅黑">、精品券、淘单券是一种虚拟货币，用于“今日推单”内抢单使用。</span></span>
+</p>
+<p>
+    <span style=";font-family:微软雅黑;font-size:15px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2<span style="font-family:微软雅黑">、 您一旦充值成功，即交易完成，我们将不提供任何更改、修正服务，充值成功的抢单金券不会过期、不可退款、不可提现或转赠他人。</span></span>
+</p>
+<p>
+    <span style=";font-family:微软雅黑;font-size:15px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3<span style="font-family:微软雅黑">、如果您未通过实名认证，请在“个人中心”“实名认证”里提交资料，资料提交后，等待审核。只有审核通过后，才可以正常使用抢单券抢单。</span></span>
+</p>
+<p>
+    <span style=";font-family:微软雅黑;font-size:15px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4<span style="font-family:微软雅黑">、在充值时请确认自己的账号，若因自身输入账号错误、操作不当等因素导致充错账号等情形而损害自身权益，您不得因此要求“今日推单”作任何补偿或赔偿。</span></span>
+</p>
+<p>
+    <span style=";font-family:微软雅黑;font-size:15px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5<span style="font-family:微软雅黑">、 如出现无法充值、充值失败等问题，详请请在“个人中心”“关于我们”联系客服反馈问题。</span></span>
+</p>
+<p>
+    <span style=";font-family:微软雅黑;font-size:15px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6<span style="font-family:微软雅黑">、充值仅支持“今日推单”微信公众号商户端进行点击充值，其他对私、银行转账等任何支付形式概不支持。</span></span>
+</p>
+<p>
+    <span style=";font-family:微软雅黑;font-size:15px"><span style="font-family:微软雅黑">二、信贷经理抢到客户后不能做以下事情和处理方式</span></span>
+</p>
+<p>
+    <span style=";font-family:微软雅黑;font-size:15px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1<span style="font-family:微软雅黑">、不得以“今日推单”名义威胁客户，不得向客户索要退费。 若违反以上一条，直接取消会员资格，停止相关抢单，所充值费用不得退返。</span></span>
+</p>
+<p>
+    <span style=";font-family:微软雅黑;font-size:15px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2<span style="font-family:微软雅黑">、 您与用户服务过程中的任何行为或者纠纷由您本人负责，我们不因此承担任何补偿或者赔偿。</span></span>
+</p>
+<p>
+    <span style=";font-family:微软雅黑;font-size:15px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3<span style="font-family:微软雅黑">、 您在服务过程中的行为涉嫌违法犯罪的，我们有权将您所有信息提供给相关部门协助调查。</span></span>
+</p>
+<p>
+    <span style=";font-family:微软雅黑;font-size:15px"><span style="font-family:微软雅黑">三、服务变更、中断或终止</span></span>
+</p>
+<p>
+    <span style=";font-family:微软雅黑;font-size:15px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1<span style="font-family:微软雅黑">、 如因升级的需要而需暂停网络服务、或调整服务内容，我们将尽可能在网站上进行通告。由于用户未能及时浏览通告而造成的损失，我们不承担任何责任。</span></span>
+</p>
+<p>
+    <span style=";font-family:微软雅黑;font-size:15px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2 <span style="font-family:微软雅黑">、您明确同意，我们保留根据实际情况随时调整传驰科技提供的服务内容、种类和形式，或自行决定授权第三方向您提供原本我们提供的服务。因业务调整给您或其他用户造成的损失，我们不承担任何责任。同时，我们保留随时变更、中断或终止传驰科技全部或部分服务的权利。</span></span>
+</p>
+<p>
+    <span style=";font-family:微软雅黑;font-size:15px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3<span style="font-family:微软雅黑">、 发生下列任何一种情形，我们有权单方面中断或终止向您提供服务而无需通知您，且无需对您或第三方承担任何责任：</span></span>
+</p>
+<p>
+    <span style=";font-family:微软雅黑;font-size:15px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(1)<span style="font-family:微软雅黑">您提供的个人资料不真实；</span></span>
+</p>
+<p>
+    <span style=";font-family:微软雅黑;font-size:15px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(2)<span style="font-family:微软雅黑">您违反本服务条款；</span></span>
+</p>
+<p>
+    <span style=";font-family:微软雅黑;font-size:15px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(3)<span style="font-family:微软雅黑">未经我们书面同意，将“今日推单”平台用于商业目的。</span></span>
+</p>
+<p>
+    <span style=";font-family:微软雅黑;font-size:15px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4 <span style="font-family:微软雅黑">、您可随时通知我们终止向您提供服务或直接取消今日推单平台服务。自您终止或取消服务之日起，我们不再向您承担任何形式的责任。</span></span>
+</p>
+<p>
+    <span style=";font-family:微软雅黑;font-size:15px"><span style="font-family:微软雅黑">四、特别约定</span></span>
+</p>
+<p>
+    <span style=";font-family:微软雅黑;font-size:15px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1<span style="font-family:微软雅黑">、 您使用本服务的行为若有任何违反国家法律法规或侵犯任何第三方的合法权益的情形时，我们有权直接删除该等违反规定之信息，并可以暂停或终止向您提供服务。</span></span>
+</p>
+<p>
+    <span style=";font-family:微软雅黑;font-size:15px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2 <span style="font-family:微软雅黑">、若您利用传驰科技服务从事任何违法或侵权行为，由您自行承担全部责任，因此给我们或任何第三方造成任何损失，您应负责全额赔偿，并使我们免受由此产生的任何损害。</span></span>
+</p>
+<p>
+    <span style=";font-family:微软雅黑;font-size:15px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3<span style="font-family:微软雅黑">、 您同意我们通过重要页面的公告、通告、电子邮件以及常规信件的形式向您传送与传驰科技服务有关的任何通知和通告。</span></span>
+</p>
+<p>
+    <span style=";font-family:微软雅黑;font-size:15px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4 <span style="font-family:微软雅黑">、本服务条款之效力、解释、执行均适用中华人民共和国法律。</span></span>
+</p>
+<p>
+    <span style=";font-family:微软雅黑;font-size:15px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5 <span style="font-family:微软雅黑">、如就本协议内容或其执行发生任何争议，应尽量友好协商解决；协商不成时，任何一方均可向传驰科技所在地的人民法院提起诉讼。</span></span>
+</p>
+<p>
+    <span style=";font-family:微软雅黑;font-size:15px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6 <span style="font-family:微软雅黑">、本服务条款中的标题仅为方便而设，不影响对于条款本身的解释。本服务条款最终解释权归传驰科技所有。</span></span>
+</p>
+<p>
+    <br/>
+</p>
 			</div>
+			<div class="weui-cell weui-cell-foot">
+				<a href="javascript:;" class="weui-btn weui-btn_primary">接受协议</a>
+			</div>			
 		</div>
 	</div>
 	<script src="/static/common/js/jquery.min.js"></script>
@@ -1187,68 +1033,16 @@ button[data-v-a3a6e31c], input[data-v-a3a6e31c] {
 	<script src="/static/common/js/areaData.js"></script>
 	<script src="/static/common/js/iosSelect.js"></script>
 	<script src="/static/common/js/fastclick.js"></script>
+	<script src="/static/common/js/jweixin-1.0.0.js"></script>
 	<script>
-	var count_down = 60;
-	function set_time() {
-		setTimeout(function() {
-			if (count_down == 0) {
-				$(".msg-btn").attr("disabled", false);	
-				$(".msg-btn").html("获取验证码");
-				$(".msg-btn").attr("class", "msg-btn");
-				count_down = 60;
-			} else {
-				$(".msg-btn").html(count_down-- + "s" );
-			set_time();
-			}
-		}, 1000);		
-	}
-	function send_code() {
-		var mobile = $("input[name='username']").val();
-		if (mobile == "") {
-			alert('手机号不能为空');
-		} else if (!/^1[3|4|5|7|8][0-9]\d{4,8}$/.test(mobile)) {
-			alert('请正确填写手机号');
-		} else {
-			$(".msg-btn").attr("disabled", true);	
-			$(".msg-btn").attr("class", "msg-btn dis");	
-			$(".msg-btn").html(count_down-- + "s" );
-			set_time();
-			$.post("/login/sendVerifyCode", {"mobile":mobile}, function(data) {
-				if (data.code == 200) {
-					alert("发送成功，请在手机上查收");
-				}
+		$(function() {
+			$(".fa-chevron-left").click(function() {
+				window.location.href = "/user/recharge";
 			});
-		}
-	}
-	
-	function confirm() {
-		var tel = $("input[name='username']").val();
-		if (tel == "") {
-			alert('手机号不能为空');
-			return ;
-		} else if (!/^1[3|4|5|7|8][0-9]\d{4,8}$/.test(tel)) {
-			alert('请正确填写手机号');
-			return;
-		}
-		var msgCode = $("#msgcode").val();
-		if (msgCode == "") {
-			alert('验证码不能为空');
-			return;
-		}
-		$.post("/login/checkVerifyCode", {"mobile":tel, "msgCode":msgCode}, function(data) {
-			console.log(data);
-			if (data.code == 200) {
-				document.cookie= "ticket="+data.ticket + ";path=/";
-				window.location.href="/home";
-			} else {
-				alert("无效验证码");
-			}
-		});
-	}
-	function jump() {
-		console.log("123");
-		window.location.href = "/view/login/login-pro.html";
-	}
+			$(".weui-btn_primary").click(function() {
+				window.location.href = "/user/recharge";
+			});
+		});		
 	</script>
 </body>
 </html>

@@ -2156,7 +2156,7 @@ h6[data-v-078a6550] {
 				$.post("/order/requit/" + $("#orderId").val(), data, function(data) {
 					if (data.code == 200) {
 						alert(data.msg);
-						window.location.href = "/order/detail/" + $("#orderId").val();
+						window.location.href = "/order/detail/" + $("#orderId").val() + "?from=${from}";
 					}
 				});
 			});

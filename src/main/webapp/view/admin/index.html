@@ -13,6 +13,10 @@
 <body>
 	<input type="hidden" id = "user" value="${user!''}">
     <div class="box">
+        <div class="box_top"> 
+        	<label>欢迎 ${user!''} 登录</label>&nbsp;&nbsp;&nbsp;&nbsp;
+        	<a href="/admin/logout" class="admin-logout">退出</a>
+        </div>
         <ul class="nav">
             <li data-type="user" class="nav_li flag">用户列表</li>
             <li data-type="product" class="nav_li">商品列表</li>

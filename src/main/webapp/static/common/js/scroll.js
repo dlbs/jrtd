@@ -43,14 +43,27 @@
 							temp = '<div ' + class_data + ' data-v-ecaca2b0="" class="weui-cell__ft cannotdo">已抢单</div>';
 						}
 					}
+					var condition = "";
+					if (data[i].lifeInsurance == 1) {
+						condition += '<span ' + class_data + ' data-v-ecaca2b0="" class="seller-info" style="padding: 1px 3px; border: 1px solid dodgerblue;color: dodgerblue; border-radius: 5px; margin-top:5px; display:inline-block;">有保单</span>';
+					}
+					if (data[i].socialInsurance == 1) {
+						condition += '<span ' + class_data + ' data-v-ecaca2b0="" class="seller-info" style="padding: 1px 3px; border: 1px solid dodgerblue; color: dodgerblue; border-radius: 5px; margin-top:5px; display:inline-block;">有社保</span>';
+					}
+					if (data[i].wagesType == 0) {
+						condition += '<span ' + class_data + ' data-v-ecaca2b0="" class="seller-info" style="padding: 1px 3px; border: 1px solid dodgerblue; color: dodgerblue; border-radius: 5px; margin-top:5px; display:inline-block;">有银行流水</span>';
+					}
+					if (data[i].accumulationFund == 1) {
+						condition += '<span ' + class_data + ' data-v-ecaca2b0="" class="seller-info" style="padding: 1px 3px; border: 1px solid dodgerblue; color: dodgerblue; border-radius: 5px; margin-top:5px; display:inline-block;">有公积金</span>';
+					}
 					var img = data[i].sex == 0? "/static/img/meil.png":"/static/img/femail.png";
 					str += '<a ' + class_data + ' data-v-ecaca2b0="" class="menu" href="/order/detail/' + data[i].id + '?from=' + from + '">'
 							+ '<span ' + class_data + ' data-v-ecaca2b0="" href="javascript:;" class="weui-cell weui-cell_access">'
 							+ '<div ' + class_data + ' data-v-ecaca2b0="" class="weui-cell__bd">'
 							+ '<div ' + class_data + ' data-v-ecaca2b0="" class="mb5">'
-							+ '<div ' + class_data + ' data-v-ecaca2b0="" class="seller-name">' + data[i].name + '</div></div>'
-							+ '<p ' + class_data + ' data-v-ecaca2b0=""> 金额：<span ' + class_data + ' data-v-ecaca2b0="" class="seller-info"> ' + data[i].sum/10000  + '万</span>'
-							+ '<span ' + class_data + ' data-v-ecaca2b0="" class="seller-time">' + plus_time(now, data[i].applyTime) + '</span></p></div></span>'
+							+ '<div ' + class_data + ' data-v-ecaca2b0="" class="seller-name">' + data[i].name + '</div><span data-v-2559bb2a="" data-v-ecaca2b0="" style="font-size:16px;color: orange; margin-left:10px;">' + data[i].sum/10000  + '万元</span></div>'
+							+ '<p ' + class_data + ' data-v-ecaca2b0="" style="display:flex;"><span style="flex:1;">' + condition + '</span>'
+							+ '<span ' + class_data + ' data-v-ecaca2b0="" class="seller-time" style="width:20%; display:flex;justify-content: center;">' + plus_time(now, data[i].applyTime) + '</span></p></div></span>'
 							+ '<div ' + class_data + ' data-v-ecaca2b0="" class="weui-cell seller-bottom">'
 							+ '<div ' + class_data + ' data-v-ecaca2b0="" class="weui-cell__bd">'
 							+ '<p ' + class_data + ' data-v-ecaca2b0="" class="mb5">'

@@ -4,6 +4,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.UUID;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.wangku.miaodan.constant.ProductTypeEnums;
+import com.wangku.miaodan.core.interceptor.AdminLoginInterceptor;
 import com.wangku.miaodan.core.model.AuthUser;
 import com.wangku.miaodan.core.model.Order;
 import com.wangku.miaodan.core.model.Recharge;
@@ -22,6 +28,7 @@ import com.wangku.miaodan.core.service.IOrderService;
 import com.wangku.miaodan.core.service.IRechargeService;
 import com.wangku.miaodan.core.service.IRequitService;
 import com.wangku.miaodan.core.service.IUserService;
+import com.wangku.miaodan.utils.Strings;
 
 @Controller
 @RequestMapping("/admin")
@@ -43,24 +50,38 @@ public class AdminController {
 	private IAuthUserService authUserService;
 	
 	@RequestMapping("")
-	public String adminLogin(String user, ModelMap model) {
-		if (user == null || "".equals(user)) {
-			return "admin/login";
+	public String adminLogin(String user, ModelMap model, HttpServletRequest request) {
+		String userName = AdminLoginInterceptor.getUserName(request);
+		String ticket = AdminLoginInterceptor.getTicket(request);
+		if (Strings.isNullOrEmpty(userName)) {
+			userName = authUserService.getDetailByTicket(ticket).getUsername();
 		}
-		model.put("user", "admin");
+		model.put("user", AdminLoginInterceptor.getUserName(request));
 		return "admin/index";
 	}
 	
 	@RequestMapping("/login")
-	public String adminHome(String username, String password, ModelMap model) {
+	public String adminHome(String username, String password, ModelMap model, HttpServletResponse response) {
 		String viewName = "redirect:/admin";
 		AuthUser user = authUserService.getDetailByUserAndPass(username, password);
 		if (!Objects.isNull(user)) {
-			model.put("user", user.getUsername());
+			String ticket = UUID.randomUUID().toString().replace("-", "");
+			authUserService.addTicket(user.getId(), ticket);
+			AdminLoginInterceptor.setUserName(ticket, username);
+			Cookie cookie = new Cookie("adminticket", ticket);
+			cookie.setPath("/");
+			response.addCookie(new Cookie("adminticket", ticket));
 			return viewName;
 		}
-		
 		return "admin/login";
+	}
+	
+	@RequestMapping("/logout")
+	public String logout(HttpServletRequest request) {
+		String userName = AdminLoginInterceptor.getUserName(request);
+		AdminLoginInterceptor.clearTicket(request);
+		authUserService.removeTicket(userName);
+		return "redirect:/admin/login";
 	}
 	
 	@RequestMapping("/user/list")

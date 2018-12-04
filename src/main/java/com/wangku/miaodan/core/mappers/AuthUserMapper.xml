@@ -7,5 +7,23 @@
  		from jrtd_auth_manager
  		where username = #{username} and password = #{password}
  	</select>
+ 	
+ 	<select id="getDetailByTicket" resultType="com.wangku.miaodan.core.model.AuthUser">
+  		select id, username, password, add_time addTime, ticket 
+ 		from jrtd_auth_manager
+ 		where ticket = #{ticket}
+ 	</select>
+ 	
+ 	<update id="addTicket">
+ 		update jrtd_auth_manager
+ 		set ticket = #{ticket}
+ 		where id = #{id}
+ 	</update>
+ 	
+ 	<update id="removeTicket">
+ 		update jrtd_auth_manager
+ 		set ticket  = null
+ 		where username = #{username}
+ 	</update>
  
 </mapper>
