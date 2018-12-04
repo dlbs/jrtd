@@ -56,6 +56,9 @@
 					if (data[i].accumulationFund == 1) {
 						condition += '<span ' + class_data + ' data-v-ecaca2b0="" class="seller-info" style="padding: 1px 3px; border: 1px solid dodgerblue; color: dodgerblue; border-radius: 5px; margin-top:5px; display:inline-block;">有公积金</span>';
 					}
+					if (data[i].weiLiDai == 1) {
+						condition += '<span ' + class_data + ' data-v-ecaca2b0="" class="seller-info" style="padding: 1px 3px; border: 1px solid dodgerblue; color: dodgerblue; border-radius: 5px; margin-top:5px; display:inline-block;">微粒贷</span>';
+					}
 					var img = data[i].sex == 0? "/static/img/meil.png":"/static/img/femail.png";
 					str += '<a ' + class_data + ' data-v-ecaca2b0="" class="menu" href="/order/detail/' + data[i].id + '?from=' + from + '">'
 							+ '<span ' + class_data + ' data-v-ecaca2b0="" href="javascript:;" class="weui-cell weui-cell_access">'

@@ -73,6 +73,7 @@ public class AdminController {
 			response.addCookie(new Cookie("adminticket", ticket));
 			return viewName;
 		}
+		model.put("username", username);
 		return "admin/login";
 	}
 	
@@ -161,6 +162,30 @@ public class AdminController {
 		Map<String, Object> result = new HashMap<String, Object>();
 		result.put("code", 200);
 		result.put("msg", "申退订单状态修改成功");	
+		return result;
+	}
+	
+	@RequestMapping("/updateusertimes")
+	@ResponseBody
+	public Map<String, Object> updateUserTimes(Long id, int times, int tdTimes, boolean isTd) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		User user = userService.getDetailById(id);
+		if ((isTd && tdTimes < user.getTdTimes()) || (!isTd && times < user.getTimes())) {
+			result.put("code", 301);
+			result.put("msg", "余额只能增加");
+			result.put("times", user.getTimes());
+			result.put("tdTimes", user.getTdTimes());
+		} else if (isTd)  {
+			user.setTdTimes(tdTimes);
+			userService.update(user);
+			result.put("code", 200);
+			result.put("msg", "余额修改成功");
+		} else if (!isTd) {
+			user.setTimes(times);
+			userService.update(user);
+			result.put("code", 200);
+			result.put("msg", "余额修改成功");
+		}
 		return result;
 	}
 }

@@ -6,6 +6,7 @@
     <result column="mobile" jdbcType="VARCHAR" property="mobile" />
     <result column="order_id" jdbcType="BIGINT" property="orderId" />
     <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+    <result column="is_td" property="isTd"/>
   </resultMap>
   <sql id="Base_Column_List">
     id, mobile, order_id, add_time
@@ -81,7 +82,7 @@
   <select id="detail" resultMap="BaseResultMap">
   	select order_stored.* from order_stored 
 	LEFT JOIN user_info 
-    on user_info.id = 1
-  	where order_stored.order_id = 3
+    on user_info.id = #{userId}
+  	where order_stored.order_id = #{orderId}
   </select>
 </mapper>

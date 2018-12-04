@@ -34,4 +34,6 @@ public interface IUserService {
 
 	public long count();
 
+	public User getDetailById(Long id);
+
 }

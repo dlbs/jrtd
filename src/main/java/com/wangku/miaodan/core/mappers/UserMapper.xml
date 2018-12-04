@@ -97,6 +97,12 @@
 		<if test="picLogo != null and picLogo != ''">
 			pic_logo = #{picLogo},
 		</if>
+		<if test="times != null and times > 0">
+			times = #{times},
+		</if>
+		<if test="tdTimes != null and tdTimes > 0">
+			td_times = #{tdTimes},
+		</if>
 		<if test="status != null">
 			status = #{status},
 		</if>
@@ -138,13 +144,17 @@
   
   <update id="increTimesByMobile">
   	update user_info set 
-  	<if test="isTD == 0">
+  	<if test="isTd == 0">
   		td_times = td_times + 1
   	</if>
-  	<if test="isTD == 1">
+  	<if test="isTd == 1">
 	  	times = times + 1 
   	</if>
   	where mobile = #{mobile}
   </update>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+  	select * from user_info where id = #{id}
+  </select>
   
 </mapper>

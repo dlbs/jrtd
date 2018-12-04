@@ -82,6 +82,8 @@ function loadUser(page) {
                     + '<th  align="center">身份证背面照</th>'
                     + '<th  align="center">个人名片或工牌</th>'
                     + '<th  align="center">与公司logo合影</th>'
+                    + '<th  align="center">精品券</th>'
+                    + '<th  align="center">淘单券</th>'
                     + '<th  align="center">状态</th>'
                     + '<th  align="center">注册时间</th>'
                     + '<th  align="center">操作</th>'
@@ -116,7 +118,10 @@ function loadUser(page) {
 				if (list[i].status == 1) {
 					optStr = '<button onclick="checkUserAuth(' + list[i].id + ',' + 2+ ')">通过</button>&nbsp;&nbsp;<button onclick="checkUserAuth(' + list[i].id + ',' + 3 + ')">驳回</button>';
 				}
-				
+				var times = list[i].times;
+				var timesStr = '<input type = "text" id = "times_' + list[i].id + '" size="6" value = "' + times + '" ><button onclick="submitTimes(' + list[i].id + ')">提交</button>';
+				var tdTimes = list[i].tdTimes;
+				var tdTimesStr = '<input type = "text" id = "tdTimes_' + list[i].id + '" size="6" value = "' + tdTimes + '" ><button onclick="submitTdTimes(' + list[i].id + ')">提交</button>';
 				str += '<tr><td align="center">' + (++num) + '</td>'
 				+ '<td align="center">' + list[i].name + '</td>'
 				+ '<td align="center">' + list[i].identity + '</td>'
@@ -127,15 +132,42 @@ function loadUser(page) {
 				+ '<td align="center">' + imgIdentityBack + '</td>'
 				+ '<td align="center">' + imgPicCard + '</td>'
 				+ '<td align="center">' + imgPicLogo + '</td>'
+				+ '<td align="center">' + timesStr + '</td>'
+				+ '<td align="center">' + tdTimesStr + '</td>'
 				+ '<td align="center">' + statusStr + '</td>'
 				+ '<td align="center">' + new Date(list[i].addTime).format('yyyy-MM-dd hh:mm:ss') + '</td>'
-				+ '<td align="center">' + optStr + '</td>'
+				+ '<td align="center" id= "user_' + list[i].id + '">' + optStr + '</td>'
 				+ '</tr>';
 			}
 			$("#tbody").empty().append($(str));
 		}
 		
 	});
+}
+
+function submitTimes(id, old_times) {
+	var times = $("#times_" + id).val();
+	$.post("/admin/updateusertimes", {"id":id, "times":times, "tdTimes":0, "isTd":"false"}, function(data) {
+		if (data.code != 200) {
+			$("#times_" + id).val(data.times);
+			alert(data.msg);
+		} else {
+			alert("精品券修改成功");
+		}
+	});
+	
+}
+
+function submitTdTimes(id, old_td_times) {
+	var tdTimes = $("#tdTimes_" + id).val();
+	$.post("/admin/updateusertimes", {"id":id, "times":0, "tdTimes":tdTimes, "isTd":"true"}, function(data) {
+		if (data.code != 200) {
+			$("#tdTimes_" + id).val(data.tdTimes);
+			alert(data.msg);
+		} else {
+			alert("淘单券修改成功");
+		}
+	});	
 }
 
 function loadProduct(page) {
@@ -282,7 +314,7 @@ function loadRequit(page) {
 		if (list.length > 0) {
 			var str = "";
 			for (var i = 0; i < list.length; ++i) {
-				var opt = list[i].status == 0?'<td align="center"><button  onclick="updateRequit(' + list[i].id + ',' + 1 + ')">通过</button>&nbsp;&nbsp;&nbsp;<button onclick="updateRequit(' + list[i].id + ',' + 2 + ')">驳回</button></td>':'<td align="center"></td>';
+				var opt = list[i].status == 0?'<button  onclick="updateRequit(' + list[i].id + ',' + 1 + ')">通过</button>&nbsp;&nbsp;&nbsp;<button onclick="updateRequit(' + list[i].id + ',' + 2 + ')">驳回</button>':'';
 				var status = list[i].status == 0? '<td align="center">未处理</td>':list[i].status == 1?'<td align="center">退单成功</td>':'<td align="center">已驳回</td>';
 				str += '<tr><td align="center">' + (++num) + '</td>'
 				+ '<td align="center">' + list[i].name + '</td>'
@@ -295,7 +327,7 @@ function loadRequit(page) {
 				+ '<td align="center">' + list[i].reason + '</td>'
 				+ '<td align="center">' + new Date(list[i].addTime).format('yyyy-MM-dd hh:mm:ss') + '</td>'
 				+ '<td align="center">' + new Date(list[i].updateTime).format('yyyy-MM-dd hh:mm:ss') + '</td>'
-				+ opt
+				+ '<td align="center" id="requit_' + list[i].id + '">' + opt + '</td>'
 				+ '</tr>';				
 			}
 			$("#tbody").empty().append($(str));
@@ -311,7 +343,7 @@ function checkUserAuth(id, status) {
 	$.post("/admin/checkAuth", {"id":id, "status":status}, function(data) {
 		if (data.code == 200) {
 			alert(data.msg);
-			loadUser();
+			$("#user_" + id).text("");
 		}
 	});
 }
@@ -320,7 +352,6 @@ function updateProduct(id, status) {
 	$.post("/admin/updateProduct", {"id":id, "status":status}, function(data) {
 		if (data.code == 200) {
 			alert(data.msg);
-			loadProduct();
 		}
 	});		
 }
@@ -329,7 +360,7 @@ function updateRequit(id, status) {
 	$.post("/admin/updateRequit", {"id":id, "status":status}, function(data) {
 		if (data.code == 200) {
 			alert(data.msg);
-			loadRequit();
+			$("#requit_" + id).text("");
 		}
 	});
 }

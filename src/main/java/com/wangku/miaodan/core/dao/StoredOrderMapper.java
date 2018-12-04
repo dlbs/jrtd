@@ -3,7 +3,6 @@ package com.wangku.miaodan.core.dao;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
-import com.wangku.miaodan.core.model.StoreOrder;
 import com.wangku.miaodan.core.model.StoredOrder;
 
 @Repository
@@ -20,5 +19,5 @@ public interface StoredOrderMapper {
 
     int updateByPrimaryKey(StoredOrder record);
 
-	StoreOrder detail(@Param("userId")Long userId, @Param("orderId")Long orderId);
+	StoredOrder detail(@Param("userId")Long userId, @Param("orderId")Long orderId);
 }

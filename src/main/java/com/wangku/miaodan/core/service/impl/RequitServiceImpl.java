@@ -13,7 +13,7 @@ import com.wangku.miaodan.core.dao.StoredOrderMapper;
 import com.wangku.miaodan.core.dao.UserMapper;
 import com.wangku.miaodan.core.model.Order;
 import com.wangku.miaodan.core.model.Requit;
-import com.wangku.miaodan.core.model.StoreOrder;
+import com.wangku.miaodan.core.model.StoredOrder;
 import com.wangku.miaodan.core.service.IRequitService;
 
 @Service
@@ -50,10 +50,9 @@ public class RequitServiceImpl implements IRequitService {
 		requit.setStatus((byte)status);
 		requitMapper.updateByPrimaryKey(requit);
 		if (status == 1) {
-			StoreOrder storeOrder = storeOrderMapper.detail(requit.getUserId(), requit.getOrderId());
+			StoredOrder storeOrder = storeOrderMapper.detail(requit.getUserId(), requit.getOrderId());
 			userMapper.increTimesByMobile(storeOrder.getMobile(), storeOrder.getIsTd());
-			Order order = new Order();
-			order.setId(storeOrder.getOrderId());
+			Order order = orderMapper.selectByPrimaryKey(storeOrder.getOrderId());
 			order.setStatus(0);
 			orderMapper.updateByPrimaryKey(order);
 		}

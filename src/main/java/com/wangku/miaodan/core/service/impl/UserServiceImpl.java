@@ -116,4 +116,9 @@ public class UserServiceImpl implements IUserService {
 		return userMapper.count();
 	}
 
+	@Override
+	public User getDetailById(Long id) {
+		return userMapper.selectByPrimaryKey(id);
+	}
+
 }
