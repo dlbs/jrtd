@@ -39,12 +39,12 @@ public class FileController {
 	@RequestMapping("/upload")
 	@ResponseBody
 	public Map<String, Object> upload(MultipartFile file, HttpServletRequest request) {
-		String path = request.getSession().getServletContext().getRealPath("user-info");
+		String path = request.getSession().getServletContext().getRealPath("/user-info");
+		System.out.println(path);
 		Map<String, Object> result = new HashMap<String, Object>();
 		if (file != null) {
-			String[] split = file.getOriginalFilename().split("\\.");
-			String name = split[split.length - 1];
-			name = new StringBuffer(40).append(UUID.randomUUID().toString()).append(".").append(name).toString();
+			String name = file.getOriginalFilename();
+			name = new StringBuffer(40).append(UUID.randomUUID().toString().replace("-", "")).append(".").append(name).toString();
 			File temp = new File(path + File.separator + name);
 			try {
 				temp.mkdirs();

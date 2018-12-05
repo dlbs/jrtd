@@ -1609,9 +1609,13 @@ h6[data-v-078a6550] {
 					    		_this.siblings("img").remove();
 					    		_this.before($('<img data-v-3b1241a1="" src="' + data.url + '" height="100%">'));
 					    		_this.parent(".weui-uploader__input-box").attr("class", "weui__image-box");
+					    		_this.val("");
 					    	} else {
 					    		alert("网络错误请重新上传");
 					    	}
+					    },
+					    error: function(data) {
+					    	console.log(data);
 					    }
 					}); 
 				}
