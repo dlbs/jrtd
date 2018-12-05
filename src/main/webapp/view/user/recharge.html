@@ -880,7 +880,7 @@ a.menu[data-v-7ad21634] {
 	position: relative;
 	background: #1676e3;
 	color: #fff;
-	height: -webkit-fill-available;
+	height: 100%;
 }
 
 #topup-detail .weui-grid .checked .weui-grid__label {
@@ -1088,9 +1088,6 @@ a.menu[data-v-7ad21634] {
 			});
 			
 			$(".weui-btn_primary").click(function() {
-				if (!confirm("确认支付" + $(".weui-cell__ft").find("span[class='checkValue']").text())) {
-					return;
-				}
 				var type = $("label[class='weui-cell weui-check__label checked']").attr("for");
 				$.post("/user/recharge", {"type":type}, function(data) {
 					if (data.code == 200) {
