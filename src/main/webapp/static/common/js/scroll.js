@@ -64,7 +64,7 @@
 							+ '<span ' + class_data + ' data-v-ecaca2b0="" href="javascript:;" class="weui-cell weui-cell_access">'
 							+ '<div ' + class_data + ' data-v-ecaca2b0="" class="weui-cell__bd">'
 							+ '<div ' + class_data + ' data-v-ecaca2b0="" class="mb5">'
-							+ '<div ' + class_data + ' data-v-ecaca2b0="" class="seller-name">' + data[i].name + '</div><span data-v-2559bb2a="" data-v-ecaca2b0="" style="font-size:16px;color: orange; margin-left:10px;">' + data[i].sum/10000  + '万元</span></div>'
+							+ '<div ' + class_data + ' data-v-ecaca2b0="" class="seller-name">' + data[i].name + '</div><span data-v-2559bb2a="" data-v-ecaca2b0="" style="font-size:16px;color: orange; margin-left:10px;">' + data[i].sum  + '万元</span></div>'
 							+ '<p ' + class_data + ' data-v-ecaca2b0="" style="display:flex;"><span style="flex:1;">' + condition + '</span>'
 							+ '<span ' + class_data + ' data-v-ecaca2b0="" class="seller-time" style="width:20%; display:flex;justify-content: center;">' + plus_time(now, data[i].applyTime) + '</span></p></div></span>'
 							+ '<div ' + class_data + ' data-v-ecaca2b0="" class="weui-cell seller-bottom">'

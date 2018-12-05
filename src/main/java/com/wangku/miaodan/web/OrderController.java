@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.wangku.miaodan.core.interceptor.LoginInterceptor;
 import com.wangku.miaodan.core.model.Order;
 import com.wangku.miaodan.core.model.Requit;
+import com.wangku.miaodan.core.model.TempOrder;
 import com.wangku.miaodan.core.model.User;
 import com.wangku.miaodan.core.service.IOrderService;
 import com.wangku.miaodan.core.service.IRequitService;
@@ -132,7 +134,8 @@ public class OrderController {
 	}
 	
 	@RequestMapping(value = "/loan", method = RequestMethod.POST)
-	public int save(Order order) {
+	@ResponseBody
+	public int save(@RequestBody TempOrder order) {
 		
 		if (order == null) {
 			return 0;
@@ -146,11 +149,11 @@ public class OrderController {
 			return 2;
 		}
 		
-		if (Strings.isNullOrEmpty(order.getCity())) {
+		if (Strings.isNullOrEmpty(order.getCity()) || order.getCity().contains("市")) {
 			return 3;
 		}
 		
-		if (order.getSum() == null || order.getSum().intValue() <= 0) {
+		if (order.getSum() == null || order.getSum() <= 0) {
 			return 4;
 		}
 		
@@ -163,7 +166,7 @@ public class OrderController {
 		}
 		
 		List<Order> list = new ArrayList<Order>();
-		list.add(order);
+		list.add(order.translateOrder());
 		orderService.saveBatch(list);
 		return 200;
 	}

@@ -217,7 +217,7 @@ function loadProduct(page) {
 				var sb = list[i].socialInsurance == 0?"无":"有";
 				var sx = list[i].lifeInsurance == 0?"无":"有";
 				var wld = list[i].weiLiDai == 0?"无":"有";
-				var sum = list[i].sum/10000 + "万";
+				var sum = list[i].sum + "万";
 				var applyTime = new Date(list[i].applyTime).format('yyyy-MM-dd hh:mm:ss')
 				var status = list[i].status == 0?"未抢":"已抢";
 				var opt = (list[i].status == 0 || list[i].status == 1)? '<td align="center"><button onclick="updateProduct(' + list[i].id + ',' + 2 + ')">加精</button>&nbsp;&nbsp;&nbsp;<button onclick="updateProduct(' + list[i].id + ',' + 3 + ')">废弃</button></td>':"<td></td>";
@@ -321,7 +321,7 @@ function loadRequit(page) {
 				+ '<td align="center">' + list[i].mobile + '</td>'
 				+ '<td align="center">' + list[i].productName + '</td>'
 				+ '<td align="center">' + list[i].productMobile + '</td>'
-				+ '<td align="center">' + list[i].sum/10000 + '万元</td>'
+				+ '<td align="center">' + list[i].sum + '万元</td>'
 				+ '<td align="center">' + list[i].requitReason + '</td>'
 				+ status
 				+ '<td align="center">' + list[i].reason + '</td>'
