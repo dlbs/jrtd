@@ -12,30 +12,16 @@
     <script type="text/javascript" src="/static/admin/js/index.js"></script>    
     <script type="text/javascript" src="/static/admin/js/My97DatePicker/WdatePicker.js"></script>    
     <script type="text/javascript">
-    	type = "${type!'user'}";
+    	type = "recharge";
     </script>
 </head>
 <body>
     <div class="box">
-<!--         <ul class="nav">
-            <li data-type="user" class="nav_li flag">用户列表</li>
-            <li data-type="product" class="nav_li">商品列表</li>
-            <li data-type="recharge-log" class="nav_li">充值记录列表</li>
-            <li data-type="requit" class="nav_li">申退列表</li>
-        </ul> -->
         <div class="search">
-			<form action="javascript:;">
-	        	注册时间:<input type="text" autocomplete="off" id="addTime" name="addtime" value="" placeholder="注册时间" onclick="WdatePicker()">&nbsp;&nbsp;
-	        	状       态:
-	        	<select id="status">
-	        		<option value="-1">不限</option>
-	        		<option value="0">未认证</option>
-	        		<option value="1">审核中</option>
-	        		<option value="2">已通过</option>
-	        		<option value="3">未通过</option>
-	        	</select>
-	        	注册城市:<input type="text" id="city" autocomplete="off" placeholder="注册城市">&nbsp;&nbsp;
-	        	<button id="submit">查询</button>				
+			<form action="javascript:;" id="form">
+	        	充值时间:<input type="text" autocomplete="off" id="addTime" name="addTime" value="" placeholder="充值时间" onclick="WdatePicker()">&nbsp;&nbsp;
+	        	用户姓名:<input type="text" id="name" name = "name" autocomplete="off" placeholder="用户姓名">&nbsp;&nbsp;&nbsp;&nbsp;
+	        	<button id="submit">查询</button>	&nbsp;&nbsp;			
 	        	<button id="reset">重置</button>
 			</form>
         </div>
@@ -50,16 +36,9 @@
 			</div>        
     </div>
     <script type="text/javascript">
-    	$("#submit").click(function() {
-    		console.log($("#addTime").val());
-    		console.log($("#status").val());
-    		console.log($("#city").val());
-    	});
-    	
     	$("#reset").click(function() {
     		$("#addTime").val("");
-    		$("#status").val("");
-    		$("#city").val("");    		
+    		$("#name").val("");
     	});
     </script>
 </body>

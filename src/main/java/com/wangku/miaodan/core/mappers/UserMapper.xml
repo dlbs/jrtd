@@ -127,14 +127,34 @@
   	where mobile = #{mobile}
   </update>
   
-  <select id="list" resultMap="BaseResultMap">
+  <select id="list" resultMap="BaseResultMap" parameterType="map">
   	select * from user_info 
+  	where 1 = 1
+  	<if test="city != null">
+  		and city like CONCAT(#{city}, "%")
+  	</if>
+  	<if test="status != null">
+  		and status = #{status}
+  	</if>
+  	<if test="addTime != null">
+  		and add_time like CONCAT(#{addTime}, "%")
+  	</if>
   	order by add_time desc
   	limit #{start}, #{size}
   </select>
   
-  <select id="count" resultType="long">
+  <select id="count" resultType="long" parameterType="map">
   	select count(*) from user_info 
+  	where 1 = 1
+  	<if test="city != null">
+  		and city like CONCAT(#{city}, "%")
+  	</if>
+  	<if test="status != null">
+  		and status = #{status}
+  	</if>
+  	<if test="addTime != null">
+  		and add_time like CONCAT(#{addTime}, "%")
+  	</if>  	
   </select>
   
   <update id="updateByPrimaryKey" parameterType="com.wangku.miaodan.core.model.User">

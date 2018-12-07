@@ -30,8 +30,10 @@ $(function() {
 			$(this).siblings().removeClass("flag");
 			type = $(this).attr("data-type");
 			loadElement(1);
-			num = 0
 		}
+	});
+	$("#submit").click(function() {
+		loadElement(1);
 	});
 });
 
@@ -53,11 +55,12 @@ function initPaginate(pages, page) {
 }
 
 function loadElement(page) {
+	num = (page - 1) * 20;
 	if (type == "user") {
 		loadUser(page);
 	} else if (type == "product"){
 		loadProduct(page);
-	} else if (type == "recharge-log") {
+	} else if (type == "recharge") {
 		loadRecharge(page);
 	} else if (type == "requit") {
 		loadRequit(page);
@@ -65,7 +68,8 @@ function loadElement(page) {
 }
 
 function loadUser(page) {
-	$.post("/admin/user/list", {"page":page, "size":size}, function(data) {
+	var param = $("#form").serialize() + "&size=20&page=" + page ;
+	$.post("/admin/user/list", param, function(data) {
 		initPaginate(data.pages, page);
 		var list = data.list;
 		if(page == 1) {
@@ -140,6 +144,9 @@ function loadUser(page) {
 				+ '</tr>';
 			}
 			$("#tbody").empty().append($(str));
+			$(".ul_listz li:nth-child(2)").html($(".ul_listz li:nth-child(2)").html().replace("&nbsp;&nbsp;&nbsp;&nbsp;", "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;共" + data.count + "/" + data.sum + "条&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"));
+		} else {
+			$("#tbody").append($('<tr><td colspan="16" rowspan="6" align="center">暂无数据</td></tr>'));
 		}
 		
 	});
@@ -171,7 +178,8 @@ function submitTdTimes(id, old_td_times) {
 }
 
 function loadProduct(page) {
-	$.post("/admin/product/list", {"page":page, "size":size}, function(data) {
+	var param = $("#form").serialize() + "&size=20&page=" + page ;
+	$.post("/admin/product/list", param, function(data) {
 		var list = data.list;
 		initPaginate(data.pages, page);
 		if(page == 1) {
@@ -198,6 +206,7 @@ function loadProduct(page) {
                     + '<th  align="center">微粒贷</th>'
                     + '<th  align="center">贷款金额</th>'
                     + '<th  align="center">申请日期</th>'
+                    + '<th  align="center">数据来源</th>'
                     + '<th  align="center">数据状态</th>'
                     + '<th  align="center">操作</th>'
                     + '</tr>'));
@@ -241,17 +250,22 @@ function loadProduct(page) {
 					+ '<td align="center">' + wld + '</td>'
 					+ '<td align="center">' + sum + '</td>'
 					+ '<td align="center">' + applyTime + '</td>'
+					+ '<td align="center">' + list[i].source + '</td>'
 					+ '<td align="center">' + status + '</td>'
 					+ opt
 					+ '</tr>';
 			}
 			$("#tbody").empty().append($(str));				
+			$(".ul_listz li:nth-child(2)").html($(".ul_listz li:nth-child(2)").html().replace("&nbsp;&nbsp;&nbsp;&nbsp;", "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;共" + data.count + "/" + data.sum + "条&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"));		
+		} else {
+			$("#tbody").append($('<tr><td colspan="24" rowspan="6" align="center">暂无数据</td></tr>'));
 		}
 	});	
 }
 
 function loadRecharge(page) {
-	$.post("/admin/recharge/list", {"page":page, "size":size}, function(data) {
+	var param = $("#form").serialize() + "&size=20&page=" + page ;
+	$.post("/admin/recharge/list", param, function(data) {
 		var list = data.list;
 		initPaginate(data.pages, page);
 		if (page == 1) {
@@ -284,12 +298,16 @@ function loadRecharge(page) {
 				+ '</tr>';
 			}
 			$("#tbody").empty().append($(str));
+			$(".ul_listz li:nth-child(2)").html($(".ul_listz li:nth-child(2)").html().replace("&nbsp;&nbsp;&nbsp;&nbsp;", "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;共" + data.count + "/" + data.sum + "条&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"));
+		} else {
+			$("#tbody").append($('<tr><td colspan="8" rowspan="6" align="center">暂无数据</td></tr>'));
 		}
 	});	
 }
 
 function loadRequit(page) {
-	$.post("/admin/requit/list", {"page":page, "size":size}, function(data) {
+	var param = $("#form").serialize() + "&size=20&page=" + page ;
+	$.post("/admin/requit/list", param, function(data) {
 		var list = data.list;
 		initPaginate(data.pages, page);
 		if (page == 1) {
@@ -331,10 +349,9 @@ function loadRequit(page) {
 				+ '</tr>';				
 			}
 			$("#tbody").empty().append($(str));
+			$(".ul_listz li:nth-child(2)").html($(".ul_listz li:nth-child(2)").html().replace("&nbsp;&nbsp;&nbsp;&nbsp;", "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;共" + data.count + "/" + data.sum + "条&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"));		
 		} else {
-			if (page == 1) {
-				$("#tbody").append($('<tr><td colspan="11" rowspan="5" align="center">暂无数据</td></tr>'));
-			}
+			$("#tbody").append($('<tr><td colspan="12" rowspan="6" align="center">暂无数据</td></tr>'));
 		}
 	});	
 }

@@ -1,6 +1,7 @@
 package com.wangku.miaodan.core.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -22,9 +23,10 @@ public interface RequitMapper {
 
     int updateByPrimaryKey(Requit record);
 
-	List<Requit> list(@Param("start")int start, @Param("size")int size);
+    List<Requit> list(Map<String, Object> map);
 
 	Requit selectByOrderId(@Param("orderId")long orderId, @Param("mobile")String mobile);
 
-	long count();
+	long count(Map<String, Object> map);
+
 }

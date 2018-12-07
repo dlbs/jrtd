@@ -1,7 +1,9 @@
 package com.wangku.miaodan.core.service.impl;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,7 @@ import com.wangku.miaodan.core.model.Order;
 import com.wangku.miaodan.core.model.Requit;
 import com.wangku.miaodan.core.model.StoredOrder;
 import com.wangku.miaodan.core.service.IRequitService;
+import com.wangku.miaodan.utils.Strings;
 
 @Service
 public class RequitServiceImpl implements IRequitService {
@@ -32,9 +35,17 @@ public class RequitServiceImpl implements IRequitService {
 	private OrderMapper orderMapper;
 
 	@Override
-	public List<Requit> list(int page, int size) {
-		int start = page;
-		return requitMapper.list(start, size);
+	public List<Requit> list(String name, String status, int start, int size) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("start", start);
+		map.put("size", size);
+		map.put("name", Strings.isNullOrEmpty(name)? null:name);
+		try {
+			map.put("status", Integer.parseInt(status));
+		} catch (NumberFormatException e) {}
+		
+		
+		return requitMapper.list(map);
 	}
 
 	@Override
@@ -64,8 +75,13 @@ public class RequitServiceImpl implements IRequitService {
 	}
 
 	@Override
-	public long count() {
-		return requitMapper.count();
+	public long count(String name, String status) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("name", Strings.isNullOrEmpty(name)? null:name);
+		try {
+			map.put("status", Integer.parseInt(status));
+		} catch (NumberFormatException e) {}		
+		return requitMapper.count(map);
 	}
 
 }

@@ -6,7 +6,7 @@ import com.wangku.miaodan.core.model.Requit;
 
 public interface IRequitService {
 
-	List<Requit> list(int page, int size);
+	List<Requit> list(String name, String status, int page, int size);
 
 	void save(Requit requit);
 
@@ -14,6 +14,6 @@ public interface IRequitService {
 
 	Requit detail(long orderId, String mobile);
 
-	long count();
+	long count(String name, String status);
 
 }

@@ -1,6 +1,8 @@
 package com.wangku.miaodan.core.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.wangku.miaodan.core.dao.OrderMapper;
 import com.wangku.miaodan.core.model.Order;
 import com.wangku.miaodan.core.service.IOrderService;
+import com.wangku.miaodan.utils.Strings;
 import com.wangku.miaodan.web.SearchBean;
 
 @Service
@@ -52,8 +55,19 @@ public class OrderServiceImpl implements IOrderService {
 	}
 
 	@Override
-	public List<Order> list(int start, int size) {
-		return orderMapper.list(start, size);
+	public List<Order> list(String applyTime, String source, String status, String city, int start, int size) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("start", start);
+		map.put("size", size);
+		map.put("applyTime", Strings.isNullOrEmpty(applyTime)? null:applyTime);
+		map.put("source", Strings.isNullOrEmpty(source)? null:source);
+		map.put("city", Strings.isNullOrEmpty(city)? null:city.replace("市", ""));
+		try {
+			map.put("status", Integer.parseInt(status));
+		} catch (NumberFormatException e) {}
+		
+		
+		return orderMapper.list(map);
 	}
 
 	@Override
@@ -65,8 +79,16 @@ public class OrderServiceImpl implements IOrderService {
 	}
 
 	@Override
-	public long count() {
-		return orderMapper.count();
+	public long count(String applyTime, String source, String status, String city) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("applyTime", Strings.isNullOrEmpty(applyTime)? null:applyTime);
+		map.put("source", Strings.isNullOrEmpty(source)? null:source);
+		map.put("city", Strings.isNullOrEmpty(city)? null:city.replace("市", ""));
+		try {
+			map.put("status", Integer.parseInt(status));
+		} catch (NumberFormatException e) {}	
+		
+		return orderMapper.count(map);
 	}
 
 }

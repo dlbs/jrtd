@@ -1,6 +1,7 @@
 package com.wangku.miaodan.core.service.impl;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,6 +18,7 @@ import com.wangku.miaodan.core.dao.UserMapper;
 import com.wangku.miaodan.core.model.Recharge;
 import com.wangku.miaodan.core.model.User;
 import com.wangku.miaodan.core.service.IUserService;
+import com.wangku.miaodan.utils.Strings;
 import com.wangku.miaodan.web.PayMentController;
 
 @Service
@@ -98,10 +100,20 @@ public class UserServiceImpl implements IUserService {
 		return user.getStatus() == 2;
 	}
 
+	
 	@Override
-	public List<User> list(int start, int size) {
-		return userMapper.list(start, size);
-	}
+	public List<User> list(String city, String status, String addTime, int start, int size) {
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("city", Strings.isNullOrEmpty(city)? null: city.replace("市", ""));
+		try {
+			param.put("status", Integer.parseInt(status));
+		} catch (NumberFormatException e) {}
+		param.put("addTime", Strings.isNullOrEmpty(addTime)?null:addTime);
+		param.put("start", start);
+		param.put("size", size);
+		
+		return userMapper.list(param);
+	}	
 
 	@Override
 	public void checkAuth(Long userId, int status) {
@@ -112,8 +124,14 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
-	public long count() {
-		return userMapper.count();
+	public long count(String city, String status, String addTime) {
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("city", Strings.isNullOrEmpty(city)? null: city.replace("市", ""));
+		try {
+			param.put("status", Integer.parseInt(status));
+		} catch (NumberFormatException e) {}
+		param.put("addTime", Strings.isNullOrEmpty(addTime)?null:addTime);
+		return userMapper.count(param);
 	}
 
 	@Override

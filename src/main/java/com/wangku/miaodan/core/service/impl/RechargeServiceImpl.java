@@ -1,5 +1,6 @@
 package com.wangku.miaodan.core.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.wangku.miaodan.core.dao.RechargeMapper;
 import com.wangku.miaodan.core.model.Recharge;
 import com.wangku.miaodan.core.service.IRechargeService;
+import com.wangku.miaodan.utils.Strings;
 
 @Service
 public class RechargeServiceImpl implements IRechargeService {
@@ -37,13 +39,21 @@ public class RechargeServiceImpl implements IRechargeService {
 	}
 
 	@Override
-	public List<Recharge> list(int start, int size) {
-		return rechargeMapper.list(start, size);
+	public List<Recharge> list(String addTime, String name, int start, int size) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("start", start);
+		map.put("size", size);
+		map.put("addTime", Strings.isNullOrEmpty(addTime)? null:addTime);
+		map.put("name", Strings.isNullOrEmpty(name)? null:name);
+		return rechargeMapper.list(map);
 	}
 
 	@Override
-	public long count() {
-		return rechargeMapper.count();
+	public long count(String addTime, String name) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("addTime", Strings.isNullOrEmpty(addTime)? null:addTime);
+		map.put("name", Strings.isNullOrEmpty(name)? null:name);
+		return rechargeMapper.count(map);
 	}
 
 }

@@ -1,6 +1,7 @@
 package com.wangku.miaodan.core.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -35,8 +36,9 @@ public interface OrderMapper {
 
 	void saveBatch(List<Order> list);
 
-	List<Order> list(@Param("start")int start, @Param("size")int size);
+	List<Order> list(Map<String, Object> map);    
 
-	long count();    
+	long count(Map<String, Object> map);
+
     
 }

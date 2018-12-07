@@ -50,14 +50,20 @@ public class AdminController {
 	private IAuthUserService authUserService;
 	
 	@RequestMapping("")
-	public String adminLogin(String user, ModelMap model, HttpServletRequest request) {
+	public String adminHome(String user, ModelMap model, HttpServletRequest request) {
 		String userName = AdminLoginInterceptor.getUserName(request);
 		String ticket = AdminLoginInterceptor.getTicket(request);
 		if (Strings.isNullOrEmpty(userName)) {
 			userName = authUserService.getDetailByTicket(ticket).getUsername();
 		}
 		model.put("user", AdminLoginInterceptor.getUserName(request));
-		return "admin/index";
+		return "admin/temp";
+	}
+	
+	@RequestMapping("/index")
+	public String index(String type, ModelMap model) {
+		model.put("type", type);
+		return "admin/index";		
 	}
 	
 	@RequestMapping("/login")
@@ -87,51 +93,58 @@ public class AdminController {
 	
 	@RequestMapping("/user/list")
 	@ResponseBody
-	public Map<String, Object> userList(int page, int size) {
+	public Map<String, Object> userList(int page, int size, String status, String city, String addTime) {
 		 Map<String, Object> result = new HashMap<String, Object>();
-		 List<User> list = userService.list((page - 1) * size, size);
+		 List<User> list = userService.list(city, status, addTime, (page - 1) * size, size);
 		 result.put("list", list);
-		 long count = userService.count();
+		 long count = userService.count(city, status, addTime);
 		 result.put("pages", count % size == 0? count/ size: count/size + 1);
+		 result.put("count", count);
+		 result.put("sum", userService.count(null, null, null));
 		 return result;
 	}
 	
 	@RequestMapping("/product/list")
 	@ResponseBody
-	public Map<String, Object> productList(int page, int size) {
+	public Map<String, Object> productList(String applyTime, String source, String status, String city, int page, int size) {
 		 Map<String, Object> result = new HashMap<String, Object>();
-		 List<Order> list = orderService.list((page - 1) * size, size);
+		 List<Order> list = orderService.list(applyTime, source, status, city, (page - 1) * size, size);
 		 result.put("list", list);
-		 long count = orderService.count();
+		 long count = orderService.count(applyTime, source, status, city);
 		 result.put("pages", count % size == 0? count/ size: count/size + 1);
+		 result.put("count", count);
+		 result.put("sum", orderService.count(null, null, null, null));
 		return result;
 	}
 	
 	@RequestMapping("/recharge/list")
 	@ResponseBody
-	public Map<String, Object> rechargeList(int page, int size) {
+	public Map<String, Object> rechargeList(String addTime, String name, int page, int size) {
 		Map<String, Object> result = new HashMap<String, Object>();
-		List<Recharge> list = rechargeService.list((page - 1) * size, size);
+		List<Recharge> list = rechargeService.list(addTime, name, (page - 1) * size, size);
 		for (Recharge recharge : list) {
-			ProductTypeEnums type = ProductTypeEnums.getByType(recharge
-					.getProduct());
+			ProductTypeEnums type = ProductTypeEnums.getByType(recharge.getProduct());
 			recharge.setTimes(type.getJpTimes());
 			recharge.setTdTimes(type.getTdTimes());
 		}
 		result.put("list", list);
-		long count = rechargeService.count();
+		long count = rechargeService.count(addTime, name);
 		result.put("pages", count % size == 0 ? count / size : count / size + 1);
+		result.put("count", count);
+		result.put("sum", rechargeService.count(null, null));
 		return result;
 	}
 	
 	@RequestMapping("/requit/list")
 	@ResponseBody
-	public Map<String, Object> requitList(int page, int size) {
+	public Map<String, Object> requitList(String name, String status, int page, int size) {
 		Map<String, Object> result = new HashMap<String, Object>();
-		List<Requit> list = requitService.list((page - 1) * size, size);
+		List<Requit> list = requitService.list(name, status, (page - 1) * size, size);
 		 result.put("list", list);
-		 long count = requitService.count();
+		 long count = requitService.count(name, status);
 		 result.put("pages", count % size == 0? count/ size: count/size + 1);
+		 result.put("count", count);
+		 result.put("sum", requitService.count(null, null));
 		return result;
 	}
 	

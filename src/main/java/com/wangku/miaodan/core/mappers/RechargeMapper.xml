@@ -176,20 +176,33 @@
 		select * from recharge_info where number = #{number};
 	</select>
 	
-	<select id="list" resultMap="BaseResultMap">
+	<select id="list" resultMap="BaseResultMap" parameterType="map">
 		select rei.id, rei.mobile, rei.product, rei.sum, 
 		       rei.num_product, rei.status, rei.add_time, 
 		       rei.failer_resone, ui.name 
 		from recharge_info  rei
 		LEFT JOIN user_info ui
 		ON ui.mobile = rei.mobile
-		where rei.status = 2 or rei.status = 3
+		where (rei.status = 2 or rei.status = 3)
+		<if test="addTime != null">
+			and rei.add_time like CONCAT(#{addTime}, "%")
+		</if>
+		<if test="name != null">
+			and ui.name = #{name}
+		</if>
 		order by rei.add_time desc 
 		limit #{start}, #{size}
 	</select>
 	
-	<select id="count" resultType="long">
-		select count(*) from recharge_info where status = 2 or status = 3
+	<select id="count" resultType="long" parameterType="map">
+		select count(*) from recharge_info 
+		where (status = 2 or status = 3)
+		<if test="addTime != null">
+			and add_time like CONCAT(#{addTime}, "%")
+		</if>
+		<if test="name != null">
+			and mobile in (select mobile from user_info where name like CONCAT(#{name}, "%"))
+		</if>		
 	</select>
 	
 </mapper>

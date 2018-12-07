@@ -15,8 +15,8 @@ public interface IRechargeService {
 
 	public Recharge getdetailByNumber(String number);
 	
-	public List<Recharge> list(int page, int size);
+	public List<Recharge> list(String addTime, String name, int page, int size);
 
-	public long count();
+	public long count(String addTime, String name);
 
 }

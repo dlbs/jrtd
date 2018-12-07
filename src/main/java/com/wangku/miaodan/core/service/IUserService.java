@@ -28,11 +28,11 @@ public interface IUserService {
 
 	public boolean isAuth(String mobile);
 
-	public List<User> list(int start, int size);
+	public List<User> list(String city, String status, String addTime, int start, int size);
 
 	public void checkAuth(Long userId, int status);
 
-	public long count();
+	public long count(String city, String status, String addTime);
 
 	public User getDetailById(Long id);
 

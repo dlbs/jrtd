@@ -24,7 +24,7 @@
     <result column="wei_li_dai" jdbcType="TINYINT" property="weiLiDai" />
     <result column="apply_time" jdbcType="TIMESTAMP" property="applyTime" />
     <result column="type" jdbcType="TINYINT" property="type" />
-    <result column="source_id" jdbcType="VARCHAR" property="sourceId" />
+    <result column="source" jdbcType="VARCHAR" property="source" />
     <result column="status" jdbcType="INTEGER" property="status" />
   </resultMap>
   <sql id="Base_Column_List">
@@ -474,14 +474,40 @@
     </foreach>  	
   </insert>  
   
-  <select id="list" resultMap="BaseResultMap">
+  <select id="list" resultMap="BaseResultMap" parameterType="map">
   	select * from order_info 
+  	where 1 = 1
+  	<if test="applyTime != null">
+  		and apply_time like CONCAT(#{applyTime}, "%")
+  	</if>
+  	<if test="source != null">
+  		and source = #{source}
+  	</if>
+  	<if test="status != null">
+  		and status = #{status}
+  	</if>
+  	<if test="city != null">
+  		and city like CONCAT(#{city}, "%")
+  	</if>
   	order by apply_time desc 
   	limit #{start}, #{size}
   </select>
   
   <select id="count" resultType="long">
   	select count(*) from order_info
+  	where 1 = 1
+  	<if test="applyTime != null">
+  		and apply_time like CONCAT(#{applyTime}, "%")
+  	</if>
+  	<if test="source != null">
+  		and source = #{source}
+  	</if>
+  	<if test="status != null">
+  		and status = #{status}
+  	</if>
+  	<if test="city != null">
+  		and city like CONCAT(#{city}, "%")
+  	</if>  	
   </select>
     
 </mapper>

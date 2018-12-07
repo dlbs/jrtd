@@ -1,6 +1,7 @@
 package com.wangku.miaodan.core.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -38,10 +39,9 @@ public interface UserMapper {
 
 	void addOpenId(@Param("mobile")String mobile, @Param("opendId")String openId);
 
-	List<User> list(@Param("start")int start, @Param("size")int size);
+	List<User> list(Map<String, Object> param);
 
 	void increTimesByMobile(@Param("mobile")String mobile, @Param("isTd")Integer isTd);
 
-	long count();
-    
+	long count(Map<String, Object> param);
 }

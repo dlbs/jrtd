@@ -49,7 +49,7 @@ public class Order {
 
 	private Byte type;
 
-	private String sourceId;
+	private String source;
 
 	private Integer status;
 
@@ -229,12 +229,12 @@ public class Order {
 		this.type = type;
 	}
 
-	public String getSourceId() {
-		return sourceId;
+	public String getSource() {
+		return source;
 	}
 
-	public void setSourceId(String sourceId) {
-		this.sourceId = sourceId;
+	public void setSource(String source) {
+		this.source = source;
 	}
 
 	public Integer getStatus() {
