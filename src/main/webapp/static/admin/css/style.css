@@ -34,19 +34,19 @@ li{
 table{
     border-collapse:collapse;
     border-spacing:0;
-     empty-cells: show;
-     width: 100%;
+    empty-cells: show;
+    width: 100%;
 }
+
 td{
   padding: 5px 0;
   white-space: nowrap;
 }
+
 th {
   padding: 5px 15px;
   white-space: nowrap;
 }
-
-
 
 .tbody_tr  {
 	background:#a0b3bf;
@@ -64,10 +64,6 @@ td img {
 
 .box_top {
     font-size: x-large;	
-}
-
-.tab {
-	border: 2px solid #645f5f;	
 }
 
 .search {
