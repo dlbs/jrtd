@@ -52,6 +52,16 @@ public class Order {
 	private String source;
 
 	private Integer status;
+	
+	private String plusTime;
+	
+	public String getPlusTime() {
+		return plusTime;
+	}
+
+	public void setPlusTime(String plusTime) {
+		this.plusTime = plusTime;
+	}
 
 	public Long getId() {
 		return id;

@@ -1,6 +1,7 @@
 package com.wangku.miaodan.web;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -44,12 +45,41 @@ public class OrderController {
 	@ResponseBody
 	public Map<String, Object> search(SearchBean condition, HttpServletRequest request) {
 		Map<String, Object> map = new HashMap<String, Object>();
+		List<Order> orders = new ArrayList<Order>(0);
 		if (condition.getType() != null && condition.getType() == 3) {
-			map.put("orders", orderService.getStoredByUser(LoginInterceptor.getMobile(request)));
+			orders = orderService.getStoredByUser(LoginInterceptor.getMobile(request));
 		} else {
-			map.put("orders", orderService.selectByCondition(condition));
+			orders = orderService.selectByCondition(condition);
 		}
+		Date now = new Date();
+		for (Order order : orders) {
+			order.setPlusTime(plusTime(now, order.getApplyTime()));
+		}
+		
+		map.put("orders", orders);
+		
 		return map;
+	}
+	
+	public String plusTime(Date now, Date target) {
+		Calendar cal1 = Calendar.getInstance();
+		Calendar cal2 = Calendar.getInstance();
+		cal1.setTime(now);
+		cal2.setTime(target);
+		long time = now.getTime() - target.getTime();
+		if (time / (1000 * 60 * 60 * 24) > 364) {
+			return (cal1.get(Calendar.YEAR) - cal2.get(Calendar.YEAR)) + "年前";
+		} else if (time / (1000 * 60 * 60 * 24) > 30){
+			return (cal1.get(Calendar.MONTH) - cal2.get(Calendar.MONTH)) + "月前";
+		} else if (time / (1000 * 60 * 60 * 24) > 1) {
+			return (time / (1000 * 60 * 60 * 24)) + "天前";
+		} else if (time / (1000 * 60) >= 1) {
+			return (time / (1000 * 60)) + "分钟前";
+		} else if (time / 1000 > 10) {
+			return (time / 1000) + "秒前";
+		} else {
+			return "刚刚";
+		}
 	}
 	
 	@RequestMapping("/order/detail/{id}")

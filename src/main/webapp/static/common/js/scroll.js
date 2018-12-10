@@ -66,7 +66,7 @@
 							+ '<div ' + class_data + ' data-v-ecaca2b0="" class="mb5">'
 							+ '<div ' + class_data + ' data-v-ecaca2b0="" class="seller-name">' + data[i].name + '</div><span data-v-2559bb2a="" data-v-ecaca2b0="" style="font-size:16px;color: orange; margin-left:10px;">' + data[i].sum  + '万元</span></div>'
 							+ '<p ' + class_data + ' data-v-ecaca2b0="" style="display:flex;"><span style="flex:1;">' + condition + '</span>'
-							+ '<span ' + class_data + ' data-v-ecaca2b0="" class="seller-time" style="width:20%; display:flex;justify-content: center;">' + plus_time(now, data[i].applyTime) + '</span></p></div></span>'
+							+ '<span ' + class_data + ' data-v-ecaca2b0="" class="seller-time" style="width:20%; display:flex;justify-content: center;">' + data[i].plusTime + '</span></p></div></span>'
 							+ '<div ' + class_data + ' data-v-ecaca2b0="" class="weui-cell seller-bottom">'
 							+ '<div ' + class_data + ' data-v-ecaca2b0="" class="weui-cell__bd">'
 							+ '<p ' + class_data + ' data-v-ecaca2b0="" class="mb5">'
@@ -96,20 +96,6 @@
 	        		successCallback(data.orders);                		
 	        	});
 			}
-			
-			function plus_time(nowTime, target) {
-				var plus = (nowTime - target)/1000;
-				var day = parseInt(plus / (24 * 60 * 60 ));
-				var hour = parseInt(plus / (60 * 60));
-				var minute = parseInt(plus / 60);
-				if (day > 0) {
-					return day + "天前";
-				} else if (hour > 0) {
-					return hour + "小时前";
-				} else {
-					return minute + "分钟前";
-				}
-			}			
 			
 			//禁止PC浏览器拖拽图片,避免与下拉刷新冲突;如果仅在移动端使用,可删除此代码
 			document.ondragstart=function() {return false;}

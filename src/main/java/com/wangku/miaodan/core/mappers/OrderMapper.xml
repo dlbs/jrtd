@@ -30,7 +30,7 @@
   <sql id="Base_Column_List">
     id, name, mobile, city, age, sum, vocation, work_time, sex, month_income, wages_type, 
     credit_card, car, building, accumulation_fund, social_insurance, life_insurance, 
-    identy_number, sesame_credit, wei_li_dai, apply_time, type, source_id, status
+    identy_number, sesame_credit, wei_li_dai, apply_time, type, source, status
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -50,7 +50,7 @@
       building, accumulation_fund, social_insurance, 
       life_insurance, identy_number, sesame_credit, 
       wei_li_dai, apply_time, type, 
-      source_id, status)
+      source, status)
     values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, 
       #{city,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER}, #{sum,jdbcType=DECIMAL}, #{vocation,jdbcType=TINYINT}, 
       #{workTime,jdbcType=TINYINT}, #{sex,jdbcType=TINYINT}, #{monthIncome,jdbcType=TINYINT}, 
@@ -58,7 +58,7 @@
       #{building,jdbcType=TINYINT}, #{accumulationFund,jdbcType=TINYINT}, #{socialInsurance,jdbcType=TINYINT}, 
       #{lifeInsurance,jdbcType=TINYINT}, #{identyNumber,jdbcType=VARCHAR}, #{sesameCredit,jdbcType=INTEGER}, 
       #{weiLiDai,jdbcType=TINYINT}, #{applyTime,jdbcType=TIMESTAMP}, #{type,jdbcType=TINYINT}, 
-      #{sourceId,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER})
+      #{source,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.wangku.miaodan.core.model.Order">
     insert into order_info
@@ -129,8 +129,8 @@
       <if test="type != null">
         type,
       </if>
-      <if test="sourceId != null">
-        source_id,
+      <if test="source != null">
+        source,
       </if>
       <if test="status != null">
         status,
@@ -203,8 +203,8 @@
       <if test="type != null">
         #{type,jdbcType=TINYINT},
       </if>
-      <if test="sourceId != null">
-        #{sourceId,jdbcType=VARCHAR},
+      <if test="source != null">
+        #{source,jdbcType=VARCHAR},
       </if>
       <if test="status != null">
         #{status,jdbcType=INTEGER},
@@ -277,8 +277,8 @@
       <if test="type != null">
         type = #{type,jdbcType=TINYINT},
       </if>
-      <if test="sourceId != null">
-        source_id = #{sourceId,jdbcType=VARCHAR},
+      <if test="source != null">
+        source = #{source,jdbcType=VARCHAR},
       </if>
       <if test="status != null">
         status = #{status,jdbcType=INTEGER},
@@ -309,7 +309,7 @@
       wei_li_dai = #{weiLiDai,jdbcType=TINYINT},
       apply_time = #{applyTime,jdbcType=TIMESTAMP},
       type = #{type,jdbcType=TINYINT},
-      source_id = #{sourceId,jdbcType=VARCHAR},
+      source = #{source,jdbcType=VARCHAR},
       status = #{status,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -337,7 +337,7 @@
 		wei_li_dai,
 		apply_time,
 		type,
-		source_id,
+		source,
 		status,
 		add_time       
       from   order_info 
@@ -423,9 +423,9 @@
       limit #{page}, #{size}
   </select>
   
-  <select id="selectBySourceIdAndType" resultMap="BaseResultMap">
+  <select id="selectBysourceAndType" resultMap="BaseResultMap">
   	select * from order_info
-  	where source_id = #{sourceId} and type = #{type}
+  	where source = #{source} and type = #{type}
  	limit 1
   </select>  
   
@@ -441,7 +441,7 @@
 	oi.identy_number, oi.month_income, oi.wages_type,
 	oi.credit_card, oi.car, oi.building, oi.accumulation_fund,
 	oi.social_insurance, oi.life_insurance, oi.sesame_credit,
-	oi.wei_li_dai, oi.apply_time, oi.type, oi.source_id,
+	oi.wei_li_dai, oi.apply_time, oi.type, oi.source,
 	oi.status, oi.add_time, os.add_time saddTime
 	from order_info oi
 	LEFT JOIN order_stored os

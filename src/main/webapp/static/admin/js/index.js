@@ -333,7 +333,7 @@ function loadRequit(page) {
 			var str = "";
 			for (var i = 0; i < list.length; ++i) {
 				var opt = list[i].status == 0?'<button  onclick="updateRequit(' + list[i].id + ',' + 1 + ')">通过</button>&nbsp;&nbsp;&nbsp;<button onclick="updateRequit(' + list[i].id + ',' + 2 + ')">驳回</button>':'';
-				var status = list[i].status == 0? '<td align="center">未处理</td>':list[i].status == 1?'<td align="center">退单成功</td>':'<td align="center">已驳回</td>';
+				var status = list[i].status == 0? '<td align="center">待处理</td>':list[i].status == 1?'<td align="center">退单成功</td>':'<td align="center">已驳回</td>';
 				str += '<tr><td align="center">' + (++num) + '</td>'
 				+ '<td align="center">' + list[i].name + '</td>'
 				+ '<td align="center">' + list[i].mobile + '</td>'

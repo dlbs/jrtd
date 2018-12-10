@@ -34,7 +34,7 @@
 		ON rei.order_id = oi.id
 		where 1 = 1 
 		<if test="name != null">
-			and oi.name = #{name}
+			and ui.name = #{name}
 		</if>
 		<if test="status != null">
 			and rei.status = #{status}
@@ -47,7 +47,7 @@
 		select count(*) from jrtd_requit_info
 		where 1 = 1 
 		<if test="name != null">
-			and order_id in (select id from order_info where name = #{name})
+			and user_id in (select id from user_info where name = #{name})
 		</if>
 		<if test="status != null">
 			and status = #{status}

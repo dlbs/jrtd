@@ -2128,7 +2128,7 @@ h6[data-v-078a6550] {
 				</a>
 				<div data-v-078a6550="" class="weui-cell__bd food-detail">
 					<p data-v-078a6550="">
-						贷款金额：<span data-v-078a6550="" class="orderingMoney">${order.sum}万</span>
+						贷款金额：<span data-v-078a6550="" class="orderingMoney">${order.sum}万元</span>
 					</p>
 				</div>
 				<div data-v-078a6550="" class="weui-cell__bd mobile-detail">
@@ -2346,6 +2346,8 @@ h6[data-v-078a6550] {
 							<#if requit.status == 0>
 								<a data-v-078a6550="" href="javascript:;" class="weui-btn weui-btn_disabled weui-btn_primary">退单中</a>
 							<#elseif requit.status == 2>
+								<a data-v-078a6550="" href="/order/requit/${order.id}?from=${from}" class="weui-btn requit-btn_able weui-btn_primary">申请退单</a>
+							<#elseif requit.status == 1>
 								<a data-v-078a6550="" href="/order/requit/${order.id}?from=${from}" class="weui-btn requit-btn_able weui-btn_primary">申请退单</a>
 							</#if>
 						<#else>
