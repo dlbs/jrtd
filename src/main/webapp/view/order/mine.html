@@ -2411,7 +2411,18 @@ h6[data-v-1df58a84] {
 <body data-7m="7m_warp">
 	<div id="app">
 		<div data-v-2559bb2a="" id="oldTag" class="content">
-			<header data-v-2559bb2a="" class="detail-header"> 我的单子 </header>
+			<!-- <header data-v-2559bb2a="" class="detail-header"> 我的单子 </header> -->
+			<header data-v-2559bb2a="" class="header">
+				<div data-v-2559bb2a="" class="header-btn">
+					<#if td?? && td == "true">
+						<div data-v-2559bb2a="false" class="inner-btn left_btn">精品订单</div>
+						<div data-v-2559bb2a="true" class="inner-btn right_btn active_btn">淘单</div>
+					<#else>
+						<div data-v-2559bb2a="false" class="inner-btn left_btn active_btn">精品订单</div>
+						<div data-v-2559bb2a="true" class="inner-btn right_btn">淘单</div>
+					</#if>
+				</div>
+			</header>
 			<div data-v-ecaca2b0="" data-v-2559bb2a="" id="outer-abkcm" class="_v-container" style="width: 100%; height: 100%;">
 				<div data-v-2559bb2a="" id = "mescroll" data-v-ecaca2b0="" class="mescroll">
 					<div class="mescroll-downwarp mescroll-downwarp-reset" style="height: 0px;">
@@ -2461,6 +2472,7 @@ h6[data-v-1df58a84] {
 	</div>
 	<form id="form">
 		<input type="hidden" name="type" value="3" />
+		<input type="hidden" name ="TD" value = "${td!}">
 	</form>	
 	<script src="/static/common/js/jquery.min.js"></script>
 	<script src="/static/common/js/jquery-weui.min.js"></script>
@@ -2472,6 +2484,15 @@ h6[data-v-1df58a84] {
 			temp_type=3;
 			return $("#form").serialize();
 		}
+		$(function() {
+			$(".inner-btn").click(function() {
+				$(".inner-btn").removeClass("active_btn");
+				$(this).addClass("active_btn");
+				$("input[name='TD']").val($(this).attr("data-v-2559bb2a"));
+				temp_td = $(this).attr("data-v-2559bb2a");
+				getListData({"num":1, "size":20});				
+			});
+		});
     </script>
 </body>
 </html>

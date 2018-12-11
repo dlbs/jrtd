@@ -13,6 +13,7 @@
 <link href="/static/common/css/weui.min.css" rel="stylesheet">
 <link href="/static/common/css/verify.css" rel="stylesheet">
 <link rel="stylesheet" href="/static/common/css/iosSelect.css">
+<link rel="stylesheet" href="/static/common/popup/css/style.css">
 <style>
 * {
 	box-sizing: border-box;
@@ -1585,6 +1586,7 @@ h6[data-v-078a6550] {
 	<script src="/static/common/js/areaData.js"></script>
 	<script src="/static/common/js/iosSelect.js"></script>
 	<script src="/static/common/js/fastclick.js"></script>
+	<script src="/static/common/popup/js/popups.js"></script>	
 	<script>
 		$(function() {
 			$(".fa-chevron-left").click(function() {
@@ -1611,11 +1613,8 @@ h6[data-v-078a6550] {
 					    		_this.parent(".weui-uploader__input-box").attr("class", "weui__image-box");
 					    		_this.val("");
 					    	} else {
-					    		alert("网络错误请重新上传");
+					    		jqtoast("网络错误请重新上传");
 					    	}
-					    },
-					    error: function(data) {
-					    	console.log(data);
 					    }
 					}); 
 				}
@@ -1639,41 +1638,41 @@ h6[data-v-078a6550] {
 				param.picCard = $($(".weui-uploader__input")[1]).siblings().length > 0? $($(".weui-uploader__input")[1]).siblings().attr("src"): "";
 				param.picLogo = $($(".weui-uploader__input")[3]).siblings().length > 0? $($(".weui-uploader__input")[3]).siblings().attr("src"): "";
 				if(param.name == "") {
-					alert("姓名不能为空:");
+					jqtoast("姓名不能为空");
 					return;
 				}
 				
 				if (param.identity == "") {
-					alert("身份证号不能为空");
+					jqtoast("身份证号不能为空");
 					return;
 				}
 				
 				if(param.city == "") {
-					alert("请填写所在城市");
+					jqtoast("请填写所在城市");
 					return;
 				}
 				
 				if(param.compName == "") {
-					alert("请填写公司全称");
+					jqtoast("请填写公司全称");
 					return;
 				}
 				
 				if(param.picIdentity == "") {
-					alert("请上传身份证正面照片");
+					jqtoast("请上传身份证正面照片");
 					return;
 				}
 				
 				if (param.picIdentityBack == "") {
-					alert("请上传身份证背面照片");
+					jqtoast("请上传身份证背面照片");
 					return;
 				}
 				if(param.picCard == "") {
-					alert("请上传个人名片或工牌照片");
+					jqtoast("请上传个人名片或工牌照片");
 					return;
 				}
 				
 				if (param.picLogo == "") {
-					alert("请上传本人与公司logo合影");
+					jqtoast("请上传本人与公司logo合影");
 					return;
 				}
 				
@@ -1683,9 +1682,9 @@ h6[data-v-078a6550] {
 					if (data.code == 200) {
 						$(".auditStatus-msg").text("审核状态：审核中");
 						$(".weui-btn_primary").addClass(" weui-btn_disabled");
-						alert(data.msg);
+						jqtoast(data.msg);
 					} else {
-						alert("网络错误！");
+						jqtoast("网络错误！");
 					}
 				});
 			});

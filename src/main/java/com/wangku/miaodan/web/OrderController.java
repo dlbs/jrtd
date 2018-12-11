@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.wangku.miaodan.constant.OrderSourceTypeEnum;
 import com.wangku.miaodan.core.interceptor.LoginInterceptor;
 import com.wangku.miaodan.core.model.Order;
 import com.wangku.miaodan.core.model.Requit;
@@ -47,7 +48,7 @@ public class OrderController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		List<Order> orders = new ArrayList<Order>(0);
 		if (condition.getType() != null && condition.getType() == 3) {
-			orders = orderService.getStoredByUser(LoginInterceptor.getMobile(request));
+			orders = orderService.getStoredByUser(LoginInterceptor.getMobile(request), condition.isTD());
 		} else {
 			orders = orderService.selectByCondition(condition);
 		}
@@ -83,13 +84,15 @@ public class OrderController {
 	}
 	
 	@RequestMapping("/order/detail/{id}")
-	public String detail(@PathVariable("id") String id, String from, ModelMap mp, HttpServletRequest request) {
+	public String detail(@PathVariable("id") String id, String from, Boolean td, Integer status, ModelMap mp, HttpServletRequest request) {
 		String mobile = LoginInterceptor.getMobile(request);
 		Order order = orderService.getOrderById(Long.parseLong(id));
 		mp.put("isMine", orderService.checkIsMine(mobile, order.getId()));
 		mp.put("from", from);
+		mp.put("status", status);
+		mp.put("td", td == null? "false":td.toString());
 		mp.put("order", order);
-		mp.put("isTD", (new Date().getTime() - order.getApplyTime().getTime())/(24 * 60 * 60 * 1000) >= 1? true:false);
+		mp.put("isTD", OrderSourceTypeEnum.isTDByDesc(order.getSource()));
 		mp.put("requit", resquitService.detail(Long.parseLong(id), mobile));
 		return "/order/order-detail";
 	}
@@ -104,9 +107,9 @@ public class OrderController {
 		if (order == null) {
 			result.put("code", 601);
 		} else {
-			boolean isTD = new Date().getTime() - order.getApplyTime().getTime() >= 24 * 60 * 60 * 1000;
-			 //验证用户是否通过认证
-			 Integer status = userService.getDetailByMobile(mobile).getStatus();
+			boolean isTD = OrderSourceTypeEnum.isTDByDesc(order.getSource());
+			//验证用户是否通过认证
+			Integer status = userService.getDetailByMobile(mobile).getStatus();
 			 
 			if (status == 0) {
 				result.put("code", 601);
@@ -194,6 +197,15 @@ public class OrderController {
 		if (Objects.isNull(order.getApplyTime())) {
 			return 6;
 		}
+		
+		if (Objects.isNull(order.getSource())) {
+			return 7;
+		}
+		
+		if (!"M01".equals(order.getSource()) || !"Y02".equals(order.getSource()) || !"A03".equals(order.getSource()) || !"B04".equals(order.getSource())) {
+			return 7;
+		}
+		
 		
 		List<Order> list = new ArrayList<Order>();
 		list.add(order.translateOrder());

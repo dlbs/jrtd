@@ -33,8 +33,8 @@ public class OrderServiceImpl implements IOrderService {
 	}
 
 	@Override
-	public List<Order> getStoredByUser(String mobile) {
-		return orderMapper.getStoredByUser(mobile);
+	public List<Order> getStoredByUser(String mobile, boolean isTD) {
+		return orderMapper.getStoredByUser(mobile, isTD);
 	}
 
 	@Override

@@ -76,6 +76,16 @@ public class SearchBean {
 	// 页面数据尺寸
 	private Integer size;
 	
+	private boolean isTD;
+	
+	public boolean isTD() {
+		return isTD;
+	}
+
+	public void setTD(boolean isTD) {
+		this.isTD = isTD;
+	}
+
 	public String getNowDate() {
 		return nowDate;
 	}

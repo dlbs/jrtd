@@ -343,16 +343,13 @@
       from   order_info 
       where 1 = 1 
       <if test="type == 1">
-      	and apply_time >= #{nowDate}
-      </if>
-      <if test="type == 2">
-      	and apply_time &lt; #{nowDate}
+      	and source in ("M01", "A03", "B04")
       </if>
       <if test="vocation != null">
       	and vocation =#{vocation}
       </if>
       <if test="type == 3">
-      	and apply_time &lt; #{now} 
+      	and source = "Y02"
       </if>
       <if test="status != null">
       	and status = #{status}
@@ -446,7 +443,14 @@
 	from order_info oi
 	LEFT JOIN order_stored os
 	ON oi.id = os.order_id 
-	where oi.id in (select order_id from order_stored where mobile = #{mobile}) and oi.status = 1
+	where 1 = 1 
+	<if test="isTD">
+		and oi.source  = "Y02"
+	</if>
+	<if test="!isTD">
+		and oi.source in ("M01", "A03", "B04")
+	</if>
+	and oi.id in (select order_id from order_stored where mobile = #{mobile}) and oi.status = 1
 	order by saddTime desc   	
   </select>
   

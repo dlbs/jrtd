@@ -50,7 +50,8 @@ public class HomeController {
 	}
 	
 	@RequestMapping("/mine")
-	public String mine() {
+	public String mine(Boolean td, ModelMap model) {
+		model.put("td", td == null? "false":td.toString());
 		return "/order/mine";
 	}
 	

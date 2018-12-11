@@ -13,6 +13,7 @@
 <link href="/static/common/css/weui.min.css" rel="stylesheet">
 <link href="/static/common/css/verify.css" rel="stylesheet">
 <link rel="stylesheet" href="/static/common/css/iosSelect.css">
+<link rel="stylesheet" href="/static/common/popup/css/style.css">
 <style>
 * {
 	box-sizing: border-box;
@@ -2142,6 +2143,7 @@ h6[data-v-078a6550] {
 	<script src="/static/common/js/polyfill.min.js"></script>
 	<script src="/static/common/js/jquery-weui.min.js"></script>
 	<script src="/static/common/js/areaData.js"></script>
+	<script src="/static/common/popup/js/popups.js"></script>	
 	<script>
 		$(function() {
 			$(".fa-chevron-left").click(function() {
@@ -2150,15 +2152,14 @@ h6[data-v-078a6550] {
 			$(".weui-btn_able").click(function() {
 				var data = $("#form").serialize();
 				if (data.indexOf("requitReason") < 0) {
-					alert("请选择退单原因");
-					return;
+					jqtoast("请选择退单原因");
+				} else {
+					$.post("/order/requit/" + $("#orderId").val(), data, function(data) {
+						if (data.code == 200) {
+							jqtoast(data.msg, 1500, "/order/detail/" + $("#orderId").val() + "?from=${from}");
+						}
+					});
 				}
-				$.post("/order/requit/" + $("#orderId").val(), data, function(data) {
-					if (data.code == 200) {
-						alert(data.msg);
-						window.location.href = "/order/detail/" + $("#orderId").val() + "?from=${from}";
-					}
-				});
 			});
 		});	
 	</script>

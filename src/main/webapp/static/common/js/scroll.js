@@ -1,6 +1,7 @@
 //创建MeScroll对象,内部已默认开启下拉刷新,自动执行up.callback,重置列表数据;
 			var temp_type = 1;
 			var temp_status = "";
+			var temp_td = false;
 			var from = "";
 			var mescroll = new MeScroll("mescroll", {
 				up: {
@@ -23,7 +24,11 @@
 			function setListData(data){
 				from = temp_type == 1? "/home": temp_type == 2? "/td":"/mine";
 				if (temp_status != "") {
-					from += "&status" + temp_status;
+					from += "&status=" + temp_status;
+				}
+				
+				if (temp_td != "") {
+					from += "&td=" + temp_td;
 				}
 				
 				var now = new Date().getTime();

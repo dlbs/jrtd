@@ -13,6 +13,7 @@
 <link href="/static/common/css/weui.min.css" rel="stylesheet">
 <link href="/static/common/css/verify.css" rel="stylesheet">
 <link rel="stylesheet" href="/static/common/css/iosSelect.css">
+<link rel="stylesheet" href="/static/common/popup/css/style.css">
 <style>
 * {
 	box-sizing: border-box;
@@ -2342,16 +2343,20 @@ h6[data-v-078a6550] {
 					<a data-v-078a6550="" href="javascript:;" class="weui-btn weui-btn_able weui-btn_primary"> 立即抢单 </a>
 				<#else>
 					<#if isMine>
-						<#if requit??>
-							<#if requit.status == 0>
-								<a data-v-078a6550="" href="javascript:;" class="weui-btn weui-btn_disabled weui-btn_primary">退单中</a>
-							<#elseif requit.status == 2>
-								<a data-v-078a6550="" href="/order/requit/${order.id}?from=${from}" class="weui-btn requit-btn_able weui-btn_primary">申请退单</a>
-							<#elseif requit.status == 1>
+						<#if order.source == "Y02"> 
+							<a data-v-078a6550="" href="javascript:;" class="weui-btn weui-btn_disabled weui-btn_primary">抢单结束</a>
+						<#else>
+							<#if requit??>
+								<#if requit.status == 0>
+									<a data-v-078a6550="" href="javascript:;" class="weui-btn weui-btn_disabled weui-btn_primary">退单中</a>
+								<#elseif requit.status == 2>
+									<a data-v-078a6550="" href="/order/requit/${order.id}?from=${from}" class="weui-btn requit-btn_able weui-btn_primary">申请退单</a>
+								<#elseif requit.status == 1>
+									<a data-v-078a6550="" href="/order/requit/${order.id}?from=${from}" class="weui-btn requit-btn_able weui-btn_primary">申请退单</a>
+								</#if>
+							<#else>
 								<a data-v-078a6550="" href="/order/requit/${order.id}?from=${from}" class="weui-btn requit-btn_able weui-btn_primary">申请退单</a>
 							</#if>
-						<#else>
-							<a data-v-078a6550="" href="/order/requit/${order.id}?from=${from}" class="weui-btn requit-btn_able weui-btn_primary">申请退单</a>
 						</#if>
 					<#else>
 						<a data-v-078a6550="" href="javascript:;" class="weui-btn weui-btn_disabled weui-btn_primary">抢单结束</a>
@@ -2365,33 +2370,42 @@ h6[data-v-078a6550] {
 	<script src="/static/common/js/polyfill.min.js"></script>
 	<script src="/static/common/js/jquery-weui.min.js"></script>
 	<script src="/static/common/js/areaData.js"></script>
+	<script src="/static/common/popup/js/popups.js"></script>
 	<script>
 		$(function() {
 			$(".fa-chevron-left").click(function() {
-				window.location.href='${from}';
+				window.location.href='${from}' + "?status=${status!''}&td=${td!''}";
 			});
 			$(".weui-btn_able").click(function() {
 				$.post("/order/store", {"id":$("#id").val()}, function(data) {
 					if (data.code == 200) {
-						alert("抢单成功!");
+						jqtoast("抢单成功!");
 						$(".orderingMobile").text(data.mobile);
 						$(".weui-btn_primary").addClass("weui-btn_disabled");
 					} else if (data.code == 300){
-						alert("抢单机会用尽，请尽快充值!");
+						jqtoast("抢单机会用尽，请尽快充值!");
 					} else if (data.code == 500) {
-						alert("发生网络错误");
+						jqtoast("发生网络错误");
 					} else if (data.code == 600) {
-						alert("此订单已经被抢");
+						jqtoast("此订单已经被抢");
 					} else if (data.code == 601) {
-						if (confirm("请通过实名认证")) {
-							window.location.href="/user/certify";
-						}
+						jqalert({
+		                    title:'',
+		                    content:'请先通过实名认证',
+		                    yestext:'确定',
+		                    notext:'取消',
+		                    yeslink:'/user/certify'
+		                })
 					} else if (data.code == 602) {
-						alert("实名认证审核中，请耐心等待");
+						jqtoast("实名认证审核中，请耐心等待");
 					} else if (data.code == 603){
-						if (confirm("实名认证审核未通过，请修改信息后重新提交审核")) {
-							window.location.href="/user/certify";
-						}
+						jqalert({
+		                    title:'',
+		                    content:'实名认证审核未通过，请修改信息后重新提交审核',
+		                    yestext:'确定',
+		                    notext:'取消',
+		                    yeslink:'/user/certify'
+		                })						
 					}
 				});
 			});

@@ -46,6 +46,16 @@ public class TempOrder {
 	private String weiLiDai;
 
 	private Date applyTime;
+	
+	private String source;
+
+	public String getSource() {
+		return source;
+	}
+
+	public void setSource(String source) {
+		this.source = source;
+	}
 
 	public String getName() {
 		return name;
