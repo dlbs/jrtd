@@ -16,6 +16,7 @@
 		<result column="reason" jdbcType="VARCHAR" property="reason" />
 		<result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
 		<result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+		<result column="source" property="source"/>
 	</resultMap>
 	
 	<insert id="insert" parameterType="com.wangku.miaodan.core.model.Requit">
@@ -26,7 +27,7 @@
 	<select id="list" resultMap="BaseResultMap" parameterType="map">
 		select rei.id, ui.name, ui.mobile, rei.add_time, rei.status, 
 			   rei.requit_reason, rei.reason, rei.update_time, 
-			   oi.name product_name, oi.mobile product_mobile, oi.sum 
+			   oi.name product_name, oi.mobile product_mobile, oi.sum, oi.source  
 		from jrtd_requit_info rei
 		LEFT JOIN user_info ui
 		ON rei.user_id = ui.id
@@ -38,6 +39,9 @@
 		</if>
 		<if test="status != null">
 			and rei.status = #{status}
+		</if>
+		<if test="source != null">
+			and oi.source = #{source} 
 		</if>
 		order by rei.add_time desc 
 		limit #{start}, #{size}
@@ -51,7 +55,10 @@
 		</if>
 		<if test="status != null">
 			and status = #{status}
-		</if>		
+		</if>	
+		<if test="source != null">
+			and order_id in (select id from order_info where source = #{source})
+		</if>			
 	</select>
 	
 	<update id="updateByPrimaryKey" parameterType="com.wangku.miaodan.core.model.Requit">

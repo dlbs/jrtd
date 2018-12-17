@@ -19,7 +19,15 @@
     <div class="box">
         <div class="search">
 			<form action="javascript:;" id="form">
-	        	用户姓名:<input type="text" autocomplete="off" id="name" name="name" value="" placeholder="用户姓名">&nbsp;&nbsp;
+	        	用户姓名:<input type="text" autocomplete="off" id="name" name="name" value="" placeholder="用户姓名">&nbsp;&nbsp;&nbsp;&nbsp;
+	        	数据来源编码:
+	        	<select id="source" name="source">
+	        		<option value="">不限</option>
+	        		<option value="M01">M01</option>
+	        		<option value="Y02">Y02</option>
+	        		<option value="A03">A03</option>
+	        		<option value="B04">B04</option>
+	        	</select>&nbsp;&nbsp;&nbsp;&nbsp;
 	        	状           态:
 	        	<select id="status" name="status">
 	        		<option value="">不限</option>
@@ -45,6 +53,7 @@
     	$("#reset").click(function() {
     		$("#name").val("");
     		$("#status").val("");
+    		$("#source").val("");
     	});
     </script>
 </body>

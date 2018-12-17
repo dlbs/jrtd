@@ -10,13 +10,11 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta name="format-detection" content="telephone=no">
 <link href="/static/common/css/font-awesome.min.css" rel="stylesheet">
+<link href="/static/common/css/mescroll.css" rel="stylesheet">
 <link href="/static/common/css/jquery-weui.min.css" rel="stylesheet">
 <link href="/static/common/css/weui.min.css" rel="stylesheet">
 <link href="/static/common/css/verify.css" rel="stylesheet">
 <link rel="stylesheet" href="/static/common/css/iosSelect.css">
-<link href="/static/common/iscroll/css/css.css" rel="stylesheet">
-<link href="/static/common/iscroll/css/pullToRefresh.css" rel="stylesheet">
-
 <style>
 * {
 	box-sizing: border-box;
@@ -181,7 +179,7 @@ html, body {
 ._v-container[data-v-7ad21634] {
 	background: #f5f5f5;
 	padding-top: 80px;
-	height: calc(100%) !important
+	height: calc(100% - 55px) !important
 }
 
 ._v-content[data-v-7ad21634] {
@@ -189,9 +187,11 @@ html, body {
 }
 
 .header[data-v-7ad21634] {
-	width: 100%;
+	position: fixed;
+	z-index: 1;
+	width: 100vw;
 	height: 40px;
-	background: #fff;
+	background: #fff
 }
 
 .header-btn[data-v-7ad21634] {
@@ -512,6 +512,9 @@ a.menu[data-v-7ad21634] {
 }
 </style>
 <style type="text/css">
+#footer[data-v-5247103c] {
+	position: fixed
+}
 
 #footer a[data-v-5247103c] {
 	border-left: 0 solid #c0bfc4
@@ -2161,66 +2164,50 @@ a.menu[data-v-1fde3c5f] {
 	width: 60px;
 	height: 25px
 }
-.content{
-    display: flex;
-    flex-direction: column;
-    overflow-x:hidden
-}
-.header, .weui-tabbar{
-	z-index:3
-}
-
-#thelist{
-	flex:1;
-}
-.main{
-	flex: 1;
-	overflow-y: hidden;
-	display: flex;
-    flex-direction: column;
-}
-
 </style>
 </head>
 <body data-7m="7m_warp">
 	<div id="app">
 		<div data-v-7ad21634="" id="restaurant" class="content">
-		<!--头部  -->
 			<header data-v-7ad21634="" class="header">
 				<div data-v-7ad21634="" class="header-btn">
 					<#if condition.status?? && condition.status == 0>
-					<div data-v-7ad21634="" class="inner-btn left_btn" onclick="navigate('/home')">全部订单</div>
-					<div data-v-7ad21634="" class="inner-btn right_btn active_btn" onclick="navigate('/home?status=0')">可抢订单</div>
+					<div data-v-7ad21634="" class="inner-btn left_btn">全部订单</div>
+					<div data-v-7ad21634="" class="inner-btn right_btn active_btn">可抢订单</div>
 					<#else>
 					<div data-v-7ad21634="" class="inner-btn left_btn active_btn">全部订单</div>
 					<div data-v-7ad21634="" class="inner-btn right_btn">可抢订单</div>
 					</#if>
 				</div>
-				<div data-v-7ad21634="" class="city-picker">
-					<i data-v-7ad21634="" class="fa fa-map-marker fa-fw"></i>
-					<span data-v-7ad21634="">${condition.city!'全国'}</span>
-				</div>
-				<div data-v-7ad21634="" class="screen">
-					<i data-v-7ad21634="" class="fa fa-search fa-fw"></i>
-					<button data-v-7ad21634="" type="button">筛选</button>
-				</div>
 			</header>
-			<!-- 中间 -->
-			<div data-v-ecaca2b0="" id="scroller" class='main'>
-				<!-- 轮播图 -->
-				<div data-v-7ad21634="" data-v-ecaca2b0="" data-space-between="10" data-pagination=".swiper-pagination" data-autoplay="1000" class="swiper-container">
-					<div data-v-7ad21634="" data-v-ecaca2b0="" class="swiper-wrapper">
-						<div data-v-7ad21634="" data-v-ecaca2b0="" class="swiper-slide">
-							<img data-v-7ad21634="" data-v-ecaca2b0="" src="/static/img/slide2.b5e7815.jpg" alt="" width="100%">
+			<div data-v-7ad21634="" class="city-picker">
+				<i data-v-7ad21634="" class="fa fa-map-marker fa-fw"></i>
+				<span data-v-7ad21634="">${condition.city!'全国'}</span>
+			</div>
+			<div data-v-7ad21634="" class="screen">
+				<i data-v-7ad21634="" class="fa fa-search fa-fw"></i>
+				<button data-v-7ad21634="" type="button">筛选</button>
+			</div>
+			<div data-v-ecaca2b0="" data-v-7ad21634="" id="outer-to329" class="_v-container" style="width: 100%; height: 100%;">
+				<div data-v-ecaca2b0="" id="mescroll" class='mescroll'  style="transform: translate3d(0px, 0px, 0px) scale(1);">
+					<!-- 加载中 -->
+					<div class="mescroll-downwarp mescroll-downwarp-reset" style="height: 0px;">
+						<div class="downwarp-content">
+							<p class="downwarp-progress mescroll-rotate" style="transform: rotate(747.9deg);"></p>
+							<p class="downwarp-tip">加载中 ...</p>
 						</div>
 					</div>
+					<!-- 轮播图 -->
+					<div data-v-7ad21634="" data-v-ecaca2b0="" data-space-between="10" data-pagination=".swiper-pagination" data-autoplay="1000" class="swiper-container">
+						<div data-v-7ad21634="" data-v-ecaca2b0="" class="swiper-wrapper">
+							<div data-v-7ad21634="" data-v-ecaca2b0="" class="swiper-slide">
+								<img data-v-7ad21634="" data-v-ecaca2b0="" src="/static/img/slide2.b5e7815.jpg" alt="" width="100%">
+							</div>
+						</div>
+					</div>
+					<div id='temp'></div>
 				</div>
-				<!-- 数据scroll -->
-				<div id='wrapper'>
-					<ul id = "thelist"></ul>
-				</div>		
 			</div>
-			<!-- 脚部 -->
 			<div data-v-5247103c="" data-v-7ad21634="" id="footer" class="weui-tabbar">
 				<a data-v-5247103c="" href="javascript:;" class="weui-tabbar__item">
 					<li data-v-5247103c="" class="restaurant router-link-exact-active router-link-active">
@@ -2280,78 +2267,54 @@ a.menu[data-v-1fde3c5f] {
 	<script src="/static/common/js/polyfill.min.js"></script>
 	<script src="/static/common/js/jquery-weui.min.js"></script>
 	<script src="/static/common/js/areaData.js"></script>
-	 <script src="/static/common/iscroll/js/iscroll.js"></script>
-	 <script src="/static/common/iscroll/js/pullToRefresh.js"></script> 
-	 <script src="/static/common/iscroll/js/js.js"></script> 
+	<script src="/static/common/js/mescroll.js"></script>
+	<script src="/static/common/js/scroll.js"></script>
 	<script>
- 	var class_data = "data-v-7ad21634";
- 	getListData({"num":1});
-	refresher.init({
-		id:"wrapper",
-		pullDownAction:Refresh,                                                            
-		pullUpAction:Load 																			
-	});
-	function Refresh() {																
-		setTimeout(function () {	
-			var el, li, i;																		
-			el =document.querySelector("#wrapper ul");					
-			document.getElementById("wrapper").querySelector(".pullDownIcon").style.display="none";		
-			document.getElementById("wrapper").querySelector(".pullDownLabel").innerHTML="刷新成功";																					 
-			setTimeout(function () {
-				getListData({"num":1});
-				wrapper.refresh();
-				},1000);
-		}, 1000);
-	}
-	function Load() {
-		setTimeout(function () {
-			var el, li, i;
-			el =document.querySelector("#wrapper ul");
-			getListData({"num":++pageNum});
-			wrapper.refresh();
-		},1000);	
-	}
- 	$(function() {
-		getListData({"num":1, "size":20});
-		if ($("#openId").val() == '0') {
-			var href = location.href;
-			var redirect = href.indexOf("?") >= 0? href.substring(0, href.indexOf("?")): href;
-			var param = href.indexOf("?") >= 0? href.substring(href.indexOf("?") + 1, href.length): "";
-			window.location.href = "/pay/getopenid?redirecturl=" + redirect + "&" + param;
-			return;				
-		} 
-		
-		$(".inner-btn").click(function() {
-			var url = "/home"
-			$("input[name='status']").val($(this).text() == "可抢订单"? "0":"");
-			window.location.href = url + "?" + loadParams();
-		});
-		
-		$(".city-picker").on("click", function() {
-			window.location.href = "/map?type=1&city=" + $("input[name='city']").val() + "&status=" + $("input[name='status']").val();
-		});
-		
-		$(".screen").on("click", function() {
-			window.location.href = "/map/search?type=1&city="+ $("input[name='city']").val() + "&status=" + $("input[name='status']").val();
-		});
-	})
-	function resetCondition() {
-		$("input[name='building']").val("");
-		$("input[name='lifeInsurance']").val("");
-		$("input[name='weiLiDai']").val("");
-		$("input[name='socialInsurance']").val("");
-		$("input[name='accumulationFund']").val("");
-		$("input[name='car']").val("");
-	}
-	function loadParams() {
-			temp_type = 1;
-		temp_status = $("input[name='status']").val(); 
-		return $('#form').serialize();
-	} 
+		var class_data = "data-v-7ad21634";
+		$(function() {
+ 			if ($("#openId").val() == '0') {
+				var href = location.href;
+				var redirect = href.indexOf("?") >= 0? href.substring(0, href.indexOf("?")): href;
+				var param = href.indexOf("?") >= 0? href.substring(href.indexOf("?") + 1, href.length): "";
+				window.location.href = "/pay/getopenid?redirecturl=" + redirect + "&" + param;
+				return;				
+			} 
+			$(".inner-btn").click(function() {
+				var _this = $(this);
+				_this.addClass("active_btn");
+				_this.siblings().removeClass("active_btn");
+				if (_this.text() == "可抢订单") {
+					$("input[name='status']").val(0);
+				} else {
+					$("input[name='status']").val("");
+				}
+				getListData({"num":1, "size":20});
+			});
 
-	$("#scroller").on('touchmove', function(evt) {
-		evt.preventDefault()
-	});  
+			$(".city-picker").on("click", function() {
+				window.location.href = "/map?type=1&city=" + $("input[name='city']").val() + "&status=" + $("input[name='status']").val();
+			});
+
+			$(".screen").on("click", function() {
+				window.location.href = "/map/search?type=1&city="+ $("input[name='city']").val() + "&status=" + $("input[name='status']").val();
+			});
+		})
+		function resetCondition() {
+			$("input[name='building']").val("");
+			$("input[name='lifeInsurance']").val("");
+			$("input[name='weiLiDai']").val("");
+			$("input[name='socialInsurance']").val("");
+			$("input[name='accumulationFund']").val("");
+			$("input[name='car']").val("");
+		}
+		function loadParams() {
+			temp_type = 1;
+			temp_status = $("input[name='status']").val();
+			return $('#form').serialize();
+		}
+ 		$("#mescroll").on('touchmove', function(evt) {
+			evt.preventDefault()
+		}); 
 	</script>
 </body>
 </html>

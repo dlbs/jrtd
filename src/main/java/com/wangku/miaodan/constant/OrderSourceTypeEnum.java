@@ -16,7 +16,7 @@ public enum OrderSourceTypeEnum {
 	public static boolean isTDByDesc(String desc) {
 		OrderSourceTypeEnum[] values = OrderSourceTypeEnum.values();
 		for (OrderSourceTypeEnum source : values) {
-			if (desc.equals(source.getDesc())) {
+			if (desc.equals(source.getName())) {
 				return source.isTD;
 			}
 		}

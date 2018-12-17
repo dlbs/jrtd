@@ -2110,6 +2110,18 @@ h6[data-v-078a6550] {
 .w100[data-v-078a6550] {
 	width: 100%
 }
+.textarea-inherit {
+    width: 100%;
+    overflow: auto;
+    word-break: break-all; //解决兼容问题
+}
+ .weui-btn_able{
+  cursor: pointer;
+ }
+#form{
+	position: fixed;
+	width: 100%;
+}
 </style>
 </head>
 <body>
@@ -2130,12 +2142,12 @@ h6[data-v-078a6550] {
 					</p>
 					<p>
 						<span>其他原因</span><br>
-						<textarea name="other" rows="5" cols="52" placeholder="选填"></textarea>
+						<textarea class="textarea-inherit" rows="4" name="other" placeholder="选填"></textarea>
 					</p>
 				</form>
 			</div>
 			<div data-v-078a6550="" id="footer" class="weui-tabbar">
-				<a data-v-078a6550="" href="javascript:;" class="weui-btn weui-btn_able weui-btn_primary"> 提交 </a>
+				<button data-v-078a6550="" class="weui-btn weui-btn_able weui-btn_primary"> 提交 </button>
 			</div>
 		</div>
 		<input type="hidden" id="orderId" value="${orderId}">
@@ -2152,11 +2164,11 @@ h6[data-v-078a6550] {
 			$(".weui-btn_able").click(function() {
 				var data = $("#form").serialize();
 				if (data.indexOf("requitReason") < 0) {
-					jqtoast("请选择退单原因");
+					jqtoast("请选择退单原因", 1500,"red");
 				} else {
 					$.post("/order/requit/" + $("#orderId").val(), data, function(data) {
 						if (data.code == 200) {
-							jqtoast(data.msg, 1500, "/order/detail/" + $("#orderId").val() + "?from=${from}");
+							jqtoast(data.msg, 1500, "green", "/order/detail/" + $("#orderId").val() + "?from=${from}");
 						}
 					});
 				}

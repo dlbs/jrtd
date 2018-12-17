@@ -2,6 +2,7 @@ package com.wangku.miaodan.web;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -26,6 +27,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import sun.misc.BASE64Decoder;
+
 import com.wangku.miaodan.core.model.Order;
 import com.wangku.miaodan.core.service.IOrderService;
 
@@ -38,9 +41,63 @@ public class FileController {
 	
 	@RequestMapping("/upload")
 	@ResponseBody
+	public Map<String, Object> upload(HttpServletRequest request) {
+		
+		Map<String, Object> result = new HashMap<String, Object>();
+		String fileStr = request.getParameter("file");
+		String name = request.getParameter("name");
+		if (fileStr != null) {
+			String path = request.getSession().getServletContext().getRealPath("/user-info");
+			name = new StringBuffer(40).append(UUID.randomUUID().toString().replace("-", "")).append(name).toString();
+			File temp = new File(path + File.separator + name);
+			try {
+				if (!temp.exists()) {
+					temp.createNewFile();					
+				}
+				FileOutputStream outputStream = new FileOutputStream(temp);
+				byte[] decodeBytes = new BASE64Decoder().decodeBuffer(fileStr.split(",")[1]);
+/*				for (int i = 0; i < decodeBytes.length; ++i) {
+					if (decodeBytes[i] < 0) {// 调整异常数据
+						decodeBytes[i] += 256;
+					}
+				}	*/
+				outputStream.write(decodeBytes);
+				outputStream.flush(); 
+				outputStream.close();
+				result.put("code", 200);
+				result.put("url", "/user-info/" + name);
+			} catch (IOException e) {
+				e.printStackTrace();
+				result.put("code", 500);
+			}			
+		} else {
+			
+		}
+		
+		
+/*		String path = request.getSession().getServletContext().getRealPath("/user-info");
+		if (file != null) {
+			String name = file.getOriginalFilename();
+			name = new StringBuffer(40).append(UUID.randomUUID().toString().replace("-", "")).append(".").append(name).toString();
+			File temp = new File(path + File.separator + name);
+			try {
+				temp.mkdirs();
+				file.transferTo(temp);
+				result.put("code", 200);
+				result.put("url", "/user-info/" + name);
+			} catch (IOException e) {
+				e.printStackTrace();
+				result.put("code", 500);
+			}
+		}*/
+		
+		return result;
+	}	
+/*	
+	@RequestMapping("/upload")
+	@ResponseBody
 	public Map<String, Object> upload(MultipartFile file, HttpServletRequest request) {
 		String path = request.getSession().getServletContext().getRealPath("/user-info");
-		System.out.println(path);
 		Map<String, Object> result = new HashMap<String, Object>();
 		if (file != null) {
 			String name = file.getOriginalFilename();
@@ -57,7 +114,7 @@ public class FileController {
 			}
 		}
 		return result;
-	}
+	}*/
 	
 	@RequestMapping("/uploadData")
 	@ResponseBody

@@ -1302,12 +1302,12 @@ button.weui-vcode-btn {
 .weui-tabbar {
     display: -webkit-box;
     display: -webkit-flex;
-    display: flex;
-    position: absolute;
-    z-index: 500;
-    bottom: 0;
+    /* display: flex; */
+    /* position: absolute; */
+    /* z-index: 500; */
+    /* bottom: 0; */
     width: 100%;
-    background-color: #f7f7fa
+    background-color: #f7f7fa;
 }
 
 .weui-tabbar:before {

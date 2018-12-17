@@ -320,6 +320,7 @@ function loadRequit(page) {
                     + '<th  align="center">贷款人姓名</th>'
                     + '<th  align="center">贷款人电话</th>'
                     + '<th  align="center">贷款总额</th>'
+                    + '<th  align="center">数据来源</th>'
                     + '<th  align="center">申退原因</th>'
                     + '<th  align="center">申退状态</th>'
                     + '<th  align="center">驳回原因</th>'
@@ -340,6 +341,7 @@ function loadRequit(page) {
 				+ '<td align="center">' + list[i].productName + '</td>'
 				+ '<td align="center">' + list[i].productMobile + '</td>'
 				+ '<td align="center">' + list[i].sum + '万元</td>'
+				+ '<td align="center">' + list[i].source + '</td>'
 				+ '<td align="center">' + list[i].requitReason + '</td>'
 				+ status
 				+ '<td align="center">' + list[i].reason + '</td>'
@@ -351,7 +353,7 @@ function loadRequit(page) {
 			$("#tbody").empty().append($(str));
 			$(".ul_listz li:nth-child(2)").html($(".ul_listz li:nth-child(2)").html().replace("&nbsp;&nbsp;&nbsp;&nbsp;", "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;共" + data.count + "/" + data.sum + "条&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"));		
 		} else {
-			$("#tbody").append($('<tr><td colspan="12" rowspan="6" align="center">暂无数据</td></tr>'));
+			$("#tbody").append($('<tr><td colspan="13" rowspan="6" align="center">暂无数据</td></tr>'));
 		}
 	});	
 }

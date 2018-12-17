@@ -1207,9 +1207,9 @@ button[data-v-a3a6e31c], input[data-v-a3a6e31c] {
 	function send_code() {
 		var mobile = $("input[name='username']").val();
 		if (mobile == "") {
-			jqtoast('手机号不能为空');
+			jqtoast('手机号不能为空', 1500, "red");
 		} else if (!/^1[3|4|5|7|8][0-9]\d{4,8}$/.test(mobile)) {
-			jqtoast('请正确填写手机号');
+			jqtoast('请正确填写手机号', 1500, "red");
 		} else {
 			$(".msg-btn").attr("disabled", true);	
 			$(".msg-btn").attr("class", "msg-btn dis");	
@@ -1217,7 +1217,7 @@ button[data-v-a3a6e31c], input[data-v-a3a6e31c] {
 			set_time();
 			$.post("/login/sendVerifyCode", {"mobile":mobile}, function(data) {
 				if (data.code == 200) {
-					jqtoast("发送成功，请在手机上查收");
+					jqtoast("验证码发送成功，请在手机上查收");
 				}
 			});
 		}
@@ -1226,15 +1226,15 @@ button[data-v-a3a6e31c], input[data-v-a3a6e31c] {
 	function confirm() {
 		var tel = $("input[name='username']").val();
 		if (tel == "") {
-			jqtoast('手机号不能为空');
+			jqtoast('手机号不能为空', 1500, "red");
 			return ;
 		} else if (!/^1[3|4|5|7|8][0-9]\d{4,8}$/.test(tel)) {
-			jqtoast('请正确填写手机号');
+			jqtoast('请正确填写手机号', 1500, "red");
 			return;
 		}
 		var msgCode = $("#msgcode").val();
 		if (msgCode == "") {
-			jqtoast('验证码不能为空');
+			jqtoast('验证码不能为空', 1500, "red");
 			return;
 		}
 		$.post("/login/checkVerifyCode", {"mobile":tel, "msgCode":msgCode}, function(data) {
@@ -1242,7 +1242,7 @@ button[data-v-a3a6e31c], input[data-v-a3a6e31c] {
 				document.cookie= "ticket="+data.ticket + ";path=/";
 				window.location.href="/home";
 			} else {
-				jqtoast("无效验证码");
+				jqtoast("无效验证码", 1500, "red");
 			}
 		});
 	}

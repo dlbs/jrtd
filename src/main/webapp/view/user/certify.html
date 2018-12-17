@@ -1515,7 +1515,7 @@ h6[data-v-078a6550] {
 								<#else>
 									<div data-v-3b1241a1="" class="weui-uploader__input-box">
 								</#if>
-									<input data-v-3b1241a1="" id="uploaderInput1" type="file" accept="image/*" multiple="multiple" capture="camera" class="weui-uploader__input">
+									<input data-v-3b1241a1="" id="uploaderInput1" type="file" accept="image/*" multiple="multiple" class="weui-uploader__input" onchange="previewImg(this)">
 								</div>
 							</div>
 							<div data-v-3b1241a1="" class="weui-uploader__hd">
@@ -1530,7 +1530,7 @@ h6[data-v-078a6550] {
 								<#else>
 									<div data-v-3b1241a1="" class="weui-uploader__input-box">
 								</#if>
-										<input data-v-3b1241a1="" id="uploaderInput3" type="file" accept="image/*" multiple="multiple" capture="camera" class="weui-uploader__input">
+										<input data-v-3b1241a1="" id="uploaderInput3" type="file" accept="image/*" multiple="multiple" class="weui-uploader__input" onchange="previewImg(this)">
 									</div>
 							</div>
 							<div data-v-3b1241a1="" class="weui-uploader__hd">
@@ -1547,7 +1547,7 @@ h6[data-v-078a6550] {
 									<#else>
 									<div data-v-3b1241a1="" class="weui-uploader__input-box">
 									</#if>
-										<input data-v-3b1241a1="" id="uploaderInput2" type="file" accept="image/*" multiple="multiple" capture="camera" class="weui-uploader__input">
+										<input data-v-3b1241a1="" id="uploaderInput2" type="file" accept="image/*" multiple="multiple" class="weui-uploader__input" onchange="previewImg(this)">
 									</div>
 								</div>
 								<div data-v-3b1241a1="" class="weui-uploader__hd">
@@ -1562,7 +1562,7 @@ h6[data-v-078a6550] {
 								<#else>
 									<div data-v-3b1241a1="" class="weui-uploader__input-box">
 								</#if>
-										<input data-v-3b1241a1="" id="uploaderInput4" type="file" accept="image/*" multiple="multiple" capture="camera" class="weui-uploader__input">
+										<input data-v-3b1241a1="" id="uploaderInput4" type="file" accept="image/*" multiple="multiple" class="weui-uploader__input" onchange="previewImg(this)">
 									</div>
 							</div>
 							<div data-v-3b1241a1="" class="weui-uploader__hd">
@@ -1587,39 +1587,13 @@ h6[data-v-078a6550] {
 	<script src="/static/common/js/iosSelect.js"></script>
 	<script src="/static/common/js/fastclick.js"></script>
 	<script src="/static/common/popup/js/popups.js"></script>	
+	<script src="/static/common/js/lrz/lrz.bundle.js"></script>	
+	<script src="/static/common/js/lrz/lrz.all.bundle.js"></script>	
 	<script>
 		$(function() {
 			$(".fa-chevron-left").click(function() {
 				window.location.href="javascript:history.go(-1)";
-			});
-			$(".weui-uploader__input").change(function() {
-				var _this = $(this);
-				if ($(this).val() != "") {
-					var file = $(this)[0].files[0];
-					var formData = new FormData();
-					formData.append("file", file);
- 					$.ajax({
-					    type:"post",
-					    url:"/file/upload",
-					    async:false,
-					    cache:false,
-					    data:formData,
-					    contentType:false,
-					    processData:false,
-					    success:function(data){
-					    	if (data.code == 200) {
-					    		_this.siblings("img").remove();
-					    		_this.before($('<img data-v-3b1241a1="" src="' + data.url + '" height="100%">'));
-					    		_this.parent(".weui-uploader__input-box").attr("class", "weui__image-box");
-					    		_this.val("");
-					    	} else {
-					    		jqtoast("网络错误请重新上传");
-					    	}
-					    }
-					}); 
-				}
-			});
-			
+			});			
 			$(".weui-btn_primary").on("click", function() {
 				if ($(this).attr("class").indexOf("disabled") >= 0) {
 					return;
@@ -1638,41 +1612,41 @@ h6[data-v-078a6550] {
 				param.picCard = $($(".weui-uploader__input")[1]).siblings().length > 0? $($(".weui-uploader__input")[1]).siblings().attr("src"): "";
 				param.picLogo = $($(".weui-uploader__input")[3]).siblings().length > 0? $($(".weui-uploader__input")[3]).siblings().attr("src"): "";
 				if(param.name == "") {
-					jqtoast("姓名不能为空");
+					jqtoast("姓名不能为空",  1500, "red");
 					return;
 				}
 				
 				if (param.identity == "") {
-					jqtoast("身份证号不能为空");
+					jqtoast("身份证号不能为空",  1500, "red");
 					return;
 				}
 				
 				if(param.city == "") {
-					jqtoast("请填写所在城市");
+					jqtoast("请填写所在城市",  1500, "red");
 					return;
 				}
 				
 				if(param.compName == "") {
-					jqtoast("请填写公司全称");
+					jqtoast("请填写公司全称",  1500, "red");
 					return;
 				}
 				
 				if(param.picIdentity == "") {
-					jqtoast("请上传身份证正面照片");
+					jqtoast("请上传身份证正面照片",  1500, "red");
 					return;
 				}
 				
 				if (param.picIdentityBack == "") {
-					jqtoast("请上传身份证背面照片");
+					jqtoast("请上传身份证背面照片",  1500, "red");
 					return;
 				}
 				if(param.picCard == "") {
-					jqtoast("请上传个人名片或工牌照片");
+					jqtoast("请上传个人名片或工牌照片",  1500, "red");
 					return;
 				}
 				
 				if (param.picLogo == "") {
-					jqtoast("请上传本人与公司logo合影");
+					jqtoast("请上传本人与公司logo合影",  1500, "red");
 					return;
 				}
 				
@@ -1684,12 +1658,86 @@ h6[data-v-078a6550] {
 						$(".weui-btn_primary").addClass(" weui-btn_disabled");
 						jqtoast(data.msg);
 					} else {
-						jqtoast("网络错误！");
+						jqtoast("网络错误！",  1500, "red");
 					}
 				});
 			});
 
 		});
+		function previewImg(input, imgObj) {
+			var _this = $(input);
+		    var maxsize = 300 * 1024;//超过300k进行压缩
+		    if (typeof FileReader === 'undefined') {
+		        jqtoast("抱歉，你的浏览器不支持 FileReader，请使用现代浏览器操作！",  1500, "red");
+		        input.setAttribute('disabled','disabled');
+		    }
+		    if(input.files && input.files[0]){
+		        var file = input.files[0],
+		            reader = new FileReader();
+		        if(file.type !== 'image/jpeg' && file.type !== 'image/png' && file.type !== 'image/gif') {
+		            jqtoast("不是有效的图片文件!",  1500, "red");
+		            return;
+		        }
+		        reader.readAsDataURL(file);
+		        reader.onload = function(e){
+		             var result=this.result;
+		            if(result.length >= maxsize){
+		                lrz(input.files[0], {width: 600})  
+		                .then(function (rst) {
+		                	console.log(rst);
+		                      $.ajax({  
+		                          url : "/file/upload",  
+		                          type: "POST",  
+		                          data : {file:rst.base64, name:rst.origin.name},  
+		                          dataType:"json",  
+		                          cache:false,  
+		                          async:false,  
+		                          success : function(data) {
+		  					    	if (data.code == 200) {
+							    		_this.siblings("img").remove();
+							    		_this.before($('<img data-v-3b1241a1="" src="' + data.url + '" height="100%">'));
+							    		_this.parent(".weui-uploader__input-box").attr("class", "weui__image-box");
+							    		_this.val("");
+							    	} else {
+							    		jqtoast("网络错误请重新上传");
+							    	}
+		                          },
+		                          error : function(){
+
+		                          }  
+		                          });  
+
+		                      })
+		            }else{
+		            	console.log(223);
+/* 		                getId(imgObj).setAttribute('src',result);
+		                getId(imgObj).classList.add('on');
+		                var img = new Image();
+		                img.src = result;
+		                getId(imgObj).setAttribute('src',result);
+		                getId(imgObj).classList.add('on');
+		                $.ajax({  
+		                    url :"/file/upload",  
+		                    type: "POST",  
+		                    data : {
+		                        file:result//压缩后的base值
+		                    },  
+		                    dataType:"json",  
+		                    cache:false,  
+		                    async:false,  
+		                    success : function(data) {
+		                        alert("成功");
+		                    },
+		                    error : function(){
+
+		                    }  
+		                    }); */
+
+		           }
+
+		       }
+		    }
+		}
     </script>
 </body>
 </html>

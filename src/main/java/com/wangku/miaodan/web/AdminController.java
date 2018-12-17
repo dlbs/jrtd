@@ -137,14 +137,14 @@ public class AdminController {
 	
 	@RequestMapping("/requit/list")
 	@ResponseBody
-	public Map<String, Object> requitList(String name, String status, int page, int size) {
+	public Map<String, Object> requitList(String name, String status, String source, int page, int size) {
 		Map<String, Object> result = new HashMap<String, Object>();
-		List<Requit> list = requitService.list(name, status, (page - 1) * size, size);
+		List<Requit> list = requitService.list(name, status, source, (page - 1) * size, size);
 		 result.put("list", list);
-		 long count = requitService.count(name, status);
+		 long count = requitService.count(name, status, source);
 		 result.put("pages", count % size == 0? count/ size: count/size + 1);
 		 result.put("count", count);
-		 result.put("sum", requitService.count(null, null));
+		 result.put("sum", requitService.count(null, null, null));
 		return result;
 	}
 	

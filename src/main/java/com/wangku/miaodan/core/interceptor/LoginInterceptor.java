@@ -72,7 +72,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 	
 	public static void sendCode(String mobile, String verifyCode) {
 		System.out.println(mobile + "------" + verifyCode);
-		MessageUtils.sendSms(mobile, verifyCode);
+		//MessageUtils.sendSms(mobile, verifyCode);
 	}
 	
 	public static String getMobile(HttpServletRequest request) {

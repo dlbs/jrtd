@@ -138,6 +138,8 @@ a {
 	top: 60px;
 	right: 10px;
 	text-align: center;
+	background: rgba(0, 0, 0, 0.7);
+	color: black;
 }
 
 .letter ul {

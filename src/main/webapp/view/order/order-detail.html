@@ -2340,7 +2340,9 @@ h6[data-v-078a6550] {
 			</div>
 			<div data-v-078a6550="" id="footer" class="weui-tabbar">
 				<#if order.status == 0>
-					<a data-v-078a6550="" href="javascript:;" class="weui-btn weui-btn_able weui-btn_primary"> 立即抢单 </a>
+					<a data-v-078a6550="" href="javascript:;" class="weui-btn weui-btn_able weui-btn_primary">立即抢单 </a>
+				<#elseif order.status == 3>
+					<a data-v-078a6550="" href="javascript:;" class="weui-btn weui-btn_disabled weui-btn_primary">抢单结束 </a>
 				<#else>
 					<#if isMine>
 						<#if order.source == "Y02"> 
@@ -2379,15 +2381,15 @@ h6[data-v-078a6550] {
 			$(".weui-btn_able").click(function() {
 				$.post("/order/store", {"id":$("#id").val()}, function(data) {
 					if (data.code == 200) {
-						jqtoast("抢单成功!");
+						jqtoast("抢单成功，立即联系客户吧");
 						$(".orderingMobile").text(data.mobile);
 						$(".weui-btn_primary").addClass("weui-btn_disabled");
 					} else if (data.code == 300){
-						jqtoast("抢单机会用尽，请尽快充值!");
+						jqtoast("抢单机会用尽，请尽快充值!", 1500, "red");
 					} else if (data.code == 500) {
-						jqtoast("发生网络错误");
+						jqtoast("发生网络错误", 1500, "red");
 					} else if (data.code == 600) {
-						jqtoast("此订单已经被抢");
+						jqtoast("此订单已经被抢", 1500, "red");
 					} else if (data.code == 601) {
 						jqalert({
 		                    title:'',
@@ -2397,7 +2399,7 @@ h6[data-v-078a6550] {
 		                    yeslink:'/user/certify'
 		                })
 					} else if (data.code == 602) {
-						jqtoast("实名认证审核中，请耐心等待");
+						jqtoast("实名认证审核中，请耐心等待", 1500, "red");
 					} else if (data.code == 603){
 						jqalert({
 		                    title:'',

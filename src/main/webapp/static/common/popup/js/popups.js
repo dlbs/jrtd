@@ -85,14 +85,15 @@ function jqalert(param) {
 
 }
 /*toast 弹出提示*/
-function jqtoast(text, sec, link) {
+function jqtoast(text, sec, color, link) {
     var _this = text;
     var this_sec = sec;
     var htm = '';
-    htm += '<div class="jq-toast" style="display: none;">';
+    var color = color? color:"green";
+    htm += '<div class="jq-toast ' + color + '" style="display: none;">';
     if (_this){
         htm +='<div class="toast">'+_this+'</div></div>';
-        $('body').prepend(htm);
+        $('.content').prepend(htm);
         $('.jq-toast').fadeIn();
     } else {
         jqalert({

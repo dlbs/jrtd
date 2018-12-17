@@ -2461,6 +2461,7 @@ h6[data-v-1df58a84] {
 	<script src="/static/common/js/mescroll.js"></script>
 	<script src="/static/common/js/scroll.js"></script>	
 	<script>
+	
 		var class_data = "data-v-2559bb2a";
 		$(function() {
 			$(".city-picker").on("click", function() {
@@ -2470,6 +2471,9 @@ h6[data-v-1df58a84] {
 			$(".screen").on("click", function() {
 				window.location.href = "/map/search?type=2&city=" + ($("input[name='city']").val() == ""? "全国":$("input[name='city']").val());
 			});	
+			$(".detail-header").on('touchmove', function (e) {
+				e.preventDefault(); 
+			}); 			
 		})			
 		function loadParams() {
 			temp_type = 2;
