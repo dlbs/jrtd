@@ -37,12 +37,6 @@ public class HomeController {
 		return "home";
 	}
 	
-	@RequestMapping(value = "/jpdd", produces = "text/html;charset=UTF-8")
-	public String jpdd(ModelMap model, SearchBean condition) {
-		model.put("condition", condition);
-		return "/order/jpdd";
-	}
-	
 	@RequestMapping(value = "/td", produces = "text/html;charset=UTF-8")
 	public String td(ModelMap model, SearchBean condition) {
 		model.put("condition", condition);
@@ -50,8 +44,8 @@ public class HomeController {
 	}
 	
 	@RequestMapping("/mine")
-	public String mine(Boolean td, ModelMap model) {
-		model.put("td", td == null? "false":td.toString());
+	public String mine(Boolean TD, ModelMap model) {
+		model.put("td", TD == null? "false":TD.toString());
 		return "/order/mine";
 	}
 	

@@ -17,6 +17,8 @@ import com.wangku.miaodan.utils.message.aliyun.MessageUtils;
 
 public class LoginInterceptor implements HandlerInterceptor {
 	
+	private static final boolean IS_MESSAGE = true;
+	
 	private static final Map<String, String> tickets = new HashMap<String, String>();
 	
 	private ITokenService tokenService;
@@ -72,7 +74,9 @@ public class LoginInterceptor implements HandlerInterceptor {
 	
 	public static void sendCode(String mobile, String verifyCode) {
 		System.out.println(mobile + "------" + verifyCode);
-		//MessageUtils.sendSms(mobile, verifyCode);
+		if (IS_MESSAGE) {
+			MessageUtils.sendSms(mobile, verifyCode);
+		}
 	}
 	
 	public static String getMobile(HttpServletRequest request) {

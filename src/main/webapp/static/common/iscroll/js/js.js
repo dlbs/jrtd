@@ -24,7 +24,7 @@
     			if (data.orders.length <= 0) {
         			$("#thelist").append($('<p style="text-align:center; font-size:15px;">-暂无数据-</p>'));
         			$(".pullUp").hide();
-    			}
+    			} 
         	}
         	
         	if (data.orders.length > 0) {

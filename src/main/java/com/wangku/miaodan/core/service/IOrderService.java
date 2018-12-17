@@ -11,7 +11,7 @@ public interface IOrderService {
 
 	public Order getOrderBySourceIdAndType(String sourceId, int type);
 
-	public List<Order> getStoredByUser(String mobile, boolean isTD);
+	public List<Order> getStoredByUser(String mobile, boolean isTD, int start, int size);
 
 	public boolean checkIsMine(String mobile, Long id);
 

@@ -30,7 +30,7 @@ public interface OrderMapper {
 
 	int counsumeOrder(@Param("id")Long orderId);
 
-	List<Order> getStoredByUser(@Param("mobile")String mobile, @Param("isTD")boolean isTD);
+	List<Order> getStoredByUser(@Param("mobile")String mobile, @Param("isTD")boolean isTD, @Param("start")int start, @Param("size")int size);
 
 	int selectByMobileAndId(@Param("mobile")String mobile, @Param("id")Long id);
 

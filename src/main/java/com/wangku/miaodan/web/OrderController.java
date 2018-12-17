@@ -48,7 +48,8 @@ public class OrderController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		List<Order> orders = new ArrayList<Order>(0);
 		if (condition.getType() != null && condition.getType() == 3) {
-			orders = orderService.getStoredByUser(LoginInterceptor.getMobile(request), condition.isTD());
+			int start = (condition.getPage() - 1) * condition.getSize();
+			orders = orderService.getStoredByUser(LoginInterceptor.getMobile(request), condition.isTD(), start, condition.getSize());
 		} else {
 			orders = orderService.selectByCondition(condition);
 		}

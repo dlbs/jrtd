@@ -14,7 +14,8 @@
 <link href="/static/common/css/weui.min.css" rel="stylesheet">
 <link href="/static/common/css/verify.css" rel="stylesheet">
 <link rel="stylesheet" href="/static/common/css/iosSelect.css">
-<link href="/static/common/css/mescroll.css" rel="stylesheet">
+<link href="/static/common/iscroll/css/css.css" rel="stylesheet">
+<link href="/static/common/iscroll/css/pullToRefresh.css" rel="stylesheet">
 <style>
 * {
 	box-sizing: border-box;
@@ -39,16 +40,17 @@ html, body {
 
 .detail-header {
 	text-align: center;
-	height: 40px;
-	line-height: 40px;
+	height: 45px;
+	line-height: 45px;
 	font-size: 16px;
 	font-weight: 400;
 	background: #1676e3;
 	color: #fff;
-	position: fixed;
 	width: 100vw;
-	top: 0;
-	z-index: 1;
+}
+.main {
+	flex: 1;
+    overflow-x: hidden;
 }
 
 .detail-header i {
@@ -177,8 +179,7 @@ html, body {
 
 ._v-container[data-v-2559bb2a] {
 	background: #f5f5f5;
-	padding-top: 80px;
-	height: calc(100% - 55px) !important
+	
 }
 
 ._v-content[data-v-2559bb2a] {
@@ -491,8 +492,8 @@ a.menu[data-v-2559bb2a] {
 }
 </style>
 <style type="text/css">
-#footer[data-v-5247103c] {
-	position: fixed
+#footer[data-v-2559bb2a] {
+	
 }
 
 #footer a[data-v-5247103c] {
@@ -1587,13 +1588,13 @@ h6[data-v-078a6550] {
 }
 #oldTag[data-v-2559bb2a] {
 	background: #f5f5f5;
-	height: 100vh
+	height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 ._v-container[data-v-2559bb2a] {
 	background: #f5f5f5;
-	padding-top: 40px;
-	height: calc(100% - 55px) !important
 }
 
 ._v-content[data-v-2559bb2a] {
@@ -2377,28 +2378,28 @@ h6[data-v-1df58a84] {
 <body data-7m="7m_warp">
 	<div id="app">
 		<div data-v-2559bb2a="" id="oldTag" class="content">
-			<header data-v-2559bb2a="" class="detail-header"> 淘单 </header>
-			<div data-v-2559bb2a="" class="city-picker">
-				<i data-v-2559bb2a="" class="fa fa-map-marker fa-fw"></i>
-				<span data-v-2559bb2a="">${condition.city!'全国'}</span>
-			</div>
-			<div data-v-2559bb2a="" class="screen">
-				<i data-v-2559bb2a="" class="fa fa-search fa-fw"></i>
-				<button data-v-2559bb2a="" type="button">筛选</button>
-			</div>
-			<div data-v-ecaca2b0="" data-v-2559bb2a="" id="outer-abkcm" class="_v-container" style="width: 100%; height: 100%;">
-				<div id="mescroll" data-v-2559bb2a="" data-v-ecaca2b0="" class="mescroll">
-					<!-- 加载中 -->
-					<div class="mescroll-downwarp mescroll-downwarp-reset" style="height: 0px;">
-						<div class="downwarp-content">
-							<p class="downwarp-progress mescroll-rotate" style="transform: rotate(747.9deg);"></p>
-							<p class="downwarp-tip">加载中 ...</p>
-						</div>
-					</div>					
-					<div data-v-2559bb2a="" id="temp" data-v-ecaca2b0="" class="seller-list"></div>
+			<!-- 头部 -->
+			<header data-v-2559bb2a="" class="detail-header"> 淘单
+				<div data-v-2559bb2a="" class="city-picker">
+					<i data-v-2559bb2a="" class="fa fa-map-marker fa-fw"></i>
+					<span data-v-2559bb2a="">${condition.city!'全国'}</span>
+				</div>
+				<div data-v-2559bb2a="" class="screen">
+					<i data-v-2559bb2a="" class="fa fa-search fa-fw"></i>
+					<button data-v-2559bb2a="" type="button">筛选</button>
+				</div>
+			 </header>
+			 <!-- 中间 -->
+			<div data-v-2559bb2a="" id="scroller" class='main'>
+				<!-- 数据scroll -->
+				<div data-v-2559bb2a="" id="outer-abkcm" class="_v-container" style="width: 100%; height: 100%;">
+					<div id='wrapper'>
+						<ul id = "thelist"></ul>
+					</div>		
 				</div>
 			</div>
-			<div data-v-5247103c="" data-v-2559bb2a="" id="footer" class="weui-tabbar">
+			<!--脚  -->			 
+			<div data-v-2559bb2a="" id="footer" class="weui-tabbar">
 				<a data-v-5247103c="" href="/home" class="weui-tabbar__item">
 					<li data-v-5247103c="" class="restaurant">
 						<div data-v-5247103c="" class="weui-tabbar__icon">
@@ -2458,11 +2459,39 @@ h6[data-v-1df58a84] {
 	<script src="/static/common/js/jquery-weui.min.js"></script>
 	<script src="/static/common/js/iosSelect.js"></script>
 	<script src="/static/common/js/fastclick.js"></script>
-	<script src="/static/common/js/mescroll.js"></script>
-	<script src="/static/common/js/scroll.js"></script>	
+	 <script src="/static/common/iscroll/js/iscroll.js"></script>
+	 <script src="/static/common/iscroll/js/pullToRefresh.js"></script> 
+	 <script src="/static/common/iscroll/js/js.js"></script> 
 	<script>
-	
 		var class_data = "data-v-2559bb2a";
+	 	getListData({"num":1});		
+		refresher.init({
+			id:"wrapper",
+			pullDownAction:Refresh,                                                            
+			pullUpAction:Load 																			
+		});	 
+		getListData({"num":1});	
+		function Refresh() {																
+			setTimeout(function () {	
+				var el, li, i;																		
+				el =document.querySelector("#wrapper ul");					
+				document.getElementById("wrapper").querySelector(".pullDownIcon").style.display="none";		
+				document.getElementById("wrapper").querySelector(".pullDownLabel").innerHTML="刷新成功";																					 
+				setTimeout(function () {
+					getListData({"num":1});
+					wrapper.refresh();
+					},1000);
+			}, 1000);
+		}
+		function Load() {
+			setTimeout(function () {
+				var el, li, i;
+				el =document.querySelector("#wrapper ul");
+				getListData({"num":++pageNum});
+				wrapper.refresh();
+			},1000);	
+		}
+		
 		$(function() {
 			$(".city-picker").on("click", function() {
 				window.location.href = "/map?type=2";

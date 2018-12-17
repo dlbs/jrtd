@@ -2291,6 +2291,7 @@ a.menu[data-v-1fde3c5f] {
 		pullDownAction:Refresh,                                                            
 		pullUpAction:Load 																			
 	});
+	getListData({"num":1});
 	function Refresh() {																
 		setTimeout(function () {	
 			var el, li, i;																		
@@ -2312,7 +2313,6 @@ a.menu[data-v-1fde3c5f] {
 		},1000);	
 	}
  	$(function() {
-		getListData({"num":1, "size":20});
 		if ($("#openId").val() == '0') {
 			var href = location.href;
 			var redirect = href.indexOf("?") >= 0? href.substring(0, href.indexOf("?")): href;
