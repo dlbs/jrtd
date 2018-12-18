@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSON;
 import com.wangku.miaodan.constant.OrderSourceTypeEnum;
 import com.wangku.miaodan.core.interceptor.LoginInterceptor;
 import com.wangku.miaodan.core.model.Order;
@@ -28,6 +29,7 @@ import com.wangku.miaodan.core.model.User;
 import com.wangku.miaodan.core.service.IOrderService;
 import com.wangku.miaodan.core.service.IRequitService;
 import com.wangku.miaodan.core.service.IUserService;
+import com.wangku.miaodan.utils.HttpUtils;
 import com.wangku.miaodan.utils.Strings;
 
 @Controller
@@ -203,15 +205,29 @@ public class OrderController {
 			return 7;
 		}
 		
+		
 		if (!"M01".equals(order.getSource()) || !"Y02".equals(order.getSource()) || !"A03".equals(order.getSource()) || !"B04".equals(order.getSource())) {
 			return 7;
 		}
 		
+		if (Strings.isNullOrEmpty(order.getMkj())) {
+			return 8;
+		}
+		
+		try {
+			String mobile = OrderSourceTypeEnum.getInstByName(order.getSource()).transMobile(JSON.parseObject(order.getMkj(), Map.class));
+			if (!Strings.isNullOrEmpty(mobile)) {
+				order.setMobile(mobile);
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return 7;
+		}
 		
 		List<Order> list = new ArrayList<Order>();
 		list.add(order.translateOrder());
 		orderService.saveBatch(list);
 		return 200;
 	}
-
+	
 }

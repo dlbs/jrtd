@@ -55,6 +55,16 @@ public class Order {
 	
 	private String plusTime;
 	
+	private String mkj;
+	
+	public String getMkj() {
+		return mkj;
+	}
+
+	public void setMkj(String mkj) {
+		this.mkj = mkj;
+	}
+
 	public String getPlusTime() {
 		return plusTime;
 	}

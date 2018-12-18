@@ -61,7 +61,7 @@ public class MD5Utils {
 		// 定义调用的方法
 		String algorithm = "MD5";
 		// 结果字符串
-		String result = "";
+		StringBuffer sb = new StringBuffer();
 		// 初始化并开始进行计算
 		digest = MessageDigest.getInstance(algorithm);
 		digest.update(srcStr.getBytes());
@@ -72,10 +72,9 @@ public class MD5Utils {
 
 		// 将byte数组转换成字符串
 		for (int i = 0; i < length; i++) {
-			result = result + byteHEX(byteRes[i], sign);
+			sb.append(byteHEX(byteRes[i], sign));
 		}
-
-		return result;
+		return sb.toString();
 	}
 
 	/**

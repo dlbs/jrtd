@@ -26,11 +26,12 @@
     <result column="type" jdbcType="TINYINT" property="type" />
     <result column="source" jdbcType="VARCHAR" property="source" />
     <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="mkj" property="mkj"/>
   </resultMap>
   <sql id="Base_Column_List">
     id, name, mobile, city, age, sum, vocation, work_time, sex, month_income, wages_type, 
     credit_card, car, building, accumulation_fund, social_insurance, life_insurance, 
-    identy_number, sesame_credit, wei_li_dai, apply_time, type, source, status
+    identy_number, sesame_credit, wei_li_dai, apply_time, type, source, status, mkj 
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -439,7 +440,7 @@
 	oi.credit_card, oi.car, oi.building, oi.accumulation_fund,
 	oi.social_insurance, oi.life_insurance, oi.sesame_credit,
 	oi.wei_li_dai, oi.apply_time, oi.type, oi.source,
-	oi.status, oi.add_time, os.add_time saddTime
+	oi.status, oi.add_time, oi.mkj, os.add_time saddTime
 	from order_info oi
 	LEFT JOIN order_stored os
 	ON oi.id = os.order_id 
@@ -466,7 +467,7 @@
       wages_type, credit_card, car, 
       building, accumulation_fund, social_insurance, 
       life_insurance, identy_number, sesame_credit, 
-      wei_li_dai, apply_time)
+      wei_li_dai, apply_time, mkj)
     values 
     <foreach collection="list" item="order" separator=",">
 		  (#{order.name,jdbcType=VARCHAR}, #{order.mobile,jdbcType=VARCHAR}, 
@@ -475,7 +476,7 @@
 	      #{order.wagesType,jdbcType=TINYINT}, #{order.creditCard,jdbcType=TINYINT}, #{order.car,jdbcType=TINYINT}, 
 	      #{order.building,jdbcType=TINYINT}, #{order.accumulationFund,jdbcType=TINYINT}, #{order.socialInsurance,jdbcType=TINYINT}, 
 	      #{order.lifeInsurance,jdbcType=TINYINT}, #{order.identyNumber,jdbcType=VARCHAR}, #{order.sesameCredit,jdbcType=INTEGER}, 
-	      #{order.weiLiDai,jdbcType=TINYINT}, #{order.applyTime,jdbcType=TIMESTAMP})    
+	      #{order.weiLiDai,jdbcType=TINYINT}, #{order.applyTime,jdbcType=TIMESTAMP}, #{mkj})    
     </foreach>  	
   </insert>  
   

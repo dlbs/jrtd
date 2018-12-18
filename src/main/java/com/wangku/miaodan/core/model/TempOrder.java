@@ -48,6 +48,16 @@ public class TempOrder {
 	private Date applyTime;
 	
 	private String source;
+	
+	private String mkj;
+	
+	public String getMkj() {
+		return mkj;
+	}
+
+	public void setMkj(String mkj) {
+		this.mkj = mkj;
+	}
 
 	public String getSource() {
 		return source;
@@ -230,6 +240,7 @@ public class TempOrder {
 		order.setLifeInsurance("有".equals(lifeInsurance)?(byte)1:(byte)0);
 		order.setWeiLiDai("有".equals(weiLiDai)?(byte)1:(byte)0);
 		order.setApplyTime(applyTime);
+		order.setMkj(mkj);
 		return order;
 	}
 
