@@ -15,6 +15,5 @@ public class Base64Utils {
 	public static final String encode(final String base) {
 		return new String(base64.encode(base.getBytes()));
 	}
-	
 
 }
