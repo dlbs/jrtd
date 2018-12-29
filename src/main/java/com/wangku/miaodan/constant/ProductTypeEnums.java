@@ -5,12 +5,12 @@ import java.math.BigDecimal;
 
 public enum ProductTypeEnums {
 	
-	PRODUCT_ONE("0精品/30淘单", 1, 0, 30, new BigDecimal(0.01)),
-	PRODUCT_TWO("15精品/0淘单", 2, 15, 0, new BigDecimal(0.01)),
-	PRODUCT_THREE("30精品/15淘单", 3, 30, 15, new BigDecimal(0.01)),
-	PRODUCT_FOUR("66精品/30淘单", 4, 66, 30, new BigDecimal(0.01)),
-	PRODUCT_FIVE("102精品/30淘单", 5, 102, 30, new BigDecimal(0.01)),
-	PRODUCT_SIX("153精品/30淘单", 6, 153, 30, new BigDecimal(0.01));
+	PRODUCT_ONE("0精品/30淘单", 1, 0, 30, new BigDecimal(688)),
+	PRODUCT_TWO("15精品/0淘单", 2, 15, 0, new BigDecimal(1688)),
+	PRODUCT_THREE("32精品/15淘单", 3, 30, 15, new BigDecimal(2888)),
+	PRODUCT_FOUR("66精品/30淘单", 4, 66, 30, new BigDecimal(5688)),
+	PRODUCT_FIVE("102精品/30淘单", 5, 102, 30, new BigDecimal(8088)),
+	PRODUCT_SIX("153精品/30淘单", 6, 153, 30, new BigDecimal(10888));
 	
 	private String desc;
 	
