@@ -16,7 +16,7 @@ import com.wangku.miaodan.utils.message.aliyun.MessageUtils;
 
 public class LoginInterceptor implements HandlerInterceptor {
 	
-	private static final boolean IS_MESSAGE = false;
+	private static final boolean IS_MESSAGE = true;
 	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -46,7 +46,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 		Cookie[] cookies = request.getCookies();
 		if (cookies != null) {
 			for (Cookie cookie : cookies) {
-				if (cookie.getName().equals("ticket")) {
+				if (cookie.getName().equals("user_ticket")) {
 					return cookie.getValue();
 				}
 			}
@@ -56,7 +56,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 	
 	public static void sendCode(String mobile, String verifyCode) {
 		System.out.println(mobile + "------" + verifyCode);
-		if (IS_MESSAGE) {
+		if (IS_MESSAGE && !"13931727436".equals(mobile)) {
 			MessageUtils.sendSms(mobile, verifyCode);
 		}
 	}

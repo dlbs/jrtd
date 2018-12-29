@@ -92,7 +92,7 @@ public class LoginController {
 	public static String getTicket(HttpServletRequest request) {
 		Cookie[] cookies = request.getCookies();
 		for (Cookie cookie : cookies) {
-			if (cookie.getName().equals("ticket")) {
+			if (cookie.getName().equals("user_ticket")) {
 				return cookie.getValue();
 			}
 		}
