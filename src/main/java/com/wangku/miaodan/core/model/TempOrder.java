@@ -1,11 +1,19 @@
 package com.wangku.miaodan.core.model;
 
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 import com.alibaba.fastjson.JSON;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 public class TempOrder {
 
@@ -45,6 +53,7 @@ public class TempOrder {
 
 	private String weiLiDai;
 
+	@JsonDeserialize(using = Long2DateDeserialize.class)
 	private Date applyTime;
 	
 	private String source;
@@ -241,7 +250,30 @@ public class TempOrder {
 		order.setWeiLiDai("有".equals(weiLiDai)?(byte)1:(byte)0);
 		order.setApplyTime(applyTime);
 		order.setMkj(mkj);
+		order.setSource(source);
 		return order;
+	}
+	
+	public static void main(String[] args) {
+		System.out.println(new Date(1545620508L * 1000));
+	}
+
+}
+
+
+class Date2LongSerializer extends JsonSerializer<Date>{
+    @Override
+    public void serialize(Date date, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException, JsonProcessingException {
+        jsonGenerator.writeNumber(date.getTime() / 1000);
+    }
+}
+
+class Long2DateDeserialize extends JsonDeserializer<Date>{
+
+	@Override
+	public Date deserialize(JsonParser jp, DeserializationContext ctxt)
+			throws IOException, JsonProcessingException {
+		return new Date(jp.getValueAsLong() * 1000);
 	}
 
 }

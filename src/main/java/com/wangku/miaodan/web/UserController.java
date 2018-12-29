@@ -117,10 +117,14 @@ public class UserController {
 		BigDecimal sum =  new BigDecimal(price.doubleValue() * 1);
 		String number = PayUtil.getNonceStr();
 		Recharge recharge = new Recharge(number, mobile, byType.getType(), 1, price, sum);
+		recharge.setTimes(byType.getJpTimes());
+		recharge.setTdTimes(byType.getTdTimes());
 		Long id = userService.addRecharge(recharge);
 		result.put("code", 200);
 		result.put("msg", "订单创建成功");
 		result.put("data", id);
+		result.put("times", byType.getJpTimes());
+		result.put("tdTimes", byType.getTdTimes());
 		return result;	
 	}
 	

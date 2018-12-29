@@ -3,10 +3,10 @@ package com.wangku.miaodan.web;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.UUID;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,7 +18,7 @@ import com.wangku.miaodan.core.interceptor.LoginInterceptor;
 import com.wangku.miaodan.core.model.Token;
 import com.wangku.miaodan.core.service.ITokenService;
 import com.wangku.miaodan.core.service.IUserService;
-import com.wangku.miaodan.utils.Strings;
+import com.wangku.miaodan.utils.Base64Utils;
 import com.wangku.miaodan.utils.VerifyCodeUtil;
 
 @Controller
@@ -38,12 +38,10 @@ public class LoginController {
 	}
 	
 	@RequestMapping("/out")
-	public String logout(HttpServletRequest request) {
-		String ticket = getTicket(request);
-		Token token = tokenService.getDetailByCondition(new Token(null, ticket, null, 0));
-		if (token != null) {
-			tokenService.updateLoginInfo(new Token(token.getMobile(), null, null, 0));
-		}
+	public String logout(HttpServletRequest request, HttpServletResponse response) {
+		Cookie cookie = new Cookie("ticket", null);
+		cookie.setPath("/");
+		response.addCookie(cookie);
 		return "redirect:/login/index";
 	}
 	
@@ -61,12 +59,12 @@ public class LoginController {
 			result.put("code", 602);
 			result.put("msg", "验证码过期");
 		} else {
-			String ticket = UUID.randomUUID().toString();
-			tokenService.updateLoginInfo(new Token(mobile, ticket, null, 0));
+			//String ticket = UUID.randomUUID().toString();
+			//tokenService.updateLoginInfo(new Token(mobile, ticket, null, 0));
 			userService.addUser(mobile);// 直接进行新用户创建
 			result.put("code", 200);
 			result.put("msg", "验证通过");
-			result.put("ticket", ticket);
+			result.put("ticket", Base64Utils.encode(mobile));
 		}
 		
 		return result;

@@ -3,6 +3,7 @@ package com.wangku.miaodan.core.service;
 import java.util.List;
 import java.util.Map;
 
+import com.wangku.miaodan.core.model.Order;
 import com.wangku.miaodan.core.model.Recharge;
 import com.wangku.miaodan.core.model.User;
 
@@ -10,7 +11,7 @@ public interface IUserService {
 
 	public boolean checkCanStore(String mobile, boolean isTD);
 
-	public long storeOrder(Long orderId, String mobile, boolean isTD);
+	public long storeOrder(Order order, String mobile, boolean isTD);
 
 	public void addUser(String mobile);	
 	

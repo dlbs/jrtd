@@ -197,7 +197,7 @@ public class HttpUtils {
 			httpClient = HttpClients.custom()
 					.setDefaultRequestConfig(REQUEST_CONFIG)
 					.build();
-			httpPost.setHeader("contentType", "application/json");
+			httpPost.setHeader("Content-Type", "application/json;charset=utf-8");
 			httpPost.setEntity(new StringEntity(s, DEFAULT_CHARSET));
 			response = httpClient.execute(httpPost);
 			body = EntityUtils.toString(response.getEntity(), DEFAULT_CHARSET);

@@ -24,5 +24,7 @@ public interface IOrderService {
 	public void updateStatus(Long productId, int status);
 
 	public long count(String applyTime, String source, String status, String city);
+
+	public void updateMobileAndIdent(Order order);
 	
 }

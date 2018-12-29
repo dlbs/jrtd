@@ -1,66 +1,70 @@
 package com.wangku.miaodan.constant;
 
-import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
 import java.util.Map;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.wangku.miaodan.core.model.Order;
 import com.wangku.miaodan.utils.HttpUtils;
 import com.wangku.miaodan.utils.MD5Utils;
 import com.wangku.miaodan.utils.Strings;
 
+@SuppressWarnings("rawtypes")
 public enum OrderSourceTypeEnum {
 	
-	M01("微盟", "M01", false, "http://m-dev.yidaikuan.net/api/middleware/getRealPhone") {
+	M01("微盟", "M01", false, true, "http://m.yidaikuan.net/api/middleware/getRealPhone") {
 		@Override
-		public String transMobile(Map params) {
-			String post = HttpUtils.post(getUrl(), JSON.toJSONString(params));
-			JSONObject obj = JSON.parseObject(post);
-			if ("0".equals(Strings.transfer2String(obj.get("code")))) {
-				return JSON.parseObject(JSON.toJSONString(obj.get("data"))).getString("phone");
+		public void transferSensitive(Map params, Order order) {
+			JSONObject result = JSON.parseObject(HttpUtils.post(getUrl(), JSON.toJSONString(params)));
+			if ("000000".equals(result.getString("code"))) {
+				JSONObject data = JSON.parseObject(JSON.toJSONString(result.get("data")));
+				order.setMobile(data.getString("phone"));
 			} else {
-				System.out.println("微盟电话转换出错, 参数信息:" + params + ", 错误信息:" + post);
-				return null;
+				throw new NullPointerException("微盟敏感数据转换出错, 参数信息:" + params + ", 错误信息:" + result);
 			}
 		}
 	},
 	
-	Y02("", "Y02", true, "") {
+	Y02("小豆金融", "Y02", true, true, "http://hd.kapokmedia.com:60521/notify/buytheInformation") {
 		@Override
-		public String transMobile(Map params) {
-			return null;
-		}
-	},
-	
-	A03("好时代", "A03", false, "http://java.51haoshidai.com/edu/open/getPhone") {
-		@Override
-		public String transMobile(Map params) {
-			long time = System.currentTimeMillis();
-			StringBuffer sb = new StringBuffer(500);
-			Object userId = params.get("userId");
-			sb.append("key=6b4b7ccf85761c1fd4277fa4caa4e7ab").append("&time=").append(time).append("&userId=").append(String.valueOf(userId));
-			try {
-				String sign = MD5Utils.getMD5Lower(sb.toString());
-				String url = getUrl() + "?platformId=2&sign=" + sign + "&time=" + time + "&userId=" + String.valueOf(userId);
-				String result = HttpUtils.get(url);
+		public void transferSensitive(Map params, Order order) {
+			JSONObject result = JSON.parseObject(HttpUtils.post(getUrl(), JSON.toJSONString(params)));
+			if ("0".equals(result.getString("code"))) {
+				JSONObject data = JSON.parseObject(JSON.toJSONString(result.get("data")));
 				
-				JSONObject parse = JSON.parseObject(result);
-				if (parse.getInteger("code") == 0) {
-					return parse.getString("code");
-				} else {
-					System.out.println("好时代电话转换出错, 参数信息:" + url + ", 错误信息:" + parse.getString("code"));
-				}
-			} catch (NoSuchAlgorithmException e) {
-				e.printStackTrace();
+				order.setMobile(data.getString("phone"));
+				order.setIdentyNumber(data.getString("identity"));
+			} else {
+				throw new NullPointerException("小豆金融敏感数据转换出错, 参数信息:" + params + ", 错误信息:" + result);
 			}
-			return null;
 		}
 	},
 	
-	B04("", "B04", false, "") {
+	A03("好时代", "A03", false, true, "http://java.51haoshidai.com/edu/open/getPhone") {
 		@Override
-		public String transMobile(Map params) {
-			return null;
+		public void transferSensitive(Map params, Order order) throws Exception {
+			long time = System.currentTimeMillis()/ 1000;
+			Object userId = params.get("userId");
+			
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("userId", String.valueOf(userId));
+			map.put("time", String.valueOf(time));
+			
+			String sign = MD5Utils.getMD5Lower(Strings.packageSign(map, "6b4b7ccf85761c1fd4277fa4caa4e7ab", "platformId"));
+			JSONObject result = JSON.parseObject(HttpUtils.get(getUrl() + "?platformId=5&sign=" + sign + "&time=" + time + "&userId=" + String.valueOf(userId)));
+			if (result.getInteger("code") == 0) {
+				order.setMobile(result.getString("msg"));
+			} else {
+				throw new NullPointerException("好时代电话转换出错, 参数信息:" + String.valueOf(userId) + ", 错误信息:" + result);
+			}
+		}
+	},
+	
+	B04("", "B04", false, false, "") {
+		@Override
+		public void transferSensitive(Map params, Order order) {
+			
 		}
 	};
 	
@@ -70,16 +74,19 @@ public enum OrderSourceTypeEnum {
 	
 	private boolean isTD;
 	
+	private boolean isTM;
+	
 	private String url;
 	
-	private OrderSourceTypeEnum(String desc, String name, boolean isTD, String url) {
+	private OrderSourceTypeEnum(String desc, String name, boolean isTD, boolean isTM, String url) {
 		this.name = name;
 		this.desc = desc;
 		this.isTD = isTD;
+		this.isTM = isTM;
 		this.url = url;
 	}
 	
-	public abstract String transMobile(Map params);
+	public abstract void transferSensitive(Map params, Order order) throws Exception;
 	
 	public static boolean isTDByDesc(String desc) {
 		OrderSourceTypeEnum[] values = OrderSourceTypeEnum.values();
@@ -99,39 +106,27 @@ public enum OrderSourceTypeEnum {
 			}
 		}
 		throw new NullPointerException("source`name is invalided...");
-	}	
-	
-
-	public String getUrl() {
-		return url;
-	}
-
-	public void setUrl(String url) {
-		this.url = url;
 	}
 
 	public String getName() {
 		return name;
 	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
 	public String getDesc() {
 		return desc;
-	}
-
-	public void setDesc(String desc) {
-		this.desc = desc;
 	}
 
 	public boolean isTD() {
 		return isTD;
 	}
 
-	public void setTD(boolean isTD) {
-		this.isTD = isTD;
+	public boolean isTM() {
+		return isTM;
 	}
 
+	public String getUrl() {
+		return url;
+	}	
+
+	
 }

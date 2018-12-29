@@ -59,9 +59,9 @@ public class OrderServiceImpl implements IOrderService {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("start", start);
 		map.put("size", size);
-		map.put("applyTime", Strings.isNullOrEmpty(applyTime)? null:applyTime);
-		map.put("source", Strings.isNullOrEmpty(source)? null:source);
-		map.put("city", Strings.isNullOrEmpty(city)? null:city.replace("市", ""));
+		map.put("applyTime", Strings.isBlank(applyTime)? null:applyTime);
+		map.put("source", Strings.isBlank(source)? null:source);
+		map.put("city", Strings.isBlank(city)? null:city.replace("市", ""));
 		try {
 			map.put("status", Integer.parseInt(status));
 		} catch (NumberFormatException e) {}
@@ -81,14 +81,19 @@ public class OrderServiceImpl implements IOrderService {
 	@Override
 	public long count(String applyTime, String source, String status, String city) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("applyTime", Strings.isNullOrEmpty(applyTime)? null:applyTime);
-		map.put("source", Strings.isNullOrEmpty(source)? null:source);
-		map.put("city", Strings.isNullOrEmpty(city)? null:city.replace("市", ""));
+		map.put("applyTime", Strings.isBlank(applyTime)? null:applyTime);
+		map.put("source", Strings.isBlank(source)? null:source);
+		map.put("city", Strings.isBlank(city)? null:city.replace("市", ""));
 		try {
 			map.put("status", Integer.parseInt(status));
 		} catch (NumberFormatException e) {}	
 		
 		return orderMapper.count(map);
+	}
+
+	@Override
+	public void updateMobileAndIdent(Order order) {
+		orderMapper.updateMobileAndIdent(order);
 	}
 
 }

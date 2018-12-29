@@ -349,7 +349,7 @@
       <if test="vocation != null">
       	and vocation =#{vocation}
       </if>
-      <if test="type == 3">
+      <if test="type == 2">
       	and source = "Y02"
       </if>
       <if test="status != null">
@@ -467,7 +467,7 @@
       wages_type, credit_card, car, 
       building, accumulation_fund, social_insurance, 
       life_insurance, identy_number, sesame_credit, 
-      wei_li_dai, apply_time, mkj)
+      wei_li_dai, apply_time, mkj, source)
     values 
     <foreach collection="list" item="order" separator=",">
 		  (#{order.name,jdbcType=VARCHAR}, #{order.mobile,jdbcType=VARCHAR}, 
@@ -476,7 +476,7 @@
 	      #{order.wagesType,jdbcType=TINYINT}, #{order.creditCard,jdbcType=TINYINT}, #{order.car,jdbcType=TINYINT}, 
 	      #{order.building,jdbcType=TINYINT}, #{order.accumulationFund,jdbcType=TINYINT}, #{order.socialInsurance,jdbcType=TINYINT}, 
 	      #{order.lifeInsurance,jdbcType=TINYINT}, #{order.identyNumber,jdbcType=VARCHAR}, #{order.sesameCredit,jdbcType=INTEGER}, 
-	      #{order.weiLiDai,jdbcType=TINYINT}, #{order.applyTime,jdbcType=TIMESTAMP}, #{mkj})    
+	      #{order.weiLiDai,jdbcType=TINYINT}, #{order.applyTime,jdbcType=TIMESTAMP}, #{order.mkj}, #{order.source})    
     </foreach>  	
   </insert>  
   
@@ -515,5 +515,13 @@
   		and city like CONCAT(#{city}, "%")
   	</if>  	
   </select>
+  
+  <update id="updateMobileAndIdent" parameterType="com.wangku.miaodan.core.model.Order">
+      update order_info set mobile = #{mobile}
+      	<if test="identyNumber != null">
+      		, identy_number = #{identyNumber}
+      	</if>
+       where id  = #{id}
+  </update>
     
 </mapper>

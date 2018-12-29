@@ -932,6 +932,8 @@ a.menu[data-v-7ad21634] {
 			</div>
 			<div class="weui-msg">
 				<div class="weui-msg__text-area">
+					<input type="hidden" id="times" value="${user.times!0}">
+					<input type="hidden" id="tdTimes" value="${user.tdTimes!0}">
 					<h5 class="weui-msg__title">${user.times!0}精品券</h5>
 					<h5 class="weui-msg__title">${user.tdTimes!0}淘单券</h5>
 					<p class="weui-msg__desc"></p>
@@ -948,7 +950,7 @@ a.menu[data-v-7ad21634] {
 						<input type="radio" name="rad" id="1" class="weui-check" value="588" checked="checked">
 						<p class="weui-grid__label">
 							<span class="checkMb">30</span>淘单券<br> 
-							<span class="checkValue">588</span>元
+							<span class="checkValue">688</span>元
 						</p>
 					</label>
 				</div>				
@@ -974,7 +976,7 @@ a.menu[data-v-7ad21634] {
 						<input type="radio" name="rad" id="3" class="weui-check" value="2888" checked="checked">
 						
 						<p class="weui-grid__label">
-							<span class="checkMb">30精品券 </span><br> 
+							<span class="checkMb">32精品券 </span><br> 
 							<span class="checkMb">送15淘单券 </span><br> 
 							<span class="checkValue">2888</span>元
 						</p>
@@ -1091,9 +1093,13 @@ a.menu[data-v-7ad21634] {
 				var type = $("label[class='weui-cell weui-check__label checked']").attr("for");
 				$.post("/user/recharge", {"type":type}, function(data) {
 					if (data.code == 200) {
+						var times = data.times;
+						var tdTimes = data.tdTimes;
 						$.post("/pay", {"orderId":data.data}, function(data) {
 							if (data.code == 200) {
-								onBridgeReady(data.order.appId, data.order.timeStamp, data.order.nonceStr, data.pack, data.order.paySign);	
+								onBridgeReady(data.order.appId, data.order.timeStamp, data.order.nonceStr, data.pack, data.order.paySign); 	
+								$($("h5")[0]).text(parseInt($("#times").val()) + times + "精品券");
+								$($("h5")[1]).text(parseInt( $("#tdTimes").val()) + tdTimes + "淘单券");
 							} 
 						});
 					}

@@ -20,7 +20,6 @@
 	        <mvc:mapping path="/user/**"/>
 	        <mvc:mapping path="/order/**"/>
 	        <bean class="com.wangku.miaodan.core.interceptor.LoginInterceptor">
-	        	<property name="tokenService" ref="tokenService"/>
 	        </bean>
 	    </mvc:interceptor>
 	</mvc:interceptors>	

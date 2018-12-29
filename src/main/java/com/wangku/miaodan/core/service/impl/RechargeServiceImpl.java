@@ -43,16 +43,16 @@ public class RechargeServiceImpl implements IRechargeService {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("start", start);
 		map.put("size", size);
-		map.put("addTime", Strings.isNullOrEmpty(addTime)? null:addTime);
-		map.put("name", Strings.isNullOrEmpty(name)? null:name);
+		map.put("addTime", Strings.isBlank(addTime)? null:addTime);
+		map.put("name", Strings.isBlank(name)? null:name);
 		return rechargeMapper.list(map);
 	}
 
 	@Override
 	public long count(String addTime, String name) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("addTime", Strings.isNullOrEmpty(addTime)? null:addTime);
-		map.put("name", Strings.isNullOrEmpty(name)? null:name);
+		map.put("addTime", Strings.isBlank(addTime)? null:addTime);
+		map.put("name", Strings.isBlank(name)? null:name);
 		return rechargeMapper.count(map);
 	}
 

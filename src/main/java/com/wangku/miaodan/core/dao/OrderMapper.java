@@ -40,5 +40,6 @@ public interface OrderMapper {
 
 	long count(Map<String, Object> map);
 
+	void updateMobileAndIdent(Order order);
     
 }

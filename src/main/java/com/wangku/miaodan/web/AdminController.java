@@ -53,7 +53,7 @@ public class AdminController {
 	public String adminHome(String user, ModelMap model, HttpServletRequest request) {
 		String userName = AdminLoginInterceptor.getUserName(request);
 		String ticket = AdminLoginInterceptor.getTicket(request);
-		if (Strings.isNullOrEmpty(userName)) {
+		if (Strings.isBlank(userName)) {
 			userName = authUserService.getDetailByTicket(ticket).getUsername();
 		}
 		model.put("user", AdminLoginInterceptor.getUserName(request));

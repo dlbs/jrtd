@@ -39,8 +39,8 @@ public class RequitServiceImpl implements IRequitService {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("start", start);
 		map.put("size", size);
-		map.put("name", Strings.isNullOrEmpty(name)? null:name);
-		map.put("source", Strings.isNullOrEmpty(source)? null:source);
+		map.put("name", Strings.isBlank(name)? null:name);
+		map.put("source", Strings.isBlank(source)? null:source);
 		try {
 			map.put("status", Integer.parseInt(status));
 		} catch (NumberFormatException e) {}
@@ -65,10 +65,9 @@ public class RequitServiceImpl implements IRequitService {
 			StoredOrder storeOrder = storeOrderMapper.detail(requit.getUserId(), requit.getOrderId());
 			userMapper.increTimesByMobile(storeOrder.getMobile(), storeOrder.getIsTd());
 			Order order = orderMapper.selectByPrimaryKey(storeOrder.getOrderId());
-			order.setStatus(3);
+			order.setStatus(0);
 			orderMapper.updateByPrimaryKey(order);
 			storeOrderMapper.deleteByPrimaryKey(storeOrder.getId());
-			System.out.println("001");
 		}
 	}
 
@@ -80,8 +79,8 @@ public class RequitServiceImpl implements IRequitService {
 	@Override
 	public long count(String name, String status, String source) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("name", Strings.isNullOrEmpty(name)? null:name);
-		map.put("source", Strings.isNullOrEmpty(source)? null:source);
+		map.put("name", Strings.isBlank(name)? null:name);
+		map.put("source", Strings.isBlank(source)? null:source);
 		try {
 			map.put("status", Integer.parseInt(status));
 		} catch (NumberFormatException e) {}		

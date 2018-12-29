@@ -40,6 +40,10 @@ public class MD5Utils {
 		String sign = "lower";
 		return processStr(srcStr, sign);
 	}
+	
+	public static void main(String[] args) throws NoSuchAlgorithmException {
+		System.out.println(getMD5Lower("15011179671"));
+	}
 
 	/**
 	 * 加密之后的字符串全为大写

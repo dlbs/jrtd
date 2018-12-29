@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.alibaba.fastjson.JSON;
 import com.wangku.miaodan.constant.OrderSourceTypeEnum;
 import com.wangku.miaodan.core.interceptor.LoginInterceptor;
 import com.wangku.miaodan.core.model.Order;
@@ -77,6 +76,8 @@ public class OrderController {
 			return (cal1.get(Calendar.MONTH) - cal2.get(Calendar.MONTH)) + "月前";
 		} else if (time / (1000 * 60 * 60 * 24) > 1) {
 			return (time / (1000 * 60 * 60 * 24)) + "天前";
+		} else if (time / (1000 * 60 * 60) > 1) {
+			return (time / (1000 * 60 * 60 )) + "小时前";
 		} else if (time / (1000 * 60) >= 1) {
 			return (time / (1000 * 60)) + "分钟前";
 		} else if (time / 1000 > 10) {
@@ -103,10 +104,10 @@ public class OrderController {
 	@RequestMapping("/order/store")
 	@ResponseBody
 	public Map<String, Object> store(Long id, HttpServletRequest request) {
-		
 		String mobile = LoginInterceptor.getMobile(request);
 		Map<String, Object> result = new HashMap<String, Object>();
 		Order order = orderService.getOrderById(id);
+
 		if (order == null) {
 			result.put("code", 601);
 		} else {
@@ -127,11 +128,17 @@ public class OrderController {
 				result.put("code", 300);
 				result.put("msg", "抢单机会用尽，请尽快充值");
 			} else {
-				if (userService.storeOrder(id, mobile, isTD) == 1) {
-					result.put("code", 200);
-					result.put("mobile", order.getMobile());
+				long storeOrder = 0;
+				try {
+					storeOrder = userService.storeOrder(order, mobile, isTD);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				if (storeOrder == 1) {
+						result.put("code", 200);
+						result.put("order", order);
 				} else {
-					result.put("code", 600);
+					result.put("code", 500);
 				}
 				
 			}
@@ -169,6 +176,8 @@ public class OrderController {
 		return result;
 	}
 	
+
+	
 	@RequestMapping(value = "/loan", method = RequestMethod.POST)
 	@ResponseBody
 	public int save(@RequestBody TempOrder order) {
@@ -177,15 +186,15 @@ public class OrderController {
 			return 0;
 		}
 		
-		if (Strings.isNullOrEmpty(order.getName())) {
+		if (Strings.isBlank(order.getName())) {
 			return 1;
 		}
 		
-		if (Strings.isNullOrEmpty(order.getMobile())) {
+		if (Strings.isBlank(order.getMobile())) {
 			return 2;
 		}
 		
-		if (Strings.isNullOrEmpty(order.getCity()) || order.getCity().contains("市")) {
+		if (Strings.isBlank(order.getCity()) || order.getCity().contains("市")) {
 			return 3;
 		}
 		
@@ -193,7 +202,7 @@ public class OrderController {
 			return 4;
 		}
 		
-		if (Strings.isNullOrEmpty(order.getIdentyNumber())) {
+		if (Strings.isBlank(order.getIdentyNumber())) {
 			return 5;
 		}
 		
@@ -205,29 +214,28 @@ public class OrderController {
 			return 7;
 		}
 		
-		
-		if (!"M01".equals(order.getSource()) || !"Y02".equals(order.getSource()) || !"A03".equals(order.getSource()) || !"B04".equals(order.getSource())) {
+		if (OrderSourceTypeEnum.getInstByName(order.getSource()) == null) {
 			return 7;
 		}
 		
-		if (Strings.isNullOrEmpty(order.getMkj())) {
-			return 8;
-		}
-		
-		try {
-			String mobile = OrderSourceTypeEnum.getInstByName(order.getSource()).transMobile(JSON.parseObject(order.getMkj(), Map.class));
-			if (!Strings.isNullOrEmpty(mobile)) {
-				order.setMobile(mobile);
+		if (OrderSourceTypeEnum.getInstByName(order.getSource()).isTM()) {
+			if (Strings.isBlank(order.getMkj())) {
+				return 8;
 			}
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			return 7;
 		}
 		
 		List<Order> list = new ArrayList<Order>();
 		list.add(order.translateOrder());
 		orderService.saveBatch(list);
 		return 200;
+	}
+	
+	@RequestMapping("/test")
+	@ResponseBody
+	public String test(long id) {
+		Order orderById = orderService.getOrderById(id);
+		String post = HttpUtils.post("http://hd.kapokmedia.com:60521/notify/buytheInformation", orderById.getMkj());
+		return post;
 	}
 	
 }

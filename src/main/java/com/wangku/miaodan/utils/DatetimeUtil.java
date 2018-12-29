@@ -34,7 +34,7 @@ public class DatetimeUtil {
 	private DatetimeUtil() {
 		super();
 	}
-
+	
 	public static Timestamp currentTimestamp() {
 		return new Timestamp(System.currentTimeMillis());
 	}

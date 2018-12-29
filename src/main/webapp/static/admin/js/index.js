@@ -123,9 +123,9 @@ function loadUser(page) {
 					optStr = '<button onclick="checkUserAuth(' + list[i].id + ',' + 2+ ')">通过</button>&nbsp;&nbsp;<button onclick="checkUserAuth(' + list[i].id + ',' + 3 + ')">驳回</button>';
 				}
 				var times = list[i].times;
-				var timesStr = '<input type = "text" id = "times_' + list[i].id + '" size="6" value = "' + times + '" ><button onclick="submitTimes(' + list[i].id + ')">提交</button>';
+				var timesStr = '<input type = "number" min=0 onblur="gt_0($(this), ' + times + ')"  id = "times_' + list[i].id + '" style="width:100px;" oninput="if(value.length>10)value=value.slice(0,10)" value = "' + times + '" ><button onclick="submitTimes(' + list[i].id + ')">提交</button>';
 				var tdTimes = list[i].tdTimes;
-				var tdTimesStr = '<input type = "text" id = "tdTimes_' + list[i].id + '" size="6" value = "' + tdTimes + '" ><button onclick="submitTdTimes(' + list[i].id + ')">提交</button>';
+				var tdTimesStr = '<input type = "number" min=0 onblur="gt_0($(this), ' + tdTimes + ')" id = "tdTimes_' + list[i].id + '" style="width:100px;" oninput="if(value.length>10)value=value.slice(0,10)" value = "' + tdTimes + '" ><button onclick="submitTdTimes(' + list[i].id + ')">提交</button>';
 				str += '<tr><td align="center">' + (++num) + '</td>'
 				+ '<td align="center">' + list[i].name + '</td>'
 				+ '<td align="center">' + list[i].identity + '</td>'
@@ -150,6 +150,12 @@ function loadUser(page) {
 		}
 		
 	});
+}
+
+function gt_0(ele, times) {
+	if (ele.val() == "" || ele.val() < 0) {
+		ele.val(times);
+	}
 }
 
 function submitTimes(id, old_times) {
@@ -214,7 +220,7 @@ function loadProduct(page) {
 		var str = "";
 		if (list.length > 0) {
 			for (var i = 0; i < list.length; ++i) {				
-				var sex = list[i].sex == 0? "男":"女";
+				var sex = list[i].sex == 0? "女":"男";
 				var vocation = list[i].vocation == 0?"上班族":list[i].vocation == 1?"个体户":"企业主";
 				var workTime = list[i].workTime == 0?"半年以下":list[i].workTime == 1?"半年到一年":"一年以上";
 				var monthIncome = list[i].monthIncome == 0?"":list[i].monthIncome == 1?"3千以下":list[i].monthIncome == 2?"3千到5千":list[i].monthIncome == 3?"5千到8千":"1万以上";

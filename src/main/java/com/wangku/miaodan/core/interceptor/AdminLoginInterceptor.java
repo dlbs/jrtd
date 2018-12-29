@@ -24,7 +24,7 @@ public class AdminLoginInterceptor implements HandlerInterceptor {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 		boolean flag = false;
 		String ticket = getTicket(request);// 未登录， 重定向到登录页面
-		if (!Strings.isNullOrEmpty(ticket)) {
+		if (!Strings.isBlank(ticket)) {
 			AuthUser user = userService.getDetailByTicket(getTicket(request));
 			if (user != null) {
 				users.put(ticket, user.getUsername());

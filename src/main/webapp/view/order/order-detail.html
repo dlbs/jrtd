@@ -2382,12 +2382,12 @@ h6[data-v-078a6550] {
 				$.post("/order/store", {"id":$("#id").val()}, function(data) {
 					if (data.code == 200) {
 						jqtoast("抢单成功，立即联系客户吧");
-						$(".orderingMobile").text(data.mobile);
+						$(".orderingMobile").text(data.order.mobile);
 						$(".weui-btn_primary").addClass("weui-btn_disabled");
 					} else if (data.code == 300){
 						jqtoast("抢单机会用尽，请尽快充值!", 1500, "red");
 					} else if (data.code == 500) {
-						jqtoast("发生网络错误", 1500, "red");
+						jqtoast("网络错误", 1500, "red");
 					} else if (data.code == 600) {
 						jqtoast("此订单已经被抢", 1500, "red");
 					} else if (data.code == 601) {

@@ -17,7 +17,7 @@ public class TokenServiceImpl implements ITokenService {
 
 	@Override
 	public boolean addLoginInfo(Token token) {
-		if (Strings.isNullOrEmpty(token.getVerifyCode()) && token.getVerifyInvalidTime() <= 0) {
+		if (Strings.isBlank(token.getVerifyCode()) && token.getVerifyInvalidTime() <= 0) {
 			return false;
 		}
 		tokenMapper.insert(token);

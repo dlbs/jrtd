@@ -10,16 +10,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.alibaba.fastjson.JSON;
+import com.wangku.miaodan.constant.OrderSourceTypeEnum;
 import com.wangku.miaodan.constant.ProductTypeEnums;
 import com.wangku.miaodan.core.dao.OrderMapper;
 import com.wangku.miaodan.core.dao.RechargeMapper;
 import com.wangku.miaodan.core.dao.StoredOrderMapper;
 import com.wangku.miaodan.core.dao.UserMapper;
+import com.wangku.miaodan.core.model.Order;
 import com.wangku.miaodan.core.model.Recharge;
 import com.wangku.miaodan.core.model.User;
 import com.wangku.miaodan.core.service.IUserService;
 import com.wangku.miaodan.utils.Strings;
-import com.wangku.miaodan.web.PayMentController;
 
 @Service
 public class UserServiceImpl implements IUserService {
@@ -44,15 +46,39 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
-	public long storeOrder(Long orderId, String mobile, boolean isTD) {
+	@Transactional(rollbackFor=Exception.class)
+	public long storeOrder(Order order, String mobile, boolean isTD) {
+		Long orderId = order.getId();
 		int counsumeOrder = orderMapper.counsumeOrder(orderId);
 		if (counsumeOrder > 0) {
-			storedOrderMapper.insert(orderId, mobile, isTD? 0:1);
 			userMapper.reduceTimesByMobile(mobile, isTD);
+			storedOrderMapper.insert(orderId, mobile, isTD? 0:1);
+			if (OrderSourceTypeEnum.getInstByName(order.getSource()) != null) {
+				boolean result = transeData(order, 0);
+				if (!result) {
+					throw new NullPointerException("订单敏感信息转换失败");
+				}
+			}
 			return 1;
 		} else {
 			return 0;
 		}		
+	}	
+	
+	private boolean transeData(Order order, int count) {
+		boolean flag = false;
+		if (count >= 3) {
+			return flag;
+		}
+		try {
+			OrderSourceTypeEnum.getInstByName(order.getSource()).transferSensitive(JSON.parseObject(order.getMkj(), Map.class), order);
+			orderMapper.updateMobileAndIdent(order);
+			flag = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			transeData(order, ++count);
+		}		
+		return flag;
 	}	
 
 	@Override
@@ -104,11 +130,11 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public List<User> list(String city, String status, String addTime, int start, int size) {
 		Map<String, Object> param = new HashMap<String, Object>();
-		param.put("city", Strings.isNullOrEmpty(city)? null: city.replace("市", ""));
+		param.put("city", Strings.isBlank(city)? null: city.replace("市", ""));
 		try {
 			param.put("status", Integer.parseInt(status));
 		} catch (NumberFormatException e) {}
-		param.put("addTime", Strings.isNullOrEmpty(addTime)?null:addTime);
+		param.put("addTime", Strings.isBlank(addTime)?null:addTime);
 		param.put("start", start);
 		param.put("size", size);
 		
@@ -126,11 +152,11 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public long count(String city, String status, String addTime) {
 		Map<String, Object> param = new HashMap<String, Object>();
-		param.put("city", Strings.isNullOrEmpty(city)? null: city.replace("市", ""));
+		param.put("city", Strings.isBlank(city)? null: city.replace("市", ""));
 		try {
 			param.put("status", Integer.parseInt(status));
 		} catch (NumberFormatException e) {}
-		param.put("addTime", Strings.isNullOrEmpty(addTime)?null:addTime);
+		param.put("addTime", Strings.isBlank(addTime)?null:addTime);
 		return userMapper.count(param);
 	}
 
