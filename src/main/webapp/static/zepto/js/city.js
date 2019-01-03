@@ -31,8 +31,10 @@ var hotCity = ["全国", "北京","上海","广州","深圳","西安","成都","
 		init();
 		$('body').on('click', '.city-list p', function () {
 			if ($("#type").val() == 1) {
+				add_cookies("home_city", $(this).text());
 				window.location.href = "/home?city=" + $(this).text() + "&status=" + $("#status").val();
 			} else {
+				add_cookies("td_city", encodeURIComponent($(this).text()));
 				window.location.href = "/td?city=" + $(this).text();
 			}          
 		});
@@ -80,4 +82,9 @@ var hotCity = ["全国", "北京","上海","广州","深圳","西安","成都","
       });
   
   })(Zepto); 
+  
+  
+function add_cookies(name, val) {
+	document.cookie = name + "=" + escape(val) + ";";
+}	
   

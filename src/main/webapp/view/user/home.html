@@ -744,7 +744,7 @@ html, body {
 				</div>
 			</div>
 			<div data-v-5247103c="" data-v-5af10e42="" id="footer" class="weui-tabbar">
-				<a data-v-5247103c="" href="javascript:;" class="weui-tabbar__item">
+				<a data-v-5247103c="" onclick="jump_page('home')" href="javascript:;" class="weui-tabbar__item">
 					<li data-v-5247103c="" class="restaurant">
 						<div data-v-5247103c="" class="weui-tabbar__icon">
 							<i data-v-5247103c="" class="fa fa-home fa-fw"></i>
@@ -752,7 +752,7 @@ html, body {
 						<p data-v-5247103c="" class="weui-tabbar__label">抢单</p>
 					</li>
 				</a>
-				<a data-v-5247103c="" href="javascript:;" class="weui-tabbar__item">
+				<a data-v-5247103c="" onclick="jump_page('td')" href="javascript:;" class="weui-tabbar__item">
 					<li data-v-5247103c="" class="my-order">
 						<div data-v-5247103c="" class="weui-tabbar__icon">
 							<i data-v-5247103c="" class="fa fa-filter fa-fw"></i>
@@ -760,7 +760,7 @@ html, body {
 						<p data-v-5247103c="" class="weui-tabbar__label">淘单</p>
 					</li>
 				</a>
-				<a data-v-5247103c="" href="javascript:;" class="weui-tabbar__item">
+				<a data-v-5247103c="" onclick="jump_page('mine')" href="javascript:;" class="weui-tabbar__item">
 					<li data-v-5247103c="" class="my-order">
 						<div data-v-5247103c="" class="weui-tabbar__icon">
 							<i data-v-5247103c="" class="fa fa-list-alt fa-fw"></i>
@@ -791,18 +791,31 @@ html, body {
 				var _this = $(this);
 				_this.children("li").addClass("router-link-exact-active router-link-active");
 				_this.siblings().children("li").removeClass("router-link-exact-active router-link-active");
-				var page_name = _this.find("p").html();
-				if (page_name == "抢单") {
-					window.location.href = "/home";
-				} else if (page_name == "精品订单") {
-					window.location.href = "/jpdd";
-				} else if (page_name == "淘单") {
-					window.location.href = "/td";
-				} else if (page_name == "我的单子") {
-					window.location.href = "/mine";
-				}
 			});
 		})
+	function jump_page(url) {
+			if (url == "td") {
+				var city = getCookie("td_city");
+				if (city != null && city != "") {
+					url += "?city="+city;	
+				}
+			} else if (url == "home"){ 
+				var city = getCookie("home_city");
+				if (city != null && city != "") {
+					url += "?city="+city;	
+				}			
+			}			
+		window.location.href= "/" + url;
+	}		
+	function getCookie(name) {
+ 		var cookies = document.cookie.split(";");
+		for (var i = 0; i < cookies.length; ++i) {
+			var split = cookies[i].split("\=");
+			if (split[0].trim() == name) {
+				return unescape(split[1]).trim();
+			}
+		} 
+	}		
 	</script>
 </body>
 </html>

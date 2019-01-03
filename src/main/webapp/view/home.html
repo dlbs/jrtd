@@ -2230,7 +2230,7 @@ a.menu[data-v-1fde3c5f] {
 						<p data-v-5247103c="" class="weui-tabbar__label">抢单</p>
 					</li>
 				</a>
-				<a data-v-5247103c="" href="/td" class="weui-tabbar__item">
+				<a data-v-5247103c="" onclick="jump_page('td')" href="javascript:;" class="weui-tabbar__item">
 					<li data-v-5247103c="" class="my-order">
 						<div data-v-5247103c="" class="weui-tabbar__icon">
 							<i data-v-5247103c="" class="fa fa-filter fa-fw"></i>
@@ -2238,7 +2238,7 @@ a.menu[data-v-1fde3c5f] {
 						<p data-v-5247103c="" class="weui-tabbar__label">淘单</p>
 					</li>
 				</a>
-				<a data-v-5247103c="" href="/mine" class="weui-tabbar__item">
+				<a data-v-5247103c="" onclick="jump_page('mine')" href="javascript:;" class="weui-tabbar__item">
 					<li data-v-5247103c="" class="my-order">
 						<div data-v-5247103c="" class="weui-tabbar__icon">
 							<i data-v-5247103c="" class="fa fa-list-alt fa-fw"></i>
@@ -2246,7 +2246,7 @@ a.menu[data-v-1fde3c5f] {
 						<p data-v-5247103c="" class="weui-tabbar__label">我的单子</p>
 					</li>
 				</a>
-				<a data-v-5247103c="" href="/user/detail" class="weui-tabbar__item">
+				<a data-v-5247103c="" onclick="jump_page('user/detail')" href="javascript:;"  class="weui-tabbar__item">
 					<li data-v-5247103c="" class="my-order">
 						<div data-v-5247103c="" class="weui-tabbar__icon">
 							<i data-v-5247103c="" class="fa fa-user fa-fw"></i>
@@ -2335,6 +2335,7 @@ a.menu[data-v-1fde3c5f] {
 			window.location.href = "/map/search?type=1&city="+ $("input[name='city']").val() + "&status=" + $("input[name='status']").val();
 		});
 	})
+	
 	function resetCondition() {
 		$("input[name='building']").val("");
 		$("input[name='lifeInsurance']").val("");
@@ -2343,15 +2344,41 @@ a.menu[data-v-1fde3c5f] {
 		$("input[name='accumulationFund']").val("");
 		$("input[name='car']").val("");
 	}
+ 	
 	function loadParams() {
-			temp_type = 1;
+		temp_type = 1;
 		temp_status = $("input[name='status']").val(); 
 		return $('#form').serialize();
 	} 
 
 	$("#scroller").on('touchmove', function(evt) {
 		evt.preventDefault()
-	});  
+	});
+	
+	function jump_page(url) {
+		if (url == "td") {
+			var city = getCookie("td_city");
+			if (city != null && city != "") {
+				url += "?city="+city;	
+			}
+		} else if (url == "home"){ 
+			var city = getCookie("home_city");
+			if (city != null && city != "") {
+				url += "?city="+city;	
+			}			
+		}
+		window.location.href= "/" + url;
+	}
+	
+	function getCookie(name) {
+ 		var cookies = document.cookie.split(";");
+		for (var i = 0; i < cookies.length; ++i) {
+			var split = cookies[i].split("\=");
+			if (split[0].trim() == name) {
+				return unescape(split[1]).trim();
+			}
+		} 
+	}
 	</script>
 </body>
 </html>

@@ -2430,7 +2430,7 @@ h6[data-v-1df58a84] {
 				</div>	
 			</div>
 			<div data-v-5247103c="" data-v-2559bb2a="" id="footer" class="weui-tabbar">
-				<a data-v-5247103c="" href="/home" class="weui-tabbar__item">
+				<a data-v-5247103c="" onclick="jump_page('home')" href="javascript:;" class="weui-tabbar__item">
 					<li data-v-5247103c="" class="restaurant">
 						<div data-v-5247103c="" class="weui-tabbar__icon">
 							<i data-v-5247103c="" class="fa fa-home fa-fw"></i>
@@ -2438,7 +2438,7 @@ h6[data-v-1df58a84] {
 						<p data-v-5247103c="" class="weui-tabbar__label">抢单</p>
 					</li>
 				</a>
-				<a data-v-5247103c="" href="/td" class="weui-tabbar__item">
+				<a data-v-5247103c="" onclick="jump_page('td')" href="javascript:;" class="weui-tabbar__item">
 					<li data-v-5247103c="" class="my-order">
 						<div data-v-5247103c="" class="weui-tabbar__icon">
 							<i data-v-5247103c="" class="fa fa-filter fa-fw"></i>
@@ -2454,7 +2454,7 @@ h6[data-v-1df58a84] {
 						<p data-v-5247103c="" class="weui-tabbar__label">我的单子</p>
 					</li>
 				</a>
-				<a data-v-5247103c="" href="/user/detail" class="weui-tabbar__item">
+				<a data-v-5247103c="" onclick="jump_page('user/detail')" href="javascript:;" class="weui-tabbar__item">
 					<li data-v-5247103c="" class="my-order">
 						<div data-v-5247103c="" class="weui-tabbar__icon">
 							<i data-v-5247103c="" class="fa fa-user fa-fw"></i>
@@ -2518,6 +2518,29 @@ h6[data-v-1df58a84] {
 				e.preventDefault(); 
 			}); 
 		});
+		function jump_page(url) {
+			if (url == "td") {
+				var city = getCookie("td_city");
+				if (city != null && city != "") {
+					url += "?city="+city;	
+				}
+			} else if (url == "home"){ 
+				var city = getCookie("home_city");
+				if (city != null && city != "") {
+					url += "?city="+city;	
+				}			
+			}			
+			window.location.href="/" + url;
+		}		
+		function getCookie(name) {
+	 		var cookies = document.cookie.split(";");
+			for (var i = 0; i < cookies.length; ++i) {
+				var split = cookies[i].split("\=");
+				if (split[0].trim() == name) {
+					return unescape(split[1]).trim();
+				}
+			} 
+		}		
     </script>
 </body>
 </html>
