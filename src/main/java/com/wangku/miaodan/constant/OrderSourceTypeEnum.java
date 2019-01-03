@@ -41,20 +41,13 @@ public enum OrderSourceTypeEnum {
 		}
 	},
 	
-	A03("好时代", "A03", false, true, "http://java.51haoshidai.com/edu/open/getPhone") {
+	A03("爱德康赛", "A03", false, true, "https://www.yunyaowangluo.com/edu/open/getSinglePhone") {
 		@Override
 		public void transferSensitive(Map params, Order order) throws Exception {
-			long time = System.currentTimeMillis()/ 1000;
 			Object userId = params.get("userId");
-			
-			Map<String, String> map = new HashMap<String, String>();
-			map.put("userId", String.valueOf(userId));
-			map.put("time", String.valueOf(time));
-			
-			String sign = MD5Utils.getMD5Lower(Strings.packageSign(map, "6b4b7ccf85761c1fd4277fa4caa4e7ab", "platformId"));
-			JSONObject result = JSON.parseObject(HttpUtils.get(getUrl() + "?platformId=5&sign=" + sign + "&time=" + time + "&userId=" + String.valueOf(userId)));
-			if (result.getInteger("code") == 0) {
-				order.setMobile(result.getString("msg"));
+			JSONObject result = JSON.parseObject(HttpUtils.get(getUrl() + "?id=" + String.valueOf(userId)));
+			if (result.getInteger("code") == 200) {
+				order.setMobile(result.getString("data"));
 			} else {
 				throw new NullPointerException("好时代电话转换出错, 参数信息:" + String.valueOf(userId) + ", 错误信息:" + result);
 			}
