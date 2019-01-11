@@ -53,7 +53,7 @@ public class AdminController {
 	public String adminHome(String user, ModelMap model, HttpServletRequest request) {
 		String userName = AdminLoginInterceptor.getUserName(request);
 		String ticket = AdminLoginInterceptor.getTicket(request);
-		if (Strings.isBlank(userName)) {
+		if (!Strings.isBlank(userName)) {
 			userName = authUserService.getDetailByTicket(ticket).getUsername();
 		}
 		model.put("user", AdminLoginInterceptor.getUserName(request));
@@ -93,7 +93,7 @@ public class AdminController {
 	
 	@RequestMapping("/user/list")
 	@ResponseBody
-	public Map<String, Object> userList(int page, int size, String status, String city, String addTime) {
+	public Map<String, Object> userList(int page, int size, String status, String city, String addTime, HttpServletRequest request) {
 		 Map<String, Object> result = new HashMap<String, Object>();
 		 List<User> list = userService.list(city, status, addTime, (page - 1) * size, size);
 		 result.put("list", list);
@@ -101,6 +101,7 @@ public class AdminController {
 		 result.put("pages", count % size == 0? count/ size: count/size + 1);
 		 result.put("count", count);
 		 result.put("sum", userService.count(null, null, null));
+		 result.put("user", AdminLoginInterceptor.getUserName(request));
 		 return result;
 	}
 	
@@ -183,12 +184,7 @@ public class AdminController {
 	public Map<String, Object> updateUserTimes(Long id, int times, int tdTimes, boolean isTd) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		User user = userService.getDetailById(id);
-		if ((isTd && tdTimes < user.getTdTimes()) || (!isTd && times < user.getTimes())) {
-			result.put("code", 301);
-			result.put("msg", "余额只能增加");
-			result.put("times", user.getTimes());
-			result.put("tdTimes", user.getTdTimes());
-		} else if (isTd)  {
+		if (isTd)  {
 			user.setTdTimes(tdTimes);
 			userService.update(user);
 			result.put("code", 200);

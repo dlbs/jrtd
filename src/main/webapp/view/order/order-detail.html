@@ -2123,7 +2123,7 @@ h6[data-v-078a6550] {
 				<a data-v-078a6550="" href="javascript:;" class="weui-cell weui-cell_access">
 					<div data-v-078a6550="" class="weui-cell__bd">
 						<p data-v-078a6550="">
-							<span data-v-078a6550="" class="seller-name">${order.name}</span><br data-v-078a6550=""> 申请时间：${order.applyTime?string('yyyy-MM-dd hh:mm:ss')}
+							<span data-v-078a6550="" class="seller-name">${order.name}</span><br data-v-078a6550=""> 申请时间：${order.applyTime?string('yyyy-MM-dd HH:mm:ss')}
 						</p>
 					</div>
 				</a>
@@ -2287,9 +2287,9 @@ h6[data-v-078a6550] {
 					</div>
 					<!---->
 					<div data-v-078a6550="" class="food-sum weui-cell__ft">
-						<#if order.lifeInsurance == 0>
+						<#if order.weiLiDai == 0>
 							无
-						<#elseif order.lifeInsurance == 1>
+						<#elseif order.weiLiDai == 1>
 							有
 						</#if>						
 					</div>

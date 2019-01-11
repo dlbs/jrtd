@@ -72,6 +72,8 @@ function loadUser(page) {
 	$.post("/admin/user/list", param, function(data) {
 		initPaginate(data.pages, page);
 		var list = data.list;
+		var user = data.user;
+		console.log(user);
 		if(page == 1) {
 			$("#tbody").empty();
 			$("#thead").empty();
@@ -124,8 +126,14 @@ function loadUser(page) {
 				}
 				var times = list[i].times;
 				var timesStr = '<input type = "number" min=0 onblur="gt_0($(this), ' + times + ')"  id = "times_' + list[i].id + '" style="width:100px;" oninput="if(value.length>10)value=value.slice(0,10)" value = "' + times + '" ><button onclick="submitTimes(' + list[i].id + ')">提交</button>';
+				if (user.trim() == "15601335913") {
+					timesStr = '<input type = "text" readonly="readonly" value = "' + times + '">';
+				}
 				var tdTimes = list[i].tdTimes;
 				var tdTimesStr = '<input type = "number" min=0 onblur="gt_0($(this), ' + tdTimes + ')" id = "tdTimes_' + list[i].id + '" style="width:100px;" oninput="if(value.length>10)value=value.slice(0,10)" value = "' + tdTimes + '" ><button onclick="submitTdTimes(' + list[i].id + ')">提交</button>';
+				if (user.trim() == "15601335913") {
+					tdTimesStr = '<input type = "text" readonly="readonly" value = "' + tdTimes + '">';
+				}				
 				str += '<tr><td align="center">' + (++num) + '</td>'
 				+ '<td align="center">' + list[i].name + '</td>'
 				+ '<td align="center">' + list[i].identity + '</td>'

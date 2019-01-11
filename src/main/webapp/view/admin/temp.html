@@ -45,18 +45,27 @@
 		</div>
 		<div id="" data-options="region:'west',split:true" title="" style="width: 100px; height: 95%; display: block;" class="panel-body layout-body panel-noscroll">
 				<ul>
-					<li class="manger_acc_first_menu_on" onclick="onMenu('/view/admin/user.html', $(this), '用户信息管理');">
-						<a href="javascript:void(0);"> 用户信息 </a>
-					</li>
-					<li class="manger_acc_first_menu" onclick="onMenu('/view/admin/product.html', $(this), '商品信息管理');">
-						<a href="javascript:void(0);"> 商品信息 </a>
-					</li>
-					<li class="manger_acc_first_menu" onclick="onMenu('/view/admin/recharge.html', $(this), '充值信息管理');">
-						<a href="javascript:void(0);"> 充值信息 </a>
-					</li>
-					<li class="manger_acc_first_menu" onclick="onMenu('/view/admin/requit.html', $(this), '申退信息管理');">
-						<a href="javascript:void(0);"> 申退信息 </a>
-					</li>
+					<#if user?? && user == '15601335913'>
+						<li class="manger_acc_first_menu_on" onclick="onMenu('/view/admin/user.html', $(this), '用户信息管理');">
+							<a href="javascript:void(0);"> 用户信息 </a>
+						</li>
+						<li class="manger_acc_first_menu" onclick="onMenu('/view/admin/recharge.html', $(this), '充值信息管理');">
+							<a href="javascript:void(0);"> 充值信息 </a>
+						</li>
+					<#else>
+						<li class="manger_acc_first_menu_on" onclick="onMenu('/view/admin/user.html', $(this), '用户信息管理');">
+							<a href="javascript:void(0);"> 用户信息 </a>
+						</li>
+						<li class="manger_acc_first_menu" onclick="onMenu('/view/admin/product.html', $(this), '商品信息管理');">
+							<a href="javascript:void(0);"> 商品信息 </a>
+						</li>
+						<li class="manger_acc_first_menu" onclick="onMenu('/view/admin/recharge.html', $(this), '充值信息管理');">
+							<a href="javascript:void(0);"> 充值信息 </a>
+						</li>
+						<li class="manger_acc_first_menu" onclick="onMenu('/view/admin/requit.html', $(this), '申退信息管理');">
+							<a href="javascript:void(0);"> 申退信息 </a>
+						</li>
+					</#if>
 				</ul>
 		</div>
 	</div>

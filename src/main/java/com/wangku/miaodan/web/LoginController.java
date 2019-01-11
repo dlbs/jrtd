@@ -39,7 +39,7 @@ public class LoginController {
 	
 	@RequestMapping("/out")
 	public String logout(HttpServletRequest request, HttpServletResponse response) {
-		Cookie cookie = new Cookie("ticket", null);
+		Cookie cookie = new Cookie("user_ticket", null);
 		cookie.setPath("/");
 		response.addCookie(cookie);
 		return "redirect:/login/index";

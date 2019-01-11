@@ -24,6 +24,9 @@ public class HomeController {
 	public String home(ModelMap model, SearchBean condition, HttpServletRequest request) {
 		String mobile = LoginInterceptor.getMobile(request);
 		User user = userService.getDetailByMobile(mobile);
+		if (user == null) {
+			return "redirect:login/index";
+		}
 		if (user.getOpenId() == null) {
 			String openId = request.getParameter("openid");
 			if(!Objects.isNull(openId) && !openId.isEmpty()) {

@@ -38,7 +38,7 @@ public class PayMentController {
 	private static final Logger LOG = Logger.getLogger(PayMentController.class);
 	
 	private static final String APP_ID = "wx48d18bd5531afd7f";
-	private static final String MCH_ID = "1513645561";		//商户号
+	private static final String MCH_ID = "1521564661";//"1513645561";		//商户号
 	private static final String APP_SECRET =   "661b8f722c83876622cec0b96afc3942";	//商户秘钥
 	private static final String API_SECRET =   "73deac76e4824640b38595049f2ff61e";	//支付秘钥
 	
