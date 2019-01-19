@@ -242,7 +242,7 @@ function loadProduct(page) {
 				var wld = list[i].weiLiDai == 0?"无":"有";
 				var sum = list[i].sum + "万";
 				var applyTime = new Date(list[i].applyTime).format('yyyy-MM-dd hh:mm:ss')
-				var status = list[i].status == 0?"未抢":"已抢";
+				var status = list[i].status == 0?"未抢":(list[i].status == 3?"废弃":"已抢");
 				var opt = (list[i].status == 0 || list[i].status == 1)? '<td align="center"><button onclick="updateProduct(' + list[i].id + ',' + 2 + ')">加精</button>&nbsp;&nbsp;&nbsp;<button onclick="updateProduct(' + list[i].id + ',' + 3 + ')">废弃</button></td>':"<td></td>";
 				str += '<tr><td align="center">' + (++num) + '</td>'
 					+ '<td align="center">' + list[i].name + '</td>'

@@ -1098,8 +1098,6 @@ a.menu[data-v-7ad21634] {
 						$.post("/pay", {"orderId":data.data}, function(data) {
 							if (data.code == 200) {
 								onBridgeReady(data.order.appId, data.order.timeStamp, data.order.nonceStr, data.pack, data.order.paySign); 	
-								$($("h5")[0]).text(parseInt($("#times").val()) + times + "精品券");
-								$($("h5")[1]).text(parseInt( $("#tdTimes").val()) + tdTimes + "淘单券");
 							} 
 						});
 					}
@@ -1117,7 +1115,11 @@ a.menu[data-v-7ad21634] {
 			         "signType": "MD5",         	  //微信签名方式：     
 			         "paySign": pay_sign 			  //微信签名 
 			      }, function(res) {
-						alert(res);
+			    	  //alert(JSON.stringify(res));
+						if (res.err_msg == "get_brand_wcpay_request:ok") {
+							$($("h5")[0]).text(parseInt($("#times").val()) + times + "精品券");
+							$($("h5")[1]).text(parseInt( $("#tdTimes").val()) + tdTimes + "淘单券");
+						}
 			      })
 			}
 		if (typeof WeixinJSBridge == "undefined"){
