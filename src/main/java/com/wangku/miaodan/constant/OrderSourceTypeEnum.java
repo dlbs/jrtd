@@ -54,10 +54,17 @@ public enum OrderSourceTypeEnum {
 		}
 	},
 	
-	B04("", "B04", false, false, "") {
+	B04("哪儿贷-哈罗抢单", "B04", false, true, "https://naerdai.vip/webview/mobile/getHLMobile") {
 		@Override
 		public void transferSensitive(Map params, Order order) {
-			
+			Object id = params.get("id");
+			JSONObject result = JSON.parseObject(HttpUtils.get(getUrl()) + "?id=" + String.valueOf(id));
+			if (result.getInteger("code") == 200) {
+				order.setMobile(result.getString("data"));
+			} else {
+				throw new NullPointerException("哪儿贷电话转换出错, 参数信息:" + String.valueOf(id) + ", 错误信息:" + result);
+				
+			}
 		}
 	};
 	
