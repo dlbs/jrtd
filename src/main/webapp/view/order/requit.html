@@ -2147,7 +2147,11 @@ h6[data-v-078a6550] {
 				</form>
 			</div>
 			<div data-v-078a6550="" id="footer" class="weui-tabbar">
-				<button data-v-078a6550="" class="weui-btn weui-btn_able weui-btn_primary"> 提交 </button>
+			<#if isRequit?? && isRequit>
+				<button data-v-078a6550="" class="weui-btn weui-btn_disabled weui-btn_primary"> 提交 </button>
+			<#else>
+				<button data-v-078a6550=""  class="weui-btn weui-btn_able weui-btn_primary"> 提交 </button>
+			</#if>
 			</div>
 		</div>
 		<input type="hidden" id="orderId" value="${orderId}">
@@ -2168,6 +2172,7 @@ h6[data-v-078a6550] {
 				} else {
 					$.post("/order/requit/" + $("#orderId").val(), data, function(data) {
 						if (data.code == 200) {
+							$("button[data-v-078a6550]").attr("class", "weui-btn weui-btn_disabled weui-btn_primary");
 							jqtoast(data.msg, 1500, "green", "/order/detail/" + $("#orderId").val() + "?from=${from}");
 						}
 					});

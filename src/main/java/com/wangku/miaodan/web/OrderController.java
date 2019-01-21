@@ -147,9 +147,10 @@ public class OrderController {
 	}
 	
 	@RequestMapping(value = "/order/requit/{id}", method = RequestMethod.GET)
-	public String requit(@PathVariable("id")Long id, ModelMap model, String from) {
+	public String requit(@PathVariable("id")Long id, ModelMap model, String from, HttpServletRequest request) {
 		model.put("orderId", id);
 		model.put("from", from);
+		model.put("isRequit", resquitService.isRequit(id, LoginInterceptor.getMobile(request)));
 		return "order/requit";
 	}
 	

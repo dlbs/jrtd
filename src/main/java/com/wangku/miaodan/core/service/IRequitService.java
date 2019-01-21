@@ -16,4 +16,6 @@ public interface IRequitService {
 
 	long count(String name, String status, String source);
 
+	boolean isRequit(Long id, String mobile);
+
 }
