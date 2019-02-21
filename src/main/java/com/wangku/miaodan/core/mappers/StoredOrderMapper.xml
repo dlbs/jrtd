@@ -82,7 +82,7 @@
   <select id="detail" resultMap="BaseResultMap">
   	select order_stored.* from order_stored 
 	LEFT JOIN user_info 
-    on user_info.id = #{userId}
-  	where order_stored.order_id = #{orderId}
+    on user_info.mobile = order_stored.mobile 
+  	where order_stored.order_id = #{orderId} and user_info.id = #{userId}
   </select>
 </mapper>

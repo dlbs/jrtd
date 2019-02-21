@@ -451,7 +451,7 @@
 	<if test="!isTD">
 		and oi.source in ("M01", "A03", "B04")
 	</if>
-	and oi.id in (select order_id from order_stored where mobile = #{mobile}) and oi.status = 1
+	and os.mobile = #{mobile} and (oi.status = 1 or oi.status = 4)
 	order by saddTime desc 
 	limit #{start}, #{size}  	
   </select>

@@ -2338,6 +2338,7 @@ h6[data-v-078a6550] {
 					</div>
 				</div>
 			</div>
+			<#if order.status != 4>
 			<div data-v-078a6550="" id="footer" class="weui-tabbar">
 				<#if order.status == 0>
 					<a data-v-078a6550="" href="javascript:;" class="weui-btn weui-btn_able weui-btn_primary">立即抢单 </a>
@@ -2365,6 +2366,7 @@ h6[data-v-078a6550] {
 					</#if>
 				</#if>
 			</div>
+			</#if>
 		</div>
 	</div>
 	<input type="hidden" id="id" value="${order.id}" />

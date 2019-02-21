@@ -68,6 +68,12 @@ public class RequitServiceImpl implements IRequitService {
 			order.setStatus(3);
 			orderMapper.updateByPrimaryKey(order);
 			storeOrderMapper.deleteByPrimaryKey(storeOrder.getId());
+		} else if (status == 2) {
+			StoredOrder storeOrder = storeOrderMapper.detail(requit.getUserId(), requit.getOrderId());
+			userMapper.increTimesByMobile(storeOrder.getMobile(), storeOrder.getIsTd());
+			Order order = orderMapper.selectByPrimaryKey(storeOrder.getOrderId());
+			order.setStatus(4);
+			orderMapper.updateByPrimaryKey(order);			
 		}
 	}
 
