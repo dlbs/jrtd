@@ -53,13 +53,14 @@ public class OrderServiceImpl implements IOrderService {
 	public Order getOrderById(Long id) {
 		return orderMapper.selectByPrimaryKey(id);
 	}
-
+	
 	@Override
-	public List<Order> list(String applyTime, String source, String status, String city, int start, int size) {
+	public List<Order> list(String applyTimeStart, String applyTimeEnd, String source, String status, String city, int start, int size) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("start", start);
 		map.put("size", size);
-		map.put("applyTime", Strings.isBlank(applyTime)? null:applyTime);
+		map.put("applyTimeStart", Strings.isBlank(applyTimeStart)? null:applyTimeStart + " 00:00:00");
+		map.put("applyTimeEnd", Strings.isBlank(applyTimeEnd)? null:applyTimeEnd + " 23:59:59");
 		map.put("source", Strings.isBlank(source)? null:source);
 		map.put("city", Strings.isBlank(city)? null:city.replace("市", ""));
 		try {
@@ -68,7 +69,7 @@ public class OrderServiceImpl implements IOrderService {
 		
 		
 		return orderMapper.list(map);
-	}
+	}	
 
 	@Override
 	public void updateStatus(Long productId, int status) {
@@ -79,9 +80,10 @@ public class OrderServiceImpl implements IOrderService {
 	}
 
 	@Override
-	public long count(String applyTime, String source, String status, String city) {
+	public long count(String applyTimeStart, String applyTimeEnd, String source, String status, String city) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("applyTime", Strings.isBlank(applyTime)? null:applyTime);
+		map.put("applyTimeStart", Strings.isBlank(applyTimeStart)? null:applyTimeStart + " 00:00:00");
+		map.put("applyTimeEnd", Strings.isBlank(applyTimeEnd)? null:applyTimeEnd + " 23:59:59");
 		map.put("source", Strings.isBlank(source)? null:source);
 		map.put("city", Strings.isBlank(city)? null:city.replace("市", ""));
 		try {

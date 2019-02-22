@@ -483,8 +483,11 @@
   <select id="list" resultMap="BaseResultMap" parameterType="map">
   	select * from order_info 
   	where 1 = 1
-  	<if test="applyTime != null">
-  		and apply_time like CONCAT(#{applyTime}, "%")
+  	<if test="applyTimeStart != null">
+  		and apply_time >= #{applyTimeStart} 
+  	</if>
+  	<if test="applyTimeEnd != null">
+  		and apply_time <![CDATA[<=]]> #{applyTimeEnd} 
   	</if>
   	<if test="source != null">
   		and source = #{source}
@@ -502,8 +505,11 @@
   <select id="count" resultType="long">
   	select count(*) from order_info
   	where 1 = 1
-  	<if test="applyTime != null">
-  		and apply_time like CONCAT(#{applyTime}, "%")
+  	<if test="applyTimeStart != null">
+  		and apply_time >= #{applyTimeStart} 
+  	</if>
+  	<if test="applyTimeEnd != null">
+  		and apply_time <![CDATA[<=]]> #{applyTimeEnd} 
   	</if>
   	<if test="source != null">
   		and source = #{source}

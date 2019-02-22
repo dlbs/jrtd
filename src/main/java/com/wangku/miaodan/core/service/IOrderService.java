@@ -19,11 +19,11 @@ public interface IOrderService {
 
 	public Order getOrderById(Long id);
 
-	public List<Order> list(String applyTime, String source, String status, String city, int page, int size);
+	public List<Order> list(String applyTimeStart, String applyTimeEnd, String source, String status, String city, int page, int size);
 
 	public void updateStatus(Long productId, int status);
 
-	public long count(String applyTime, String source, String status, String city);
+	public long count(String applyTimeStart, String applyTimeEnd, String source, String status, String city);
 
 	public void updateMobileAndIdent(Order order);
 	

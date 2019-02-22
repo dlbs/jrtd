@@ -107,14 +107,14 @@ public class AdminController {
 	
 	@RequestMapping("/product/list")
 	@ResponseBody
-	public Map<String, Object> productList(String applyTime, String source, String status, String city, int page, int size) {
+	public Map<String, Object> productList(String applyTimeStart, String applyTimeEnd, String source, String status, String city, int page, int size) {
 		 Map<String, Object> result = new HashMap<String, Object>();
-		 List<Order> list = orderService.list(applyTime, source, status, city, (page - 1) * size, size);
+		 List<Order> list = orderService.list(applyTimeStart, applyTimeEnd, source, status, city, (page - 1) * size, size);
 		 result.put("list", list);
-		 long count = orderService.count(applyTime, source, status, city);
+		 long count = orderService.count(applyTimeStart, applyTimeEnd, source, status, city);
 		 result.put("pages", count % size == 0? count/ size: count/size + 1);
 		 result.put("count", count);
-		 result.put("sum", orderService.count(null, null, null, null));
+		 result.put("sum", orderService.count(null, null, null, null, null));
 		return result;
 	}
 	
