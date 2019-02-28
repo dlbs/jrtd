@@ -33,7 +33,7 @@ public class AdminLoginInterceptor implements HandlerInterceptor {
 		}
 		
 		if (!flag) {
-			response.sendRedirect(request.getContextPath()+"/admin/login");
+			response.sendRedirect("/admin/login");
 		}
 		return flag;
 	}

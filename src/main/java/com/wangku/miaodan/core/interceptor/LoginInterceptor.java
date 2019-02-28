@@ -24,7 +24,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 		if (!Strings.isBlank(mobile)) {
 			return true;
 		}
-		response.sendRedirect(request.getContextPath()+"/login/index");
+		response.sendRedirect("/login/index");
 		return false;
 	}
 
