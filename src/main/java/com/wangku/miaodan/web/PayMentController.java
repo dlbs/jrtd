@@ -46,7 +46,7 @@ public class PayMentController {
 	
 	private static final String GET_OAUTH_TOKEN = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=%s&secret=%s&code=%s&grant_type=authorization_code";
 	
-	private static final String NOTIFY_URL = "https://mp.dogao.cn/pay/order/notify";
+	private static final String NOTIFY_URL = "https://2bg3t.com/pay/order/notify";
 	
 	@Autowired
 	private IRechargeService rechargeService;
@@ -73,7 +73,7 @@ public class PayMentController {
 					response.sendRedirect(redirectUrl + "?openid=" + openId);
 				}
 			} else {
-	            String redirectUrl4Vx = "https://mp.dogao.cn/pay/getoprnid?redirectUrl=" + redirectUrl;
+	            String redirectUrl4Vx = "https://2bg3t.com/pay/getoprnid?redirectUrl=" + redirectUrl;
 	            String url = String.format(GET_OAUTH_CODE, APP_ID, URLEncoder.encode(redirectUrl,"UTF-8"), "code", "snsapi_base", "123");
 				response.sendRedirect(url);
 			}
