@@ -66,11 +66,24 @@ public enum OrderSourceTypeEnum {
 				
 			}
 		}
-	};
+	},
 	
-	private String name;
+	W05("未睐", "W05", false, false, "") {
+		@Override
+		public void transferSensitive(Map params, Order order) {
+/*			Object id = params.get("id");
+			JSONObject result = JSON.parseObject(HttpUtils.get(getUrl()) + "?id=" + String.valueOf(id));
+			if (result.getInteger("code") == 200) {
+				order.setMobile(result.getString("data"));
+			} else {
+				throw new NullPointerException("未睐电话转换出错, 参数信息:" + String.valueOf(id) + ", 错误信息:" + result);
+			}*/
+		}
+	};	
 	
 	private String desc;
+	
+	private String name;
 	
 	private boolean isTD;
 	

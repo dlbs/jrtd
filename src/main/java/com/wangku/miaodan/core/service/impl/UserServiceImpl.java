@@ -53,7 +53,7 @@ public class UserServiceImpl implements IUserService {
 		if (counsumeOrder > 0) {
 			userMapper.reduceTimesByMobile(mobile, isTD);
 			storedOrderMapper.insert(orderId, mobile, isTD? 0:1);
-			if (OrderSourceTypeEnum.getInstByName(order.getSource()) != null) {
+			if (OrderSourceTypeEnum.getInstByName(order.getSource()).isTM()) {
 				boolean result = transeData(order, 0);
 				if (!result) {
 					throw new NullPointerException("订单敏感信息转换失败");
