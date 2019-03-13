@@ -11,16 +11,20 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.wangku.miaodan.constant.OrderSourceTypeEnum;
 import com.wangku.miaodan.constant.ProductTypeEnums;
+import com.wangku.miaodan.core.dao.DataSourceMapper;
 import com.wangku.miaodan.core.dao.OrderMapper;
 import com.wangku.miaodan.core.dao.RechargeMapper;
 import com.wangku.miaodan.core.dao.StoredOrderMapper;
 import com.wangku.miaodan.core.dao.UserMapper;
+import com.wangku.miaodan.core.model.DataSource;
 import com.wangku.miaodan.core.model.Order;
 import com.wangku.miaodan.core.model.Recharge;
 import com.wangku.miaodan.core.model.User;
 import com.wangku.miaodan.core.service.IUserService;
+import com.wangku.miaodan.utils.HttpUtils;
 import com.wangku.miaodan.utils.Strings;
 
 @Service
@@ -39,6 +43,9 @@ public class UserServiceImpl implements IUserService {
 	
 	@Autowired
 	private OrderMapper orderMapper;
+	
+	@Autowired
+	private DataSourceMapper datasourceMapper;
 
 	@Override
 	public boolean checkCanStore(String mobile, boolean idTD) {
@@ -53,16 +60,14 @@ public class UserServiceImpl implements IUserService {
 		if (counsumeOrder > 0) {
 			userMapper.reduceTimesByMobile(mobile, isTD);
 			storedOrderMapper.insert(orderId, mobile, isTD? 0:1);
-			if (OrderSourceTypeEnum.getInstByName(order.getSource()).isTM()) {
-				boolean result = transeData(order, 0);
-				if (!result) {
-					throw new NullPointerException("订单敏感信息转换失败");
-				}
+			DataSource dataSource = datasourceMapper.selectByCode(order.getSource());
+			if (dataSource.getSensitive() == 0 && !transeData(order, dataSource, 0)) {
+				throw new NullPointerException("订单 " + order.getId() + " 敏感信息转换失败");
 			}
 			return 1;
 		} else {
 			return 0;
-		}		
+		}
 	}	
 	
 	private boolean transeData(Order order, int count) {
@@ -79,7 +84,53 @@ public class UserServiceImpl implements IUserService {
 			transeData(order, ++count);
 		}		
 		return flag;
-	}	
+	}
+	
+	private boolean transeData(Order order, DataSource source, int count) {
+		boolean flag = false;
+		if (count >= 3) {
+			return flag;
+		}
+		// 接口请求方式
+		try {
+			if ("post".equals(source.getReqType())) {// post请求方式
+				Map parseObject = JSON.parseObject(order.getMkj(), Map.class);
+				JSONObject result = JSON.parseObject(HttpUtils.post(source.getUrl(), JSON.toJSONString(parseObject)));
+				if (source.getCallStatusSuccessValue().equals(result.getString(source.getCallStatusField()))) {
+					String[] split = source.getSensitiveValueField().split("\\.");
+					for (int i = 0; i < split.length; i++) {
+						if(i == split.length - 1) {// 最后一层， 直接提取字段值
+							order.setMobile(result.getString(split[i]));
+							orderMapper.updateMobileAndIdent(order);
+							flag = true;
+						} else {
+							result = JSON.parseObject(JSON.toJSONString(result.get(split[i])));
+						}
+					}
+				}
+			} else {// get请求方式
+				// 获取参数
+				String str = HttpUtils.get(source.getUrl() + JSON.parseObject(order.getMkj()).getString(source.getReqParam()));
+				JSONObject result = JSON.parseObject(str);
+				if (source.getCallStatusSuccessValue().equals(result.getString(source.getCallStatusField()))) {
+					String[] split = source.getSensitiveValueField().split(",");
+					for (int i = 0; i < split.length; i++) {
+						if(i == split.length - 1) {// 最后一层， 直接提取字段值
+							order.setMobile(result.getString(split[i]));
+							orderMapper.updateMobileAndIdent(order);
+							flag = true;
+						} else {
+							result = JSON.parseObject(JSON.toJSONString(result.get(split[i])));
+						}
+					}
+				}			
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			flag = transeData(order, source, ++count);
+		}
+		return flag;
+	}
 
 	@Override
 	public void addUser(String mobile) {

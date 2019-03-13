@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wangku.miaodan.core.dao.DataSourceMapper">
+
+	<resultMap id="BaseResultMap" type="com.wangku.miaodan.core.model.DataSource">
+		<id column="id" jdbcType="BIGINT" property="id" />
+		<result column="name" jdbcType="VARCHAR" property="name" />
+		<result column="code" jdbcType="VARCHAR" property="code" />
+		<result column="scramble" jdbcType="INTEGER" property="scramble" />
+		<result column="sensi" jdbcType="INTEGER" property="sensitive" />
+		<result column="url" jdbcType="VARCHAR" property="url" />
+		<result column="req_type" jdbcType="VARCHAR" property="reqType" />
+		<result column="req_param" jdbcType="VARCHAR" property="reqParam" />
+		<result column="url" jdbcType="VARCHAR" property="url" />
+		<result column="call_status_field" jdbcType="VARCHAR" property="callStatusField" />
+		<result column="call_status_success_value" jdbcType="VARCHAR" property="callStatusSuccessValue" />
+		<result column="sensitive_value_field" jdbcType="VARCHAR" property="sensitiveValueField" />
+		<result column="status" jdbcType="INTEGER" property="status" />
+		<result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+	</resultMap>
+	
+	<sql id="Base_Column_List">
+		id, name, code, scramble, sensi, url, req_type, req_param, call_status_field, call_status_success_value,
+		sensitive_value_field, status, create_time
+	</sql>
+	
+	<select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from jrtd_source_settings
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	
+	<select id="list" resultMap="BaseResultMap">
+		select * from jrtd_source_settings 
+		where 1 = 1 
+		<if test="code != null">
+			and code = #{code}
+		</if>
+		<if test="status != null">
+			and status = #{status}
+		</if>
+		order by create_time desc 
+		limit #{start}, #{size} 
+	</select>
+	
+	<select id="count" resultType="long">
+		select count(id) from jrtd_source_settings 
+		where 1 = 1 
+		<if test="code != null">
+			and code = #{code}
+		</if>
+		<if test="status != null">
+			and status = #{status}
+		</if>	
+	</select>
+	
+	<insert id="insert" parameterType="com.wangku.miaodan.core.model.DataSource">
+		insert into jrtd_source_settings(name, code,
+		scramble, sensi, url, req_type, req_param, 
+		call_status_field, call_status_success_value, sensitive_value_field) 
+		values(#{name,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR},
+		#{scramble,jdbcType=INTEGER}, #{sensitive,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR},
+		#{reqType, jdbcType=VARCHAR}, #{reqParam, jdbcType=VARCHAR}, 
+		#{callStatusField,jdbcType=VARCHAR}, #{callStatusSuccessValue,jdbcType=VARCHAR},
+		#{sensitiveValueField,jdbcType=VARCHAR})
+	</insert>
+	
+	<update id="updateByPrimaryKeySelective" parameterType="com.wangku.miaodan.core.model.DataSource">
+		update jrtd_source_settings
+		<set>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="code != null">
+				code = #{code,jdbcType=VARCHAR},
+			</if>
+			<if test="scramble != null">
+				scramble = #{scramble,jdbcType=INTEGER},
+			</if>
+			<if test="sensitive != null">
+				sensi = #{sensitive,jdbcType=INTEGER},
+			</if>
+			<if test="url != null">
+				url = #{url,jdbcType=VARCHAR},
+			</if>
+			<if test="reqType != null">
+				req_type = #{reqType,jdbcType=VARCHAR},
+			</if>
+			<if test="reqParam != null">
+				req_param = #{reqParam,jdbcType=VARCHAR},
+			</if>
+			<if test="callStatusField != null">
+				call_status_field = #{callStatusField,jdbcType=VARCHAR},
+			</if>
+			<if test="callStatusSuccessValue != null">
+				call_status_success_value = #{callStatusSuccessValue,jdbcType=VARCHAR},
+			</if>
+			<if test="sensitiveValueField != null">
+				sensitive_value_field = #{sensitiveValueField,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=INTEGER},
+			</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	
+	<select id="selectByCode" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from jrtd_source_settings
+		where code = #{code}
+	</select>
+	
+</mapper>

@@ -58,6 +58,8 @@ function loadElement(page) {
 	num = (page - 1) * 20;
 	if (type == "user") {
 		loadUser(page);
+	} else if (type == "datasource") {
+		loadDataSource(page);
 	} else if (type == "product"){
 		loadProduct(page);
 	} else if (type == "recharge") {
@@ -189,6 +191,56 @@ function submitTdTimes(id, old_td_times) {
 			alert("淘单券修改成功");
 		}
 	});	
+}
+
+function loadDataSource(page) {
+	var param = $("#form").serialize() + "&size=20&page=" + page;
+	$.post("/admin/datasource/list", param, function(data) {
+		var list = data.list;
+		initPaginate(data.pages, page);
+		if(page == 1) {
+			$("#thead").empty();
+			$("#tbody").empty();
+			$("#thead").append($('<tr class = "tbody_tr" >'
+                    + '<th  align="center">序号</th>'
+                    + '<th  align="center">公司名称</th>'
+                    + '<th  align="center">公司编码</th>'
+                    + '<th  align="center">订单类型</th>'
+                    + '<th  align="center">脱敏处理</th>'
+                    + '<th  align="center">数据解析地址</th>'
+                    + '<th  align="center">请求状态字段名</th>'
+                    + '<th  align="center">请求成功状态值</th>'
+                    + '<th  align="center">请求成功字段名称</th>'
+                    + '<th  align="center">状态(开启/关闭)</th>'
+                    + '<th  align="center">创建时间</th>'
+                    + '<th  align="center">操作</th>'
+                    + '</tr>'));
+		}
+		
+		var str = '';
+		if(list.length > 0) {
+			for(var i = 0; i < list.length; i++) {
+				var temp = list[i].status == 0? "关闭":"开启";
+				str += '<tr><td align="center">' + (++num) + '</td>'
+					+ '<td align="center">' + list[i].name + '</td>'
+					+ '<td align="center">' + list[i].code + '</td>'
+					+ '<td align="center">' + (list[i].scramble == 0? '抢单' : '淘单') + '</td>'
+					+ '<td align="center">' + (list[i].sensitive == 0? '需要' : '不需要') + '</td>'
+					+ '<td align="center">' + (list[i].url == ''? '暂无' :list[i].url)  + '</td>'
+					+ '<td align="center">' + (list[i].callStatusField == ''? '暂无':list[i].callStatusField) + '</td>'
+					+ '<td align="center">' + (list[i].callStatusSuccessValue == ''? '暂无':list[i].callStatusSuccessValue) + '</td>'
+					+ '<td align="center">' + (list[i].sensitiveValueField == ''? '暂无':list[i].sensitiveValueField) + '</td>'
+					+ '<td align="center">' + (list[i].status == 0? '开启':'关闭') + '</td>'
+					+ '<td align="center">' + new Date(list[i].createTime).format('yyyy-MM-dd hh:mm:ss') + '</td>'
+					+ '<td align="center"><button onclick="toEdit(' + list[i].id + ')">编辑</button>&nbsp;&nbsp;<button onclick="updateStatus(' + list[i].id + ',' + (list[i].status == 0? 1:0) + ', $(this))">' + temp + '</button></td>'
+					+ '</tr>';
+			}
+			$("#tbody").empty().append($(str));				
+			$(".ul_listz li:nth-child(2)").html($(".ul_listz li:nth-child(2)").html().replace("&nbsp;&nbsp;&nbsp;&nbsp;", "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;共" + data.count + "/" + data.sum + "条&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"));		
+		} else {
+			$("#tbody").append($('<tr><td colspan="11" rowspan="6" align="center">暂无数据</td></tr>'));
+		}
+	});
 }
 
 function loadProduct(page) {

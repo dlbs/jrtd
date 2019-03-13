@@ -19,11 +19,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.wangku.miaodan.constant.ProductTypeEnums;
 import com.wangku.miaodan.core.interceptor.AdminLoginInterceptor;
 import com.wangku.miaodan.core.model.AuthUser;
+import com.wangku.miaodan.core.model.DataSource;
 import com.wangku.miaodan.core.model.Order;
 import com.wangku.miaodan.core.model.Recharge;
 import com.wangku.miaodan.core.model.Requit;
 import com.wangku.miaodan.core.model.User;
 import com.wangku.miaodan.core.service.IAuthUserService;
+import com.wangku.miaodan.core.service.IDataSourceService;
 import com.wangku.miaodan.core.service.IOrderService;
 import com.wangku.miaodan.core.service.IRechargeService;
 import com.wangku.miaodan.core.service.IRequitService;
@@ -48,6 +50,9 @@ public class AdminController {
 	
 	@Autowired
 	private IAuthUserService authUserService;
+	
+	@Autowired
+	private IDataSourceService dataSourceService;
 	
 	@RequestMapping("")
 	public String adminHome(String user, ModelMap model, HttpServletRequest request) {
@@ -103,6 +108,49 @@ public class AdminController {
 		 result.put("sum", userService.count(null, null, null));
 		 result.put("user", AdminLoginInterceptor.getUserName(request));
 		 return result;
+	}
+	
+	@RequestMapping("/datasource/list")
+	@ResponseBody
+	public Map<String, Object> dataSourceList(int page, int size, String code, String status) {
+		 Map<String, Object> result = new HashMap<String, Object>();
+		 result.put("list", dataSourceService.list(code, status, (page - 1) * size, size));
+		 long count = dataSourceService.count(code, status);
+		 result.put("pages", count % size == 0? count/ size: count/size + 1);
+		 result.put("count", count);
+		 result.put("sum", dataSourceService.count(null, null));
+		 return result;
+	}
+	
+	@RequestMapping("/datasource/add")
+	public String dataSourceAdd(DataSource source) {
+		dataSourceService.add(source);
+		return "redirect:/view/admin/datasource.html";
+	}
+	
+	@RequestMapping("/datasource/edit")
+	public String dataSourceUpdate(Long id, ModelMap map) {
+		DataSource source = dataSourceService.getById(id);
+		map.put("source", source);
+		return "/admin/datasource_add";
+	}	
+	
+	@RequestMapping("/datasource/updatestatus")
+	@ResponseBody
+	public Map<String, Object> changeStatus(Long id, int status) {
+		 Map<String, Object> result = new HashMap<String, Object>();
+		 try {
+			DataSource source = new DataSource();
+			 source.setId(id);
+			 source.setStatus(status);
+			 dataSourceService.update(source);
+			 result.put("code", 200);
+		} catch (Exception e) {
+			e.printStackTrace();
+			result.put("code", 500);
+			result.put("msg", e.getMessage());
+		}
+		 return result;	
 	}
 	
 	@RequestMapping("/product/list")
