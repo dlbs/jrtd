@@ -211,20 +211,6 @@ public class OrderController {
 			return 6;
 		}
 		
-		if (Objects.isNull(order.getSource())) {
-			return 7;
-		}
-		
-		if (OrderSourceTypeEnum.getInstByName(order.getSource()) == null) {
-			return 7;
-		}
-		
-		if (OrderSourceTypeEnum.getInstByName(order.getSource()).isTM()) {
-			if (Strings.isBlank(order.getMkj())) {
-				return 8;
-			}
-		}
-		
 		List<Order> list = new ArrayList<Order>();
 		list.add(order.translateOrder());
 		orderService.saveBatch(list);

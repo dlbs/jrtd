@@ -170,7 +170,7 @@ function gt_0(ele, times) {
 
 function submitTimes(id, old_times) {
 	var times = $("#times_" + id).val();
-	$.post("/admin/updateusertimes", {"id":id, "times":times, "tdTimes":0, "isTd":"false"}, function(data) {
+	$.post("/admin/updateusertimes", {"id":id, "times":times, "tdTimes":-1, "isTd":"false"}, function(data) {
 		if (data.code != 200) {
 			$("#times_" + id).val(data.times);
 			alert(data.msg);
@@ -183,7 +183,7 @@ function submitTimes(id, old_times) {
 
 function submitTdTimes(id, old_td_times) {
 	var tdTimes = $("#tdTimes_" + id).val();
-	$.post("/admin/updateusertimes", {"id":id, "times":0, "tdTimes":tdTimes, "isTd":"true"}, function(data) {
+	$.post("/admin/updateusertimes", {"id":id, "times":-1, "tdTimes":tdTimes, "isTd":"true"}, function(data) {
 		if (data.code != 200) {
 			$("#tdTimes_" + id).val(data.tdTimes);
 			alert(data.msg);

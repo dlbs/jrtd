@@ -446,10 +446,10 @@
 	ON oi.id = os.order_id 
 	where 1 = 1 
 	<if test="isTD">
-		and oi.source  = "Y02"
+		and oi.source in (select code from jrtd_source_settings where scramble = 1 and status = 0)
 	</if>
 	<if test="!isTD">
-		and oi.source in ("M01", "A03", "B04")
+		and oi.source in (select code from jrtd_source_settings  where scramble = 0 and status = 0)
 	</if>
 	and os.mobile = #{mobile} and (oi.status = 1 or oi.status = 4)
 	order by saddTime desc 

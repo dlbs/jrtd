@@ -1684,7 +1684,6 @@ h6[data-v-078a6550] {
 		            if(result.length >= maxsize){
 		                lrz(input.files[0], {width: 600})  
 		                .then(function (rst) {
-		                	console.log(rst);
 		                      $.ajax({  
 		                          url : "/file/upload",  
 		                          type: "POST",  
@@ -1709,13 +1708,6 @@ h6[data-v-078a6550] {
 
 		                      })
 		            }else{
-		            	console.log(223);
-/* 		                getId(imgObj).setAttribute('src',result);
-		                getId(imgObj).classList.add('on');
-		                var img = new Image();
-		                img.src = result;
-		                getId(imgObj).setAttribute('src',result);
-		                getId(imgObj).classList.add('on');
 		                $.ajax({  
 		                    url :"/file/upload",  
 		                    type: "POST",  
@@ -1726,12 +1718,19 @@ h6[data-v-078a6550] {
 		                    cache:false,  
 		                    async:false,  
 		                    success : function(data) {
-		                        alert("成功");
+	  					    	if (data.code == 200) {
+						    		_this.siblings("img").remove();
+						    		_this.before($('<img data-v-3b1241a1="" src="' + data.url + '" height="100%">'));
+						    		_this.parent(".weui-uploader__input-box").attr("class", "weui__image-box");
+						    		_this.val("");
+						    	} else {
+						    		jqtoast("网络错误请重新上传");
+						    	}
 		                    },
 		                    error : function(){
 
 		                    }  
-		                    }); */
+		                    });
 
 		           }
 

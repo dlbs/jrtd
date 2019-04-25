@@ -97,10 +97,10 @@
 		<if test="picLogo != null and picLogo != ''">
 			pic_logo = #{picLogo},
 		</if>
-		<if test="times != null and times > 0">
+		<if test="times != null and times >= 0">
 			times = #{times},
 		</if>
-		<if test="tdTimes != null and tdTimes > 0">
+		<if test="tdTimes != null and tdTimes >= 0">
 			td_times = #{tdTimes},
 		</if>
 		<if test="status != null">
