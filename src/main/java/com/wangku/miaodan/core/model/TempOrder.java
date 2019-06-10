@@ -254,6 +254,20 @@ public class TempOrder {
 		return order;
 	}
 	
+	@Override
+	public String toString() {
+		return "TempOrder [name=" + name + ", mobile=" + mobile + ", city="
+				+ city + ", age=" + age + ", sum=" + sum + ", vocation="
+				+ vocation + ", workTime=" + workTime + ", sex=" + sex
+				+ ", monthIncome=" + monthIncome + ", wagesType=" + wagesType
+				+ ", creditCard=" + creditCard + ", car=" + car + ", building="
+				+ building + ", accumulationFund=" + accumulationFund
+				+ ", socialInsurance=" + socialInsurance + ", lifeInsurance="
+				+ lifeInsurance + ", identyNumber=" + identyNumber
+				+ ", weiLiDai=" + weiLiDai + ", applyTime=" + applyTime
+				+ ", source=" + source + ", mkj=" + mkj + "]";
+	}
+
 	public static void main(String[] args) {
 		System.out.println(new Date(1545620508L * 1000));
 	}

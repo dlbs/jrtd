@@ -12,7 +12,7 @@
 	
 	<mvc:default-servlet-handler />
 	
-	<context:component-scan base-package="com.wangku.miaodan.web"/>
+	<context:component-scan base-package="com.wangku.miaodan.admin.controller, com.wangku.miaodan.front.controller"/>
 	
 	<mvc:interceptors>
 	    <mvc:interceptor>

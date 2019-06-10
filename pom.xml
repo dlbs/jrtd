@@ -244,7 +244,7 @@
 				<filtering>false</filtering>
 			</resource>
 			<resource>
-				<directory>src/main/resources/</directory>
+				<directory>src/main/resources/public/</directory>
 				<filtering>false</filtering>
 			</resource>
 		</resources>
@@ -276,4 +276,81 @@
 			</plugin>
 		</plugins>
 	</build>
+	
+	<!--定义各环境的profiles -->
+	<profiles>
+		<profile>
+			<id>dev</id>
+			<activation>
+				<property>
+					<name>package.environment</name>
+					<value>dev</value>
+				</property>
+			</activation>
+			<build>
+				<resources>
+					<resource>
+						<directory>src/main/resources/dev</directory>
+						<includes>
+							<include>**/*.xml</include>
+							<include>**/*.properties</include>
+						</includes>
+						<excludes>
+							<exclude>**/web.xml</exclude>
+						</excludes>
+						<filtering>false</filtering>
+					</resource>
+				</resources>
+			</build>
+		</profile>
+		<profile>
+			<id>test</id>
+			<activation>
+				<property>
+					<name>package.environment</name>
+					<value>test</value>
+				</property>
+			</activation>
+			<build>
+				<finalName>test</finalName>
+				<resources>
+					<resource>
+						<directory>src/main/resources/test</directory>
+						<includes>
+							<include>**/*.xml</include>
+							<include>**/*.properties</include>
+						</includes>
+						<excludes>
+							<exclude>**/web.xml</exclude>
+						</excludes>
+						<filtering>false</filtering>
+					</resource>
+				</resources>
+			</build>
+		</profile>
+		<profile>
+			<id>online</id>
+			<activation>
+				<property>
+					<name>package.environment</name>
+					<value>online</value>
+				</property>
+			</activation>
+			<build>
+				<resources>
+					<resource>
+						<directory>src/main/resources/online</directory>
+						<includes>
+							<include>**/*.xml</include>
+							<include>**/*.properties</include>
+						</includes>
+						<excludes>
+							<exclude>**/web.xml</exclude>
+						</excludes>
+						<filtering>false</filtering>
+					</resource>
+				</resources>
+			</build>
+		</profile>
+	</profiles>	
 </project>

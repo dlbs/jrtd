@@ -283,7 +283,7 @@ function loadProduct(page) {
 				var sex = list[i].sex == 0? "女":"男";
 				var vocation = list[i].vocation == 0?"上班族":list[i].vocation == 1?"个体户":"企业主";
 				var workTime = list[i].workTime == 0?"半年以下":list[i].workTime == 1?"半年到一年":"一年以上";
-				var monthIncome = list[i].monthIncome == 0?"":list[i].monthIncome == 1?"3千以下":list[i].monthIncome == 2?"3千到5千":list[i].monthIncome == 3?"5千到8千":"1万以上";
+				var monthIncome = list[i].monthIncome == 0?"3千以下":list[i].monthIncome == 1?"3千到5千":list[i].monthIncome == 2?"5千到8千":list[i].monthIncome == 3?"8千到1万":"1万以上";
 				var wagesType = list[i].wagesType == 0?"银行转账":"现金发放";
 				var car = list[i].car == 0?"无车":"有车";
 				var building = list[i].building == 0?"无房":"有房";

@@ -935,7 +935,7 @@ a.menu[data-v-7ad21634] {
 				<div class="weui-msg__text-area">
 					<input type="hidden" id="times" value="${user.times!0}">
 					<input type="hidden" id="tdTimes" value="${user.tdTimes!0}">
-					<h5 class="weui-msg__title">${user.times!0}精品券</h5>
+					<h5 class="weui-msg__title" id = "user_times">${user.times!0}精品券</h5>
 <!-- 					<h5 class="weui-msg__title">${user.tdTimes!0}淘单券</h5> -->
 					<p class="weui-msg__desc"></p>
 				</div>
@@ -1066,7 +1066,7 @@ a.menu[data-v-7ad21634] {
 						var tdTimes = data.tdTimes;
 						$.post("/pay", {"orderId":data.data}, function(data) {
 							if (data.code == 200) {
-								onBridgeReady(data.order.appId, data.order.timeStamp, data.order.nonceStr, data.pack, data.order.paySign); 	
+								onBridgeReady(data.order.appId, data.order.timeStamp, data.order.nonceStr, data.pack, data.order.paySign, times); 	
 							} 
 						});
 					}
@@ -1074,7 +1074,7 @@ a.menu[data-v-7ad21634] {
 			
 			});
 		});		
-		function onBridgeReady(app_id, time_stamp, nonce_str, pak, pay_sign){
+		function onBridgeReady(app_id, time_stamp, nonce_str, pak, pay_sign, times){
 			   WeixinJSBridge.invoke(
 			      'getBrandWCPayRequest', {
 			         "appId": app_id,       		  //公众号名称，由商户传入     
@@ -1086,8 +1086,8 @@ a.menu[data-v-7ad21634] {
 			      }, function(res) {
 			    	  //alert(JSON.stringify(res));
 						if (res.err_msg == "get_brand_wcpay_request:ok") {
-							$($("h5")[0]).text(parseInt($("#times").val()) + times + "精品券");
-							$($("h5")[1]).text(parseInt( $("#tdTimes").val()) + tdTimes + "淘单券");
+							var ti = $("#user_times").text();
+							$("#user_times").text((parseInt(ti.replace("精品券", "")) + times) + "精品券");
 						}
 			      })
 			}

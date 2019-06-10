@@ -183,6 +183,8 @@ public class OrderController {
 	@ResponseBody
 	public int save(@RequestBody TempOrder order) {
 		
+		System.out.println(order);
+		
 		if (order == null) {
 			return 0;
 		}
